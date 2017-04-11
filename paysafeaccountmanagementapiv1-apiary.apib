@@ -686,15 +686,15 @@ The Paysafe Test environment can be used to test applications without actually r
 |firstName      |string<br/>`length<=50`        |This is the first name of the business owner.|
 |middleName     |string<br/>`length<=50`        |This is the middle name of the business owner.|
 |lastName      |string<br/>`length<=50`         |This is the last name of the business owner.|
-|previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner.|
+|previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner. **Note:** This is used for European business owners only.|
 |email          |string<br/>`length<=255`       |This is the email address of the business owner.|
 |jobTitle       |string<br/>`length<=50`        |This is the job title of the business owner. |
 |phone          |string<br/>`length<=40`        |This is the phone number of the business owner.|
-|nationality    |enum                           |This is the nationality code of the business owner. See [Nationality Codes](#nationalitycodes).|
+|nationality    |enum                           |This is the nationality code of the business owner.  **Note:** This is used for European business owners only. See [Nationality Codes](#nationalitycodes).|
 |dateOfBirth    |[dateOfBirth](#date)           |This is the birth date of the business owner.|
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
-|gender         |enum                           |This is the gender of the business owner. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul> |
-|percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.|
+|gender         |enum                           |This is the gender of the business owner. **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
+|percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.  **Note:** This is used for European business owners only.|
 
 ## Business Owner Addresses
 <a name="businessowneraddressesobject"></a>
@@ -851,6 +851,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
 |refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy.|
 |federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
+|additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li><li>VISA_DEBIT</li></ul>|
 
 ```apib
 {
@@ -861,7 +862,10 @@ The Paysafe Test environment can be used to test applications without actually r
   "shipsGoods":false,
   "refundPolicy":true,
   "refundPolicyDescription":"Full refund available",
-  "federalTaxNumber":"123654789"
+  "federalTaxNumber":"123654789",
+  "additionalPaymentMethods":[
+    "DIRECT_DEBIT"
+    ]
 }
 ```
 
@@ -914,7 +918,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.|
 |taxIdentificationNumber        |string<br/>`length<=30`    |This is the tax identification (VAT) number of the business.|
 |registrationNumber             |string<br/>`length<=20`    |This is the registration number of the business.|
-|additionalPaymentMethods       |array                      |These are optional payment types for the business. **Note:** This value is used for EU businesses only. Possible values are: <ul><li>SEPA</li><li>IDEAL</li><li>GIROPAY</li><li>SOFORT</li><li>UK_DIRECT_DEBIT</li></ul>|
+|additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>SEPA</li><li>IDEAL</li><li>GIROPAY</li><li>SOFORT</li><li>UK_DIRECT_DEBIT</li></ul>|
 
 ```apib
 {
@@ -928,7 +932,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "taxIdentificationNumber":"123654789",
   "registrationNumber":"BB765432",
   "additionalPaymentMethods":[
-    "SEPA"
+    "SEPA", "IDEAL"
     ]
 }
 ```
@@ -986,9 +990,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |yearlyVolumeRange  |enum                   |This is the estimated yearly volume of the business, by transaction. Possible values are: <ul><li>LOW &ndash; 0–50k</li><li>MEDIUM &ndash; 50k–100k</li><li>HIGH &ndash; 100k–250k</li><li>VERY_HIGH &ndash; 250k+</li></ul> |
 |userName       |string<br/>`min=2 max=64`  |This is the user name that will be configured to access the merchant account in back office. It should belong to the same merchant.|
 |merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor.|
-|usAccountDetails   |[usAccountDetails](#usaccountdetails) |These are the merchant account details.|
-|caAccountDetails   |[caAccountDetails](#caaccountdetails)  |These are the merchant account details.|
-|euAccountDetails   |[euAccountDetails](#euaccountdetails)  |These are the merchant account details. |
+|usAccountDetails   |[usAccountDetails](#usaccountdetailsobject) |These are the merchant account details.|
+|caAccountDetails   |[caAccountDetails](#caaccountdetailsobject)  |These are the merchant account details.|
+|euAccountDetails   |[euAccountDetails](#euaccountdetailsobject)  |These are the merchant account details.|
 
 
 ```apib
@@ -1128,6 +1132,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
 |refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.|
 |federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
+|additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li></ul>|
 
 ```apib
 {
@@ -1138,7 +1143,10 @@ The Paysafe Test environment can be used to test applications without actually r
   "shipsGoods":false,
   "refundPolicy":true,
   "refundPolicyDescription":"Full refund available",
-  "federalTaxNumber":"123654789"
+  "federalTaxNumber":"123654789",
+  "additionalPaymentMethods":[
+    "DIRECT_DEBIT"
+    ]
 }
 ```
 
@@ -1230,7 +1238,7 @@ Click [here](https://developer.paysafe.com/en/rest-api/partners/account-manageme
 |CA         |Any        |CA             |[EFT](#eftbankaccountobject)    |
 |US         |Any        |US             |[ACH](#achbankaccountobject)    |
 |EU         |EUR        |Within [SEPA country](#sepacountries) list   |[SEPA](#sepabankaccountobject)|
-|EU         |GBP        |GB             |[BAC](#bacsbankaccountobject)S   |
+|EU         |GBP        |GB             |[BACS](#bacsbankaccountobject)   |
 |EU         |Not covered by other EU options    |Not covered by other EU options    |[WIRE](#wirebankaccountobject)|
 
 ## Business Type Codes
@@ -4036,6 +4044,9 @@ This is how you look up a microdeposit to view its status.
 + refundPolicy:`true` (boolean, optional) - This indicates whether the business has a refund policy.
 + refundPolicyDescription:`Timely` (string, optional) - This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.
 + federalTaxNumber:`987654321` (string, optional) - This is the tax identification/registration number of the business.
++ additionalPaymentMethods: (array, optional) - These are optional payment types for the business.
+    - DIRECT_DEBIT
+    - VISA_DEBIT
 
 ## Activate Merchant Account Response Object
 + account (object, required)
@@ -4048,7 +4059,7 @@ This is how you look up a microdeposit to view its status.
         + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
         + productCode:`GOLD` (string, required) - This is the code of the partner product.
         + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-        + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account. **Note:** By default, the merchant account is created with the status of PENDING.
+        + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
             - APPROVED
             - DEFERRED
             - DISABLED
@@ -4576,7 +4587,7 @@ This is how you look up a microdeposit to view its status.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`GOLD` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account. **Note:** By default, the merchant account is created with the status of PENDING.
++ status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
     - DEFERRED
     - DISABLED
