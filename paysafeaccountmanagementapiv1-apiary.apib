@@ -663,7 +663,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the merchant's BACS bank account ID returned in the response.|
-|beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary's bank address.|
+|beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary bank's address.|
 |beneficiaryAccountName         |string<br/>`length<=100`   |This is the beneficiary account name.|
 |accountNumber                  |string<br/>`length=8`      |This is the merchant's 8-digit bank account number.|
 |sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
@@ -705,9 +705,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |street         |string<br/>`length<=50`        |This is the first line of the street address.|
 |street2        |string<br/>`length<=50`        |This is the second line of the street address, if required (e.g., apartment number).|
 |city           |string<br/>`length<=40`        |This is the city where address is located.|
-|state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
-|country        |string<br/>`length=2`          |This is the country of the merchant account address. See [Supported Country Codes](#supportedcountrycodes).|
-|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address.|
+|state          |string<br/>`length<=40`        |This is the state/province/region of the business owner address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
+|country        |string<br/>`length=2`          |This is the country of the business owner address. See [Supported Country Codes](#supportedcountrycodes).|
+|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner address.|
 |yearsAtAddress |number<br/>`length<+100`       |This is the number of years the business owner has been living at this address.|
 
 ```apib
@@ -985,11 +985,14 @@ The Paysafe Test environment can be used to test applications without actually r
 |category       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
 |averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units. |
 |url            |string<br/>`length<=60`    |This is the website of the business. |
-|phone          |string<br/>`length<=40`     |This is the customer support phone number of the business. |
+|phone          |string<br/>`length<=40`    |This is the customer support phone number of the business. |
 |email          |string<br/>`length<=240`   |This is the customer support email of the business. |
 |yearlyVolumeRange  |enum                   |This is the estimated yearly volume of the business, by transaction. Possible values are: <ul><li>LOW &ndash; 0–50k</li><li>MEDIUM &ndash; 50k–100k</li><li>HIGH &ndash; 100k–250k</li><li>VERY_HIGH &ndash; 250k+</li></ul> |
-|userName       |string<br/>`min=2 max=64`  |This is the user name that will be configured to access the merchant account in back office. It should belong to the same merchant.|
+|users          |enum                       |This a comma-separated list of users configured to have access to the merchant account in the back office ["user 1", "user 2", ...]. You can add users that have [already been created](#users) for this merchant account. **Note:** The maximum number of users that can be added using the Account Management API is 100.
+|amexMid        |string<br/>`length=10`     |This is the merchant's American Express ID. |
+|externalAccountId |string<br/>`length=36`  |This is the external account ID.|
 |merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor.|
+|tradingAddress     |[tradingAddress](#merchantaccounttradingaddressesobject) |This is the merchant's trading address.|
 |usAccountDetails   |[usAccountDetails](#usaccountdetailsobject) |These are the merchant account details.|
 |caAccountDetails   |[caAccountDetails](#caaccountdetailsobject)  |These are the merchant account details.|
 |euAccountDetails   |[euAccountDetails](#euaccountdetailsobject)  |These are the merchant account details.|
@@ -1009,8 +1012,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "url":"www.acmepc.ca",
   "phone":"5556668888",
   "email":"service@acmepc.ca",
-  "yearlyVolumeRange":"HIGH",
-  "userName":"Jane User"
+  "yearlyVolumeRange":"HIGH"
   }
 ```
 
@@ -1034,6 +1036,31 @@ The Paysafe Test environment can be used to test applications without actually r
   "state":"ON",
   "country":"CA",
   "zip":"M5H 2N2"
+}
+```
+
+<a name="merchantaccounttradingaddressesobject"></a>
+## Merchant Account Trading Address
+
+|Element                        |Type           |Description                        |
+|---                            |---            |---       |
+|id             |string<br/>`length<=36`        |This is the merchant account ID returned in the response.| 
+|street         |string<br/>`length<=50`        |This is the first line of the street address.|
+|street2        |string<br/>`length<=50`        |This is the second line of the street address, if required (e.g., apartment number).|
+|city           |string<br/>`length<=40`        |This is the city where address is located.|
+|state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
+|country        |string<br/>`length=2`          |This is the country of the merchant account address. See [Supported Country Codes](#supportedcountrycodes).|
+|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address.|
+|type           |string<br/>`length<=10`        |If this element is included and set to *TRADING*, the address provided is stored as the trading address for the merchant account. |
+
+```apib
+{
+  "street":"100 Queen Street West",
+  "city":"Toronto",
+  "state":"ON",
+  "country":"CA",
+  "zip":"M5H 2N2",
+  "type":"TRADING"
 }
 ```
 
@@ -1088,7 +1115,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |id                             |string<br/>`length<=36`    |This is the merchant's SEPA bank account ID returned in the response.|
-|beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#sepacountries) of the beneficiary's bank address.|
+|beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#sepacountries) of the beneficiary bank's address.|
 |beneficiaryAccountName         |string<br/>`length<=100`   |This is the beneficiary account name.|
 |swiftNumber                    |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account.|
 |ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account.|
@@ -1189,7 +1216,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |beneficiaryCity    |string<br/>`length<=100`   |This is the beneficiary's city.|
 |beneficiaryRegion  |string<br/>`length<=100`   |This is the beneficiary's region.|
 |beneficiaryPostCode    |string<br/>`length<=100`   |This is the beneficiary's post code.|
-|beneficiaryBankCountry |string<br/>`length=2`  |This is the [country](#countrycodes) of the beneficiary's bank address.|
+|beneficiaryBankCountry |string<br/>`length=2`  |This is the [country](#countrycodes) of the beneficiary bank's address.|
 |beneficiaryBankName    |string<br/>`length<=100`   |This is the name of the beneficiary's bank.|
 |beneficiaryBankAddress |string<br/>`length<=100`   |This is the street of the beneficiary's bank address.|
 |beneficiaryBankCity    |string<br/>`length<=100`   |This is the city of the beneficiary's bank.|
@@ -1911,6 +1938,7 @@ This is how you submit a merchant account creation request that includes the mer
     + Attributes
         + Include Merchant Account
         + Include Address Object
+        + Include Trading Address Object
         
     + Headers
     
@@ -1922,6 +1950,7 @@ This is how you submit a merchant account creation request that includes the mer
         + Include Links Merchant Account Create
         + Include Merchant Account Response
         + Include Address Object
+        + Include Trading Address Object        
 
 ## Update a Merchant Account - PUT [PUT /v1/accounts/{account_id}]
 
@@ -1936,7 +1965,7 @@ This is how you update a merchant account with a PUT request.
 + Request Merchant Account Update (application/json)    
 
     + Attributes
-        + Include Merchant Account
+        + Include Merchant Account Update
 
     + Headers
     
@@ -1946,7 +1975,7 @@ This is how you update a merchant account with a PUT request.
 
     + Attributes
         + Include Links Merchant Account
-        + Include Merchant Account Response            
+        + Include Merchant Account Update Response            
 
 ## Update a Merchant Account - Consolidated Call - PUT [PUT /v1/accounts/{account_id}?operationMode={operation_mode}]
 
@@ -1962,8 +1991,9 @@ This is how you update a merchant account and its associated merchant account ad
 + Request Merchant Account Update (application/json)    
 
     + Attributes
-        + Include Merchant Account
+        + Include Merchant Account Update
         + Include Address Object
+        + Include Trading Address Object
 
     + Headers
     
@@ -1973,8 +2003,9 @@ This is how you update a merchant account and its associated merchant account ad
 
     + Attributes
         + Include Links Merchant Account
-        + Include Merchant Account Response
-        + Include Address Object
+        + Include Merchant Account Update Response
+        + Include Address Consolidated        
+        + Include Address Trading Consolidated        
 
 ## Update a Merchant Account - PATCH [PATCH /v1/accounts/{account_id}]
 
@@ -1989,7 +2020,7 @@ This is how you update a merchant account with a PATCH request.
 + Request Merchant Account Update (application/json)    
 
     + Attributes
-        + Include Merchant Account
+        + Include Merchant Account Update
 
     + Headers
     
@@ -1999,7 +2030,7 @@ This is how you update a merchant account with a PATCH request.
 
     + Attributes
         + Include Links Merchant Account
-        + Include Merchant Account Response
+        + Include Merchant Account Update Response
 
 ## Update a Merchant Account - Consolidated - PATCH [PATCH /v1/accounts/{account_id}?operationMode={operation_mode}]
 
@@ -2015,8 +2046,9 @@ This is how you update a merchant account and its associated merchant account ad
 + Request Merchant Account Update (application/json)    
 
     + Attributes
-        + Include Merchant Account
+        + Include Merchant Account Update
         + Include Address Object
+        + Include Trading Address Object        
 
     + Headers
     
@@ -2026,8 +2058,9 @@ This is how you update a merchant account and its associated merchant account ad
 
     + Attributes
         + Include Links Merchant Account
-        + Include Merchant Account Response
-        + Include Address Object
+        + Include Merchant Account Update Response
+        + Include Address Consolidated        
+        + Include Address Trading Consolidated
 
 ## Look Up a Merchant Account [GET /v1/accounts/{account_id}]
 
@@ -2070,6 +2103,7 @@ This is how you look up a merchant account using the account ID returned in the 
         + Include Links Merchant Account Consolidated
         + Include Merchant Account Response
         + Include Address Consolidated
+        + Include Trading Address Consolidated        
         + Include EFT Bank Account Resource
         + Include Terms and Conditions Resource
         + Include Business Owners
@@ -2126,7 +2160,9 @@ This is how you look up a merchant account using the account ID returned in the 
 
 ## Create a Merchant Account Address [POST /v1/accounts/{account_id}/addresses]
 
-This is how you submit a merchant account creation request.
+This is how you submit a merchant account address creation request.
+
+**Note:** Each merchant account can have only one address associated with it, in addition to one trading address.
 
 + Parameters
 
@@ -2145,7 +2181,32 @@ This is how you submit a merchant account creation request.
 
     + Attributes
         + Include Links Addresses
+        + Include Response Base
         + Include Address
+
+## Create a Merchant Account Trading Address [POST /v1/accounts/{account_id}/addresses]
+
+**Note:** Each merchant account can have only one trading address associated with it, in addition to one regular address.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Merchant Account Address Creation (application/json)
+
+    + Attributes
+        + Include Address Trading
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Addresses
+        + Include Response Base        
+        + Include Address Trading Response
 
 ## Update a Merchant Account Address [PUT /v1/addresses/{address_id}]
 
@@ -2168,15 +2229,40 @@ This is how you update a merchant account address.
 
     + Attributes
         + Include Links Addresses
+        + Include Response Base
         + Include Address
 
-## Look Up a Merchant Account Address [GET /v1/addresses/{account_id}]
+## Update a Merchant Account Trading Address [PUT /v1/addresses/{address_id}]
+
+This is how you update a merchant account trading address.
+
++ Parameters
+
+    + address_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the address ID returned in the response to the merchant account creation request.
+
++ Request Merchant Update (application/json)
+
+    + Attributes
+        + Include Address Trading
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Addresses
+        + Include Response Base        
+        + Include Address Trading Response
+
+## Look Up a Merchant Account Address [GET /v1/addresses/{address_id}]
 
 This is how you look up a merchant account address.
 
 + Parameters
 
-    + account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the address ID returned in the response to the merchant account creation request.
+    + address_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the address ID returned in the response to the merchant account creation request.
 
 + Request Get Merchant (application/json)
 
@@ -2188,7 +2274,30 @@ This is how you look up a merchant account address.
 
     + Attributes
         + Include Links Addresses
+        + Include Response Base        
         + Include Address
+
+## Look Up a Merchant Account Trading Address [GET /v1/addresses/{address_id}?type={type}]
+
+This is how you look up a merchant account trading address.
+
++ Parameters
+
+    + address_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the address ID returned in the response to the merchant account creation request.
+    + type:`TRADING` (string, required)
+
++ Request Get Merchant (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Addresses
+        + Include Response Base        
+        + Include Address Trading Response
 
 # Business Owners [/businessowners]
 <a name="businessowners"></a>
@@ -2316,7 +2425,7 @@ This is how you update a Canadian business owner with a PUT request.
 
 + Parameters
 
-    + business_owner_id:`1000789670` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request Canadian Business Owner Update (application/json)
 
@@ -2342,7 +2451,7 @@ This is how you update a Canadian business owner with a PATCH request.
 
 + Parameters
 
-    + business_owner_id:`1000789670` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request Canadian Business Owner Update (application/json)
 
@@ -2368,7 +2477,7 @@ This is how you update a US business owner with a PUT request.
 
 + Parameters
 
-    + business_owner_id:`1000789670` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request US Business Owner Update (application/json)
 
@@ -2394,7 +2503,7 @@ This is how you update a US business owner with a PATCH request.
 
 + Parameters
 
-    + business_owner_id:`1000789670` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request US Business Owner Update (application/json)
 
@@ -2420,7 +2529,7 @@ This is how you update a European business owner with a PUT request.
 
 + Parameters
 
-    + business_owner_id:`1000789670` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request European Business Owner Update (application/json)
 
@@ -2446,7 +2555,7 @@ This is how you update a European business owner with a PATCH request.
 
 + Parameters
 
-    + business_owner_id:`1000789670` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request European Business Owner Update (application/json)
 
@@ -2476,7 +2585,7 @@ Depending on your jurisdiction, you can include the following:
 
 + Parameters
 
-    + business_owner_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
     + operation_mode:`consolidated` (string, required) - This indicates that you are including other eligible objects in this request.    
 
 + Request Business Owner Update (application/json)
@@ -2508,7 +2617,7 @@ This is how you look up a business owner. This example is for a Canadian busines
 
 + Parameters
 
-    + business_owner_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request Get Business Owner (application/json)
 
@@ -2529,7 +2638,7 @@ This is how you look up a business owner, along with other elements that are ass
 
 + Parameters
 
-    + business_owner_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
     + operation_mode:`consolidated` (string, required) - This indicates that you are looking up other eligible objects in this request.
 
 + Request Get Business Owner (application/json)
@@ -2555,7 +2664,7 @@ This is how you delete a business owner.
 
 + Parameters
 
-    + business_owner_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the business owner ID returned in the response to the creation request.
+    + business_owner_id:`5e3680da-cfac-4917-855a-181c8fe27751` (string, required) - This is the business owner ID returned in the response to the creation request.
 
 + Request Delete Business Owner (application/json)
 
@@ -3698,7 +3807,7 @@ This is how you submit a Terms and Conditions acceptance request.
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
 
-+ Request User Creation (application/json)
++ Request Accept Terms and Conditions (application/json)
 
     + Attributes
         + Include Terms and Conditions
@@ -3765,7 +3874,7 @@ This is how you look up the Terms and Conditions to view them in HTML format.
 
 ## Create a User [POST /v1/accounts/{account_id}/users]
 
-This is how you submit a user creation request.
+This is how you submit a user creation request. The user will be associated with the merchant account and have access to the Paysafe Merchant Back Office.
 
 + Parameters
 
@@ -3785,7 +3894,7 @@ This is how you submit a user creation request.
 
     + Attributes
         + Include Links Merchant Account
-        + Include User
+        + Include User Response
         + Include Recovery Question Response
 
 ## Look Up a User [GET /v1/accounts/{account_id}/users]
@@ -3796,7 +3905,7 @@ This is how you look up a user associated with the merchant account.
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
 
-+ Request Get Merchant Account (application/json)
++ Request Get User (application/json)
 
     + Headers
     
@@ -3806,7 +3915,7 @@ This is how you look up a user associated with the merchant account.
 
     + Attributes
         + Include Links User
-        + Include User Response
+        + Include User Lookup Response
 
 # Recovery Questions [/recoveryquestions]
 <a name="recoveryquestions"></a>
@@ -4090,7 +4199,9 @@ This is how you look up a microdeposit to view its status.
         + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
         + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
         + locale:`en_US` (string, optional) - This is the locale used for the merchant account.
-        + userName:`john_smith` (string, optional) - This is the user name that will be configured to access the merchant account in the Merchant Back Office.
+        + users: (array, optional) - This is a list of users that will have access the merchant account in the Merchant Back Office.
+            - User 1
+            - User 2
         + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
         + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
         + merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
@@ -4160,11 +4271,28 @@ This is how you look up a microdeposit to view its status.
 + country:`CA`
 + zip:`M5H 2N2`
 
+## Address Trading
++ street:`100 King Street West`
++ street2:`Suite 1200`
++ city:`Toronto`
++ state:`ON`
++ country:`CA`
++ zip:`M5H 2N2`
++ type:`TRADING`
+
+## Address Trading Response
++ street:`100 King Street West`
++ street2:`Suite 1200`
++ city:`Toronto`
++ state:`ON`
++ country:`CA`
++ zip:`M5H 2N2`
+
 ## Address Consolidated
 + address (object, optional) - This is the address.
 
     + Properties
-        + id:`8b670bf0-f218-4710-86a9-1b100206e1c1`
+        + id:`9b670bf0-f218-4710-86a9-1b100206e1c1`
         + street:`100 Queen Street West`
         + street2:`Apt. 245`
         + city:`Toronto`
@@ -4172,8 +4300,20 @@ This is how you look up a microdeposit to view its status.
         + country:`CA`
         + zip:`M5H 2N2`
 
+## Address Trading Consolidated
++ tradingAddress (object, optional) - This is the trading address.
+
+    + Properties
+        + id:`3b670bf0-f218-4710-86a9-1b100206e1c1`
+        + street:`100 King Street West`
+        + street2:`Suite 1200`
+        + city:`Toronto`
+        + state:`ON`
+        + country:`CA`
+        + zip:`M5H 2N2`
+
 ## BACS Bank Account
-+ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#bacscountries) of the beneficiary's bank address.
++ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#bacscountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
 + accountNumber:`94001521` (string, required) - This is the merchant's 8-digit bank account number.
 + sortCode:`857412` (string, required) - This is the 6-digit sort code of the merchant's bank account.
@@ -4553,7 +4693,9 @@ This is how you look up a microdeposit to view its status.
     - en_US
     - en_GB
     - fr_CA
-+ userName:`john_smith` (string, optional) - This is the user name that will be configured to access the merchant account in the Merchant Back Office.
++ users: (array, optional) - This is a list of users that will have access to the merchant account in the Merchant Back Office. Use this parameter if you want to add multiple users. Max = 100.
+    - User 1
+    - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
 + merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
@@ -4561,6 +4703,37 @@ This is how you look up a microdeposit to view its status.
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
     
+## Merchant Account Update
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ region:`CA` (enum, required) - This is the region for the merchant account.
+    - US
+    - CA
+    - EU
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ averageTransactionAmount:`9999` (string, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated [yearly volume](#merchantaccountobject) of the business.
+    - LOW
+    - MEDIUM
+    - HIGH
+    - VERY_HIGH
++ locale:`en_CA` (string, optional) - This is the locale used for the merchant account.
+    - en_CA
+    - en_US
+    - en_GB
+    - fr_CA
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
 ## Merchant Account Consolidated
 + name:`Mega Gym` (string, required) - This is the merchant name.
 + currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
@@ -4585,7 +4758,9 @@ This is how you look up a microdeposit to view its status.
     - en_US
     - en_GB
     - fr_CA
-+ userName:`john_smith` (string, optional) - This is the user name that will be configured to access the merchant account in the Merchant Back Office.
++ users: (array, optional) - This is a list of users that will have access to the merchant account in the Merchant Back Office. Use this parameter if you want to add multiple users. Max = 100.
+    - User 1
+    - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
 + merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
@@ -4618,7 +4793,41 @@ This is how you look up a microdeposit to view its status.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
 + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
 + locale:`en_US` (string, optional) - This is the locale used for the merchant account.
-+ userName:`john_smith` (string, optional) - This is the user name that will be configured to access the merchant account in the Merchant Back Office.
++ users: (array, optional) - This is a list of users that will be have access to the merchant account in the Merchant Back Office. Max = 100.
+    - User 1
+    - User 2
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
+## Merchant Account Update Response
++ id:`1000789670` (string, required) - This is the account ID returned in the response.
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ region:`CA` (enum, required) - This is the region for the merchant account.
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+    - APPROVED
+    - DEFERRED
+    - DISABLED
+    - ENABLED
+    - PENDING
+    - REJECTED
+    - RETURNED
+    - SUBMITTED
+    - WAITING
+    - WITHDRAWN
++ averageTransactionAmount:`9999` (string, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
++ locale:`en_US` (string, optional) - This is the locale used for the merchant account.
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
 + merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
@@ -4746,7 +4955,7 @@ This is how you look up a microdeposit to view its status.
 + ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
 
 ## SEPA Bank Account
-+ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary's bank address.
++ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
 + swiftNumber:`857412369` (string, required) - This is the swift number of the merchant's bank account.
 + ibanNumber:`94001521002421` (string, required) - This is the IBAN number of the merchant's bank account.
@@ -4778,6 +4987,29 @@ This is how you look up a microdeposit to view its status.
         + acceptanceDate:`2015-06-10T14:08:37Z` (string, required) - This is the date and time the terms and conditions were accepted.
         
 
+## Trading Address Object
++ tradingAddress (object, optional) - This is the address.
+
+    + Properties
+        + street:`100 King Street West`
+        + street2:`Suite 1200`
+        + city:`Toronto`
+        + state:`ON`
+        + country:`CA`
+        + zip:`M5H 2N2`
+
+## Trading Address Consolidated
++ tradingAddress (object, optional) - This is the address.
+
+    + Properties
+        + id:`8b670bf0-f218-4710-86a9-1b100206e1c1`
+        + street:`100 King Street West`
+        + street2:`Suite 1200`
+        + city:`Toronto`
+        + state:`ON`
+        + country:`CA`
+        + zip:`M5H 2N2`
+
 ## UK Driving License 
 + number:`SMITH411015R99AB` (string, required) - This is the driving license number
 + postCode:`BA133BN` (string, required) - This is the post code from the driving license. Ideally it should be the same as the business owner address.
@@ -4795,12 +5027,18 @@ This is how you look up a microdeposit to view its status.
     + Include Date Expiry
 
 ## User
-+ userName:`john_smith` (string, required) - This is the user name that will be configured to access the merchant account in the Merchant Back Office.
++ userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
 + password:`Pwd1234!` (string, required) - This is the password that the user will use to access the merchant account in the Merchant Back Office.
 + email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
 
 ## User Response
-+ userName:`john_smith` (string, required) - This is the user name that will be configured to access the merchant account in the Merchant Back Office.
++ userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
++ password:`********` (string, required) - This is the password that the user will use to access the merchant account in the Merchant Back Office.
++ email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
+
+## User Lookup Response
++ userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
++ email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
 
 ## Wire Bank Account
 + accountNumber:`6358555211214` (string, required) - This is the merchant's bank account number.
@@ -4814,7 +5052,7 @@ This is how you look up a microdeposit to view its status.
 + beneficiaryCity:`London` (string, required) - This is the beneficiary's city.
 + beneficiaryRegion:`London` (string, required) - This is the beneficiary's region, state, or province.
 + beneficiaryPostCode:`E15 1AA` (string, required) - This is the beneficiary's post code.
-+ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's bank address.
++ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary bank's address.
 + beneficiaryBankName:`First Royal` (string, required) - This is the name of the beneficiary's bank.
 + beneficiaryBankAddress:`12 Field Rd.` (string, required) - This is the street of the beneficiary's bank address.
 + beneficiaryBankCity:`London` (string, required) - This is the city of the beneficiary's bank.
