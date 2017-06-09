@@ -60,9 +60,6 @@ For example:
 
 In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters as follows:
 
-## Query Parameters for Pagination
-
-
 | Name      | Description                                                                           |
 |-----------|---------------------------------------------------------------------------------------|
 | limit     | This is the total number of records to  return. Default value is 10. Max value is 50. |
@@ -105,11 +102,7 @@ The following request types are supported:
   * [Business Owner UK Driving Licenses](#ukdrivinglicenses)
   * [Business Owner European Identity Cards](#identitycards)
   * [Business Owner International Passports](#internationalpassports)
-  * [Merchant EFT Bank Accounts](#eftbankaccounts)
-  * [Merchant ACH Bank Accounts](#achbankaccounts)
-  * [Merchant BACS Bank Accounts](#bacsbankaccounts)
-  * [Merchant SEPA Bank Accounts](#sepabankaccounts)
-  * [Merchant Wire Bank Accounts](#wirebankaccounts)
+  * [Merchant Bank Accounts](#merchantbankaccounts)
   * [Terms and Conditions](#termsandconditions)
   * [Identity Verification](#identity)  
   * [Merchant Account Activation](#accountactivation)
@@ -163,31 +156,14 @@ The following request types are supported:
 |/internationalpassports/{document_id}          |Update a Business Owner International Passport |PUT    |
 |/internationalpassports/{document_id}          |Look Up the Business Owner International Passport  |GET    |
 |/internationalpassports/{business_owner_id}    |Delete a Business Owner International Passport |DELETE |
-|/accounts/{account_id}/eftbankaccounts         |Create an EFT Merchant Bank Account    |POST   |
-|/accounts/{account_id}/eftbankaccounts/{bank_account_id}   |Update an EFT Merchant Bank Account    |PUT    |
-|/accounts/{account_id}/eftbankaccounts/{bank_account_id}   |Look Up an EFT Merchant Bank Account   |GET    |
-|/accounts/{account_id}/eftbankaccounts/{bank_account_id}   |Delete an EFT Merchant Bank Account    |DELETE |
-|/accounts/{account_id}/achbankaccounts         |Create an ACH Merchant Bank Account    |POST   |
-|/accounts/{account_id}/achbankaccounts/{bank_account_id}   |Update an ACH Merchant Bank Account    |PUT    |
-|/accounts/{account_id}/achbankaccounts/{bank_account_id}   |Look Up an ACH Merchant Bank Account   |GET    |
-|/accounts/{account_id}/achbankaccounts/{bank_account_id}   |Delete an ACH Merchant Bank Account    |DELETE |
-|/accounts/{account_id}/bacsbankaccounts         |Create a BACS Merchant Bank Account    |POST   |
-|/accounts/{account_id}/bacsbankaccounts/{bank_account_id}   |Update a BACS Merchant Bank Account    |PUT    |
-|/accounts/{account_id}/bacsbankaccounts/{bank_account_id}   |Look Up a BACS Merchant Bank Account   |GET    |
-|/accounts/{account_id}/bacsbankaccounts/{bank_account_id}   |Delete a BACS Merchant Bank Account    |DELETE |
-|/accounts/{account_id}/sepabankaccounts         |Create a SEPA Merchant Bank Account    |POST   |
-|/accounts/{account_id}/sepabankaccounts/{bank_account_id}   |Update a SEPA Merchant Bank Account    |PUT    |
-|/accounts/{account_id}/sepabankaccounts/{bank_account_id}   |Look Up a SEPA Merchant Bank Account   |GET    |
-|/accounts/{account_id}/sepabankaccounts/{bank_account_id}   |Delete a SEPA Merchant Bank Account    |DELETE |
-|/accounts/{account_id}/wirebankaccounts         |Create a Wire Merchant Bank Account    |POST   |
-|/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Update a Wire Merchant Bank Account    |PUT    |
-|/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Look Up a Wire Merchant Bank Account   |GET    |
-|/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Delete a Wire Merchant Bank Account    |DELETE |
+|/accounts/{account_id}/bankaccounts            |Create a Merchant Bank Account                 |POST   |
+|/accounts/{account_id}/bankaccounts/{bank_account_id}   |Update a Merchant Bank Account    |PUT    |
+|/accounts/{account_id}/bankaccounts/{bank_account_id}   |Look Up a Merchant Bank Account   |GET    |
+|/accounts/{account_id}/bankaccounts/{bank_account_id}   |Delete a Merchant Bank Account    |DELETE |
 |/accounts/{account_id}/termsandconditions      |Accept the Terms and Conditions        |POST   |
 |/accounts/{account_id}/identity                 |Associate an Identity ID to a Merchant Account |POST   |
 |/accounts/{account_id}/activation              |Activate a Merchant Account            |POST   |
-|/achbankaccounts/{bank_account_id}/microdeposits |Validate an ACH Bank Account         |POST   |
-|/eftbankaccounts/{bank_account_id}/microdeposits |Validate an EFT Bank Account         |POST   |
+|/bankaccounts/{bank_account_id}/microdeposits |Validate a Bank Account         |POST   |
 |/microdeposits/{micro_deposit_id}      |Look Up a Microdeposit |GET    |
 |/microdeposits/{micro_deposit_id}/validate |Validate a Bank Microdeposit   |POST   |
 
@@ -641,39 +617,38 @@ The Paysafe Test environment can be used to test applications without actually r
 
 # Complex JSON Objects
 
-<a name="achbankaccountobject"></a>
-## ACH Bank Account
+<a name="bankaccountobject"></a>
+## Bank Account
+
+See [Bank Account Attributes Required](#bankaccountattributes) for information on which attributes are Required, Optional, and Conditional when creating each of the bank account types.
 
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's ACH bank account ID returned in the response.|
-|accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
-|routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
+|id                             |string<br/>`length<=36`    |This is the merchant's bank account ID returned in the response.|
+|accountNumber                  |string<br/>`length<=20`<br/>For [Wire](#bankaccountattributes) only `length=2-30`  |This is the merchant's bank account number.|
+|routingNumber                  |string<br/>`length=9`<br/>For [Wire](#bankaccountattributes) only `length<=12`      |This is the 9-digit routing number of the merchant's bank account.|
+|beneficiaryAccountName         |string<br/>`length<=100`<br/>For [Wire](#bankaccountattributes) only `length<=250`  |This is the beneficiary account name.|
+|sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
+|transitNumber                  |string<br/>`length=5`      |This is the 5-digit transit number of the merchant's bank branch.|
+|institutionId                  |string<br/>`length=3`      |This is the 3-digit institution ID of the merchant's bank branch.|
+|swiftNumber                    |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account.|
+|ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account.|
+|beneficiaryCountry             |string<br/>`length=2`      |This is the country of the beneficiary's address. See [Country Codes](#countrycodes).
+|beneficiaryAddress             |string<br/>`length<=100`   |This is the beneficiary's address.|
+|beneficiaryCity                |string<br/>`length<=100`   |This is the beneficiary's city.|
+|beneficiaryRegion              |string<br/>`length<=100`   |This is the beneficiary's region.|
+|beneficiaryPostCode            |string<br/>`length<=100`   |This is the beneficiary's post code.|
+|beneficiaryBankName            |string<br/>`length<=100`   |This is the name of the beneficiary's bank.|
+|beneficiaryBankAddress         |string<br/>`length<=100`   |This is the street of the beneficiary's bank address.|
+|beneficiaryBankCity            |string<br/>`length<=100`   |This is the city of the beneficiary's bank address.|
+|beneficiaryBankRegion          |string<br/>`length<=100`   |This is the region of the beneficiary's bank address. |
+|beneficiaryBankPostCode        |string<br/>`length<=100`   |This is the post code of the beneficiary's bank address.|
+|beneficiaryBankCountry         |string<br/>`length=2`      |This is the country of the beneficiary's bank address.|
 
 ```apib
 {
   "accountNumber": "5807560412853954",
   "transitNumber" : "854117563"
-}
-```
-
-<a name="bacsbankaccountobject"></a>
-## BACS Bank Account
-
-|Element                        |Type                       |Description                        |
-|---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's BACS bank account ID returned in the response.|
-|beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary bank's address.|
-|beneficiaryAccountName         |string<br/>`length<=100`   |This is the beneficiary account name.|
-|accountNumber                  |string<br/>`length=8`      |This is the merchant's 8-digit bank account number.|
-|sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
-
-```apib
-{
-  "sortCode":"857412",
-  "accountNumber":"94001521",
-  "beneficiaryAccountName":"Pmparapspd",
-  "beneficiaryBankCountry":"GB"
 }
 ```
 
@@ -695,6 +670,23 @@ The Paysafe Test environment can be used to test applications without actually r
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
 |gender         |enum                           |This is the gender of the business owner. **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
 |percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.  **Note:** This is used for European business owners only.|
+
+```apib
+{
+    "firstName":"James",
+    "middleName":"Robert", 
+    "lastName":"Ronald", 
+    "email":"jamesr@email.com",
+    "jobTitle":"CEO",
+    "phone":"5556667777",
+    "dateOfBirth": {
+      "day":"24",
+      "month":"10",
+      "year":"1981"
+      },
+      "ssn":"999888777"
+}
+```
 
 ## Business Owner Addresses
 <a name="businessowneraddressesobject"></a>
@@ -882,24 +874,6 @@ The Paysafe Test environment can be used to test applications without actually r
   "day":"24",
   "month":"10",
   "year":"1981"
-}
-```
-
-<a name="eftbankaccountobject"></a>
-## EFT Bank Account
-
-|Element                        |Type                       |Description                        |
-|---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's EFT bank account ID returned in the response.|
-|accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
-|transitNumber                  |string<br/>`length=5`      |This is the 5-digit transit number of the merchant's bank branch.|
-|institutionId                  |string<br/>`length=3`      |This is the 3-digit institution ID of the merchant's bank branch.|
-
-```apib
-{
-  "accountNumber": "5807560412853954",
-  "transitNumber" : "52487",
-  "institutionId" : "052"
 }
 ```
 
@@ -1109,26 +1083,6 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="sepabankaccountobject"></a>
-## SEPA Bank Account
-
-|Element                        |Type                       |Description                        |
-|---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's SEPA bank account ID returned in the response.|
-|beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#sepacountries) of the beneficiary bank's address.|
-|beneficiaryAccountName         |string<br/>`length<=100`   |This is the beneficiary account name.|
-|swiftNumber                    |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account.|
-|ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account.|
-
-```apib
-{
-  "swiftNumber":"85741236",
-  "ibanNumber":"940015210024214",
-  "beneficiaryAccountName":"SwiftBankAccountName",
-  "beneficiaryBankCountry":"GB"
-}
-```
-
 <a name="termsandconditionsobject"></a>
 ## Terms and Conditions
 
@@ -1199,51 +1153,6 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="wirebankaccountobject"></a>
-## Wire Bank Accounts
-
-|Element            |Type                       |Description                        |
-|---                |---                        |---    |
-|id                 |string<br/>`length<=36`    |This is the merchant's wire bank account ID returned in the response.|
-|accountNumber      |string<br/>`length=2-30`   |This is the merchant's bank account number.|
-|routingNumber      |string<br/>`length=1-12`   |This is the routing number of the merchant's bank account.|
-|sortCode           |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
-|swiftNumber        |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account.|
-|ibanNumber         |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account.|
-|beneficiaryCountry |string<br/>`length=2`      |This is the country of the beneficiary's address. See [Country Codes](#countrycodes).
-|beneficiaryAccountName |string<br/>`length<=100`    |This is the beneficiary account name.|
-|beneficiaryAddress |string<br/>`length<=100`    |This is the beneficiary's address.|
-|beneficiaryCity    |string<br/>`length<=100`   |This is the beneficiary's city.|
-|beneficiaryRegion  |string<br/>`length<=100`   |This is the beneficiary's region.|
-|beneficiaryPostCode    |string<br/>`length<=100`   |This is the beneficiary's post code.|
-|beneficiaryBankCountry |string<br/>`length=2`  |This is the [country](#countrycodes) of the beneficiary bank's address.|
-|beneficiaryBankName    |string<br/>`length<=100`   |This is the name of the beneficiary's bank.|
-|beneficiaryBankAddress |string<br/>`length<=100`   |This is the street of the beneficiary's bank address.|
-|beneficiaryBankCity    |string<br/>`length<=100`   |This is the city of the beneficiary's bank.|
-|beneficiaryBankRegion  |string<br/>`length<=100`   |This is the region of the beneficiary's bank. |
-|beneficiaryBankPostCode    |string<br/>`length<=100`   |This is the post code of the beneficiary's bank.|
-
-```apib
-{
-  "accountNumber": "6358555211214",
-  "beneficiaryCountry" : "DE",
-  "beneficiaryAccountName" : "GER Test Account 2",
-  "beneficiaryAddress" : "AV. Frankfurt 1",
-  "beneficiaryCity" : "Munich",
-  "beneficiaryRegion" : "Munich",
-  "beneficiaryPostCode" : "02002",
-  "beneficiaryBankCountry" : "DE",
-  "beneficiaryBankName" : "GER Bank 2",
-  "beneficiaryBankAddress" : "Av. Colonia 1",
-  "beneficiaryBankCity" : "Dortmund",
-  "beneficiaryBankRegion" : "Dortmund",
-  "beneficiaryBankPostCode" : "02003",
-  "swiftNumber" : "85774412",
-  "routingNumber" : "328514",
-  "ibanNumber" : "558541"
-}
-```
-
 # Error Summary
 
 Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/test-and-go-live/account-management-errors/) for a summary and description of errors you might encounter using the Account Management API.
@@ -1257,16 +1166,46 @@ Click [here](https://developer.paysafe.com/en/rest-api/partners/account-manageme
 |---        |---    |
 |United Kingdom |GB |
 
+## Bank Account Attributes Required
+<a name="bankaccountattributes"></a>
+
+This table displays the attributes that are Required, Optional, and Conditional when creating each of the five [bank account types](#bankaccounttypes). See the [Bank Account object](#bankaccountobject) for a description of the attributes listed in this table.
+
+| Element                 | EFT      | ACH      | SEPA     | BACS     | Wire        |
+|-------------------------|----------|----------|----------|----------|-------------|
+| accountNumber           | Required |Required  |          |Required  |Required     |
+| transitNumber           | Required |          |          |          |             |
+| institutionId           | Required |          |          |          |             |
+| routingNumber           |          | Required |          |          | Optional    |
+| accountNumber           |          | Required | Optional | Required | Required    |
+| swiftNumber             |          |          | Required |          | Required    |
+| ibanNumber              |          |          | Required |          | Conditional*|
+| beneficiaryCountry      |          |          |          |          | Required    |
+| beneficiaryAccountName  |          |          | Required | Required | Required    |
+| beneficiaryAddress      |          |          |          |          | Required    |
+| beneficiaryCity         |          |          |          |          | Required    |
+| beneficiaryRegion       |          |          |          |          | Required    |
+| beneficiaryPostCode     |          |          |          |          | Required    |
+| beneficiaryBankCountry  |          |          | Required | Required | Required    |
+| beneficiaryBankName     |          |          |          |          | Required    |
+| beneficiaryBankAddress  |          |          |          |          | Required    |
+| beneficiaryBankCity     |          |          |          |          | Required    |
+| beneficiaryBankRegion   |          |          |          |          | Required    |
+| beneficiaryBankPostCode |          |          |          |          | Required    |
+| sortCode                |          |          |          | Required | Optional    |
+
+\* The *ibanNumber* field is required for Wire bank accounts when the *beneficiaryBankCountry* is within our list of [countries supported for SEPA](#sepacountries).
+
 ## Bank Account Types Required
 <a name="bankaccounttypes"></a>
 
 |Region     |Currency   |Bank Country   |Required Bank Account Type |
 |---        |---        |---            |---    |
-|CA         |Any        |CA             |[EFT](#eftbankaccountobject)    |
-|US         |Any        |US             |[ACH](#achbankaccountobject)    |
-|EU         |EUR        |Within [SEPA country](#sepacountries) list   |[SEPA](#sepabankaccountobject)|
-|EU         |GBP        |GB             |[BACS](#bacsbankaccountobject)   |
-|EU         |Not covered by other EU options    |Not covered by other EU options    |[WIRE](#wirebankaccountobject)|
+|CA         |Any        |CA             |[EFT](#bankaccountattributes)    |
+|US         |Any        |US             |[ACH](#bankaccountattributes)    |
+|EU         |EUR        |Within [SEPA country](#sepacountries) list   |[SEPA](#bankaccountattributes)|
+|EU         |GBP        |GB             |[BACS](#bankaccountattributes)   |
+|EU         |Not covered by other EU options    |Not covered by other EU options    |[WIRE](#bankaccountattributes)|
 
 ## Business Type Codes
 <a name="businesstypecodes"></a>
@@ -2185,6 +2124,8 @@ This is how you submit a merchant account address creation request.
         + Include Address
 
 ## Create a Merchant Account Trading Address [POST /v1/accounts/{account_id}/addresses]
+
+This is how you submit a merchant account trading address creation request.
 
 **Note:** Each merchant account can have only one trading address associated with it, in addition to one regular address.
 
@@ -3245,12 +3186,303 @@ This is how you delete a business owner international passport.
 
 + Response 200 (application/json)
 
-# Merchant Bank Account Details [/bankaccounts]
-<a name="/bankaccounts"></a>
+# Merchant Bank Accounts [/bankaccounts]
+<a name="merchantbankaccounts"></a>
+
+See the [bank account object](#bankaccountobject) for a description of the elements used in the bank account creation requests. These will vary depending on the [type of bank account](#bankaccountattributes) you are creating.
+
+**Note:** The merchant bank account is related directly with the [merchant account](#merchantaccounts) entity, and not with the [merchant](#merchants) entity, since a merchant entity can have multiple merchant accounts assigned to it.
+
+## Create a Merchant ACH Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
+
+This is how you create a merchant ACH bank account that will be associated with the merchant account.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Merchant Bank Account Creation (application/json)
+
+    + Attributes
+        + Include Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include ACH Bank Account
+
+## Create a Merchant BACS Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
+
+This is how you create a merchant BACS bank account that will be associated with the merchant account.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Merchant BACS Bank Account Creation (application/json)
+
+    + Attributes
+        + Include BACS Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include BACS Bank Account
+
+## Create a Merchant EFT Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
+
+This is how you create a merchant EFT bank account that will be associated with the merchant account.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Merchant EFT Bank Account Creation (application/json)
+
+    + Attributes
+        + Include EFT Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include EFT Bank Account
+
+## Create a Merchant SEPA Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
+
+This is how you create a merchant SEPA bank account that will be associated with the merchant account.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Merchant SEPA Bank Account Creation (application/json)
+
+    + Attributes
+        + Include SEPA Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include SEPA Bank Account
+
+## Create a Merchant Wire Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
+
+This is how you create a merchant Wire bank account that will be associated with the merchant account.
+
+**Note:** Paysafe supports three currency/bank combinations for **EU-region** merchants.
+
+|Currency |  Beneficiary Bank Country    | Bank Account Type |
+|---        |---                            |---        |
+|EUR        |[SEPA Countries](#sepacountries)   |Must Be SEPA Bank Account |
+|GBP        |United Kingdom                     |Must Be BACS Bank Account |
+|All Others |All Others                         |Must Be Wire Bank Account |
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Merchant Wire Bank Account Creation (application/json)
+
+    + Attributes
+        + Include Wire Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include Wire Bank Account
+
+## Update a Merchant ACH Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
+
+This is how you update a merchant ACH bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Merchant Bank Account Update (application/json)
+
+    + Attributes
+        + Include Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include ACH Bank Account
+
+## Update a Merchant BACS Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
+
+This is how you update a merchant BACS bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
+
++ Request Merchant BACS Bank Account Update (application/json)
+
+    + Attributes
+        + Include BACS Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include BACS Bank Account
+
+## Update a Merchant EFT Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
+
+This is how you update a merchant EFT bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
+
++ Request Merchant EFT Bank Account Update (application/json)
+
+    + Attributes
+        + Include EFT Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include EFT Bank Account
+
+## Update a Merchant SEPA Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
+
+This is how you update a merchant SEPA bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
+
++ Request Merchant SEPA Bank Account Update (application/json)
+
+    + Attributes
+        + Include SEPA Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include SEPA Bank Account
+
+## Update a Merchant Wire Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
+
+This is how you update a merchant Wire bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+
+**Note:** While doing an update via a PUT operation, you must provide all the elements of the bank account that you want to update. Elements not included will be removed from the resulting bank account.
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
+
++ Request Merchant Wire Bank Account Update (application/json)
+
+    + Attributes
+        + Include Wire Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include Wire Bank Account
+
+## Look Up a Merchant Bank Account [GET /v1/bankaccounts/{bank_account_id}]
+
+This is how you look up a merchant bank account. This is an example for an ACH bank account. See the [bank account object](#bankaccountobject) for a description of the elements that could be returned in the response for the different bank schemes. 
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Get Merchant Bank Account (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Bank Accounts
+        + Include Response Base
+        + Include ACH Bank Account
+
+## Delete a Merchant Bank Account [DELETE /v1/bankaccounts/{bank_account_id}]
+
+This is how you delete a merchant bank account. 
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Delete Merchant Bank Account (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
 
 ## Look Up Required Bank Account Details [GET /v1/bankaccounts/metadata?country={country_id}&region={region_id}&currency={currency_id}]
 
-Merchant accounts require different bank account information, depending on various factors, including the region, country, and currency. This is how you look up the banking information required when you add a bank account to a merchant account. 
+Merchant accounts require different [bank account information](#bankaccountattributes), depending on various factors, including the region, country, and currency. This is how you look up the banking information required when you add a bank account to a merchant account. 
 
 + Parameters
 
@@ -3334,467 +3566,6 @@ Merchant accounts require different bank account information, depending on vario
             + (object)
                 + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
                 + href:`https://api.test.paysafe.com/accountmanagement/v1/bankaccounts/metadata` (string, required) - This is the URI of the resource.
-
-
-# Merchant ACH Bank Account [/achbankaccounts]
-<a name="/achbankaccounts"></a>
-
-## Create a Merchant ACH Bank Account [POST /v1/accounts/{account_id}/achbankaccounts]
-
-This is how you create a merchant ACH bank account. 
-
-**Note:** The merchant ACH bank account is related directly with the [merchant account](#merchantaccounts) entity, and not with the [merchant](#merchants) entity, since a merchant entity can have multiple merchant accounts assigned to it.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Merchant ACH Bank Account Creation (application/json)
-
-    + Attributes
-        + Include ACH Bank Account
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links ACH Bank Accounts
-        + Include Response Base
-        + Include ACH Bank Account
-
-## Update a Merchant ACH Bank Account [PUT /v1/achbankaccounts/{bank_account_id}]
-
-This is how you update a merchant ACH bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Merchant ACH Bank Account Update (application/json)
-
-    + Attributes
-        + Include ACH Bank Account
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links ACH Bank Accounts
-        + Include Response Base
-        + Include ACH Bank Account
-
-## Look Up a Merchant ACH Bank Account [GET /v1/achbankaccounts/{bank_account_id}]
-
-This is how you look up a merchant ACH bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Get Merchant ACH Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links ACH Bank Accounts
-        + Include Response Base
-        + Include ACH Bank Account
-
-## Delete a Merchant ACH Bank Account [DELETE /v1/achbankaccounts/{bank_account_id}]
-
-This is how you delete a merchant ACH bank account. 
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Delete Merchant ACH Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-# Merchant BACS Bank Account [/bacsbankaccounts]
-<a name="/bacsbankaccounts"></a>
-
-## Create a Merchant BACS Bank Account [POST /v1/accounts/{account_id}/bacsbankaccounts]
-
-This is how you create a merchant BACS bank account. 
-
-**Note:** The merchant BACS bank account is related directly with the [merchant account](#merchantaccounts) entity, and not with the [merchant](#merchants) entity, since a merchant entity can have multiple merchant accounts assigned to it.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Merchant BACS Bank Account Creation (application/json)
-
-    + Attributes
-        + Include BACS Bank Account
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links BACS Bank Accounts
-        + Include Response Base
-        + Include BACS Bank Account
-
-## Update a Merchant BACS Bank Account [PUT /v1/bacsbankaccounts/{bank_account_id}]
-
-This is how you update a merchant BACS bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Merchant BACS Bank Account Update (application/json)
-
-    + Attributes
-        + Include BACS Bank Account
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links BACS Bank Accounts
-        + Include Response Base
-        + Include BACS Bank Account
-
-## Look Up a Merchant BACS Bank Account [GET /v1/bacsbankaccounts/{bank_account_id}]
-
-This is how you look up a merchant BACS bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Get Merchant BACS Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links BACS Bank Accounts
-        + Include Response Base
-        + Include BACS Bank Account
-
-## Delete a Merchant BACS Bank Account [DELETE /v1/bacsbankaccounts/{bank_account_id}]
-
-This is how you delete a merchant BACS bank account. 
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Delete Merchant BACS Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-# Merchant EFT Bank Account [/eftbankaccounts]
-<a name="/eftbankaccounts"></a>
-
-## Create a Merchant EFT Bank Account [POST /v1/accounts/{account_id}/eftbankaccounts]
-
-This is how you create a merchant EFT bank account. 
-
-**Note:** The merchant EFT bank account is related directly with the [merchant account](#merchantaccounts) entity, and not with the [merchant](#merchants) entity, since a merchant entity can have multiple merchant accounts assigned to it.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Merchant EFT Bank Account Creation (application/json)
-
-    + Attributes
-        + Include EFT Bank Account
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links EFT Bank Accounts
-        + Include Response Base
-        + Include EFT Bank Account
-
-## Update a Merchant EFT Bank Account [PUT /v1/eftbankaccounts/{bank_account_id}]
-
-This is how you update a merchant EFT bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Merchant EFT Bank Account Update (application/json)
-
-    + Attributes
-        + Include EFT Bank Account
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links EFT Bank Accounts
-        + Include Response Base
-        + Include EFT Bank Account
-
-## Look Up a Merchant EFT Bank Account [GET /v1/eftbankaccounts/{bank_account_id}]
-
-This is how you look up a merchant EFT bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Get Merchant EFT Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links EFT Bank Accounts
-        + Include Response Base
-        + Include EFT Bank Account
-
-## Delete a Merchant EFT Bank Account [DELETE /v1/eftbankaccounts/{bank_account_id}]
-
-This is how you delete a merchant EFT bank account. 
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Delete Merchant EFT Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-# Merchant SEPA Bank Account [/sepabankaccounts]
-<a name="/sepabankaccounts"></a>
-
-## Create a Merchant SEPA Bank Account [POST /v1/accounts/{account_id}/sepabankaccounts]
-
-This is how you create a merchant SEPA bank account.
-
-**Note:** The merchant SEPA bank account is related directly with the [merchant account](#merchantaccounts) entity, and not with the [merchant](#merchants) entity, since a merchant entity can have multiple merchant accounts assigned to it.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Merchant SEPA Bank Account Creation (application/json)
-
-    + Attributes
-        + Include SEPA Bank Account
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links SEPA Bank Accounts
-        + Include Response Base
-        + Include SEPA Bank Account
-
-## Update a Merchant SEPA Bank Account [PUT /v1/sepabankaccounts/{bank_account_id}]
-
-This is how you update a merchant SEPA bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Merchant SEPA Bank Account Update (application/json)
-
-    + Attributes
-        + Include SEPA Bank Account
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links SEPA Bank Accounts
-        + Include Response Base
-        + Include SEPA Bank Account
-
-## Look Up a Merchant SEPA Bank Account [GET /v1/sepabankaccounts/{bank_account_id}]
-
-This is how you look up a merchant SEPA bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Get Merchant SEPA Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links SEPA Bank Accounts
-        + Include Response Base
-        + Include SEPA Bank Account
-
-## Delete a Merchant SEPA Bank Account [DELETE /v1/sepabankaccounts/{bank_account_id}]
-
-This is how you delete a merchant SEPA bank account. 
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Delete Merchant SEPA Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-# Merchant Wire Bank Account [/wirebankaccounts]
-<a name="/wirebankaccounts"></a>
-
-Paysafe supports three currency/bank combinations for EU-region merchants.
-
-|Currency |  Beneficiary Bank Country    | Bank Account Type |
-|---        |---                            |---        |
-|EUR        |[SEPA Countries](#sepacountries)   |Must Be [SEPA](#sepabankaccounts) Bank Account |
-|GBP        |United Kingdom                     |Must Be [BACS](#bacsbankaccounts) Bank Account |
-|All Others |All Others                         |Must Be Wire Bank Account                       |
-
-## Create a Merchant Wire Bank Account [POST /v1/accounts/{account_id}/wirebankaccounts]
-
-This is how you create a merchant Wire bank account.
-
-**Note:** The merchant Wire bank account is related directly with the [merchant account](#merchantaccounts) entity, and not with the [merchant](#merchants) entity, since a merchant entity can have multiple merchant accounts assigned to it.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Merchant Wire Bank Account Creation (application/json)
-
-    + Attributes
-        + Include Wire Bank Account
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links Wire Bank Accounts
-        + Include Response Base
-        + Include Wire Bank Account
-
-## Update a Merchant Wire Bank Account [PUT /v1/wirebankaccounts/{bank_account_id}]
-
-This is how you update a merchant Wire bank account. 
-
-**Note:** While doing an update via a PUT operation, you must provide all the elements of the bank account that you want to update. Elements not included will be removed from the resulting bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Merchant Wire Bank Account Update (application/json)
-
-    + Attributes
-        + Include Wire Bank Account
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links Wire Bank Accounts
-        + Include Response Base
-        + Include Wire Bank Account
-
-## Look Up a Merchant Wire Bank Account [GET /v1/wirebankaccounts/{bank_account_id}]
-
-This is how you look up a merchant Wire bank account.
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Get Merchant Wire Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Links Wire Bank Accounts
-        + Include Response Base
-        + Include Wire Bank Account
-
-## Delete a Merchant Wire Bank Account [DELETE /v1/wirebankaccounts/{bank_account_id}]
-
-This is how you delete a merchant Wire bank account. 
-
-+ Parameters
-
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
-
-+ Request Delete Merchant Wire Bank Account (application/json)
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
 
 # Terms and Conditions [/termsandconditions]
 <a name="termsandconditions"></a>
@@ -3994,6 +3765,8 @@ This is how you submit a merchant account identity verification request.
 
 This is how you submit a merchant account activation request.
 
+**Note:** When the merchant account is successfully activated, Paysafe sends a confirmation email to the email address that was included in the [user creation](https://developer.paysafe.com/en/partners/accounts/api/#/reference/0/users/create-a-user) request.
+
 + Parameters
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
@@ -4029,14 +3802,17 @@ For microdeposits, Paysafe will attempt to make a small deposit between 0.01 and
 
 **Note:** If the microdeposit validation method fails for some reason, then the merchant must use one of the alternative validation methods.
 
-## Create a Microdeposit [POST /v1/{bank_scheme}/{bank_account_id}/microdeposits]
+## Create a Microdeposit [POST /v1/bankaccounts/{bank_account_id}/microdeposits]
 
-This is how you create a microdeposit request for an EFT bank account. For microdeposits for the various bank schemes, use one of the following as the value for *bank_scheme* in the request:<ul><li>achbankaccounts</li><li>eftbankaccounts</li></ul>
+This is how you create a microdeposit request for an ACH (U.S.) or EFT (Canadian) bank account.
+
+**Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/partners/accounts/api/#/reference/0/users/create-a-user) request.
+
+You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
 
 + Parameters
 
-    + bank_scheme:`eftbankaccounts`(string, required) - This is the bank scheme for which you are creating the microdeposit.
-    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the creation request.
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
 
 + Request Create Microdeposit (application/json)
 
@@ -4052,17 +3828,17 @@ This is how you create a microdeposit request for an EFT bank account. For micro
 + Response 200 (application/json)
 
     + Attributes
-        + Include Links Microdeposits
+        + bLinks Microdeposits
         + Include Response Base
         + Include Microdeposit Response
 
 ## Validate a Microdeposit [POST /v1/microdeposits/{microdeposit_id}/validate]
 
+This is how you create a microdeposit validation request.
+
 As a result of a successful microdeposit request, a small deposit (between .01 and .99 of the currency of that account) is made to the bank account. To validate the microdeposit, you must send a microdeposit validation request that contains the exact amount of the microdeposit in the applicant's bank account. This verifies that the applicant is the owner of the bank account associated with the merchant account, and that the banking information provided is accurate.
 
 **Warning:** Only three attempts are permitted for submitting the microdeposit amount. After three failed attempts, the validation is considered as having failed.
-
-This is how you create a microdeposit validation request. 
 
 + Parameters
 
@@ -4100,7 +3876,7 @@ This is how you look up a microdeposit to view its status.
 <li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
 <li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
 <li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
-</ul>dd
+</ul>
 
 + Parameters
 
@@ -4317,6 +4093,10 @@ This is how you look up a microdeposit to view its status.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
 + accountNumber:`94001521` (string, required) - This is the merchant's 8-digit bank account number.
 + sortCode:`857412` (string, required) - This is the 6-digit sort code of the merchant's bank account.
+
+## Bank Account
++ accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
++ routingNumber:`854117563` (string, required) - This is the 9-digit routing number of the merchant's bank account.
 
 ## Bank Account Lookup Response
 + bankType:`WIRE` (string, required) - This is the bank account type to register with the merchant account.
@@ -4547,6 +4327,12 @@ This is how you look up a microdeposit to view its status.
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/bacsbankaccounts/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
+
+## Links Bank Accounts
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/bankaccounts/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
 
 ## Links Business Owners
 + links (array, required) - This is an array of [links](#linksobject).
