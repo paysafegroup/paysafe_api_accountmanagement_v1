@@ -1844,6 +1844,8 @@ This is how you look up a merchant.
 
 This is how you submit a merchant account creation request.
 
+**Note:** You should wait 5 seconds before using the *account_id* returned in the merchant account creation response in any subsequent API call that requires it in the endpoint (e.g., updating the merchant account).
+
 + Parameters
 
     + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
@@ -1866,6 +1868,8 @@ This is how you submit a merchant account creation request.
 ## Create a Merchant Account - Consolidated Call [POST /v1/merchants/{merchant_id}/accounts?operationMode={operation_mode}]
 
 This is how you submit a merchant account creation request that includes the merchant account address.
+
+**Note:** You should wait 5 seconds before using the *account_id* returned in the merchant account creation response in any subsequent API call that requires it in the endpoint (e.g., updating the merchant account).
 
 + Parameters
 
