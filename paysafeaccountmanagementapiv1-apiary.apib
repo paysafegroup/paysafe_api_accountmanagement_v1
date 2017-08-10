@@ -1177,7 +1177,6 @@ This table displays the attributes that are Required, Optional, and Conditional 
 | transitNumber           | Required |          |          |          |             |
 | institutionId           | Required |          |          |          |             |
 | routingNumber           |          | Required |          |          | Optional    |
-| accountNumber           |          | Required | Optional | Required | Required    |
 | swiftNumber             |          |          | Required |          | Required    |
 | ibanNumber              |          |          | Required |          | Conditional*|
 | beneficiaryCountry      |          |          |          |          | Required    |
@@ -3208,7 +3207,7 @@ This is how you create a merchant ACH bank account that will be associated with 
 + Request Merchant Bank Account Creation (application/json)
 
     + Attributes
-        + Include Bank Account
+        + Include ACH Bank Account
         
     + Headers
     
@@ -3219,7 +3218,7 @@ This is how you create a merchant ACH bank account that will be associated with 
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include ACH Bank Account
+        + Include ACH Bank Account Response
 
 ## Create a Merchant BACS Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
 
@@ -3243,7 +3242,7 @@ This is how you create a merchant BACS bank account that will be associated with
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include BACS Bank Account
+        + Include BACS Bank Account Response
 
 ## Create a Merchant EFT Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
 
@@ -3267,7 +3266,7 @@ This is how you create a merchant EFT bank account that will be associated with 
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include EFT Bank Account
+        + Include EFT Bank Account Response
 
 ## Create a Merchant SEPA Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
 
@@ -3291,7 +3290,7 @@ This is how you create a merchant SEPA bank account that will be associated with
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include SEPA Bank Account
+        + Include SEPA Bank Account Response
 
 ## Create a Merchant Wire Bank Account [POST /v1/accounts/{account_id}/bankaccounts]
 
@@ -3323,7 +3322,7 @@ This is how you create a merchant Wire bank account that will be associated with
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include Wire Bank Account
+        + Include Wire Bank Account Response
 
 ## Update a Merchant ACH Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
 
@@ -3336,7 +3335,7 @@ This is how you update a merchant ACH bank account. See the [bank account object
 + Request Merchant Bank Account Update (application/json)
 
     + Attributes
-        + Include Bank Account
+        + Include ACH Bank Account
 
     + Headers
     
@@ -3347,7 +3346,7 @@ This is how you update a merchant ACH bank account. See the [bank account object
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include ACH Bank Account
+        + Include ACH Bank Account Response
 
 ## Update a Merchant BACS Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
 
@@ -3371,7 +3370,7 @@ This is how you update a merchant BACS bank account. See the [bank account objec
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include BACS Bank Account
+        + Include BACS Bank Account Response
 
 ## Update a Merchant EFT Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
 
@@ -3395,7 +3394,7 @@ This is how you update a merchant EFT bank account. See the [bank account object
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include EFT Bank Account
+        + Include EFT Bank Account Response
 
 ## Update a Merchant SEPA Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
 
@@ -3419,7 +3418,7 @@ This is how you update a merchant SEPA bank account. See the [bank account objec
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include SEPA Bank Account
+        + Include SEPA Bank Account Response
 
 ## Update a Merchant Wire Bank Account [PUT /v1/bankaccounts/{bank_account_id}]
 
@@ -3445,7 +3444,7 @@ This is how you update a merchant Wire bank account. See the [bank account objec
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include Wire Bank Account
+        + Include Wire Bank Account Response
 
 ## Look Up a Merchant Bank Account [GET /v1/bankaccounts/{bank_account_id}]
 
@@ -3466,7 +3465,7 @@ This is how you look up a merchant bank account. This is an example for an ACH b
     + Attributes
         + Include Links Bank Accounts
         + Include Response Base
-        + Include ACH Bank Account
+        + Include ACH Bank Account Response
 
 ## Delete a Merchant Bank Account [DELETE /v1/bankaccounts/{bank_account_id}]
 
@@ -3875,7 +3874,7 @@ This is how you look up a microdeposit to view its status.
 <h1>Legal and Community</h1>
 <ul class="footer-menu">
 <li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
-<li><a href="en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
+<li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
 <li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
 <li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
 <li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
@@ -3905,6 +3904,10 @@ This is how you look up a microdeposit to view its status.
 + accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
 + routingNumber:`854117563` (string, required) - This is the 9-digit routing number of the merchant's bank account.
 
+## ACH Bank Account Response
++ accountNumber:`*************954` (string, required) - This is the merchant's bank account number.
++ routingNumber:`******563` (string, required) - This is the 9-digit routing number of the merchant's bank account.
+
 ## Account Activation Response
 + Include Activate Merchant Account Response Object
 + Include Account Address
@@ -3918,8 +3921,8 @@ This is how you look up a microdeposit to view its status.
 
     + Properties
         + id:`8b670bf0-f218-4710-86a9-1b100206e1c1`
-        + accountNumber:`5807560412853954`
-        + transitNumber:`52487`
+        + accountNumber:`*************954`
+        + transitNumber:`*****`
         + institutionId:`052`
 
 ## Account Address
@@ -4098,9 +4101,11 @@ This is how you look up a microdeposit to view its status.
 + accountNumber:`94001521` (string, required) - This is the merchant's 8-digit bank account number.
 + sortCode:`857412` (string, required) - This is the 6-digit sort code of the merchant's bank account.
 
-## Bank Account
-+ accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
-+ routingNumber:`854117563` (string, required) - This is the 9-digit routing number of the merchant's bank account.
+## BACS Bank Account Response
++ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#bacscountries) of the beneficiary bank's address.
++ beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
++ accountNumber:`*****521` (string, required) - This is the merchant's 8-digit bank account number.
++ sortCode:`******` (string, required) - This is the 6-digit sort code of the merchant's bank account.
 
 ## Bank Account Lookup Response
 + bankType:`WIRE` (string, required) - This is the bank account type to register with the merchant account.
@@ -4242,13 +4247,18 @@ This is how you look up a microdeposit to view its status.
 + transitNumber:`52487` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
 + institutionId:`052` (string, required) - This is the 3-digit institution ID of the merchant's bank branch.
 
+## EFT Bank Account Response
++ accountNumber:`*************954` (string, required) - This is the merchant's bank account number.
++ transitNumber:`*****` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
++ institutionId:`052` (string, required) - This is the 3-digit institution ID of the merchant's bank branch.
+
 ## EFT Bank Account Resource
 + eftBankAccountResource (object, optional)
 
     + Properties
         + id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant's EFT bank account ID returned in the response.
-        + accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
-        + transitNumber:`52487` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
+        + accountNumber:`*************954` (string, required) - This is the merchant's bank account number.
+        + transitNumber:`*****` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
         + institutionId:`052` (string, required) - This is the 3-digit institution ID of the merchant's bank branch.
 
 ## Empty Set
@@ -4750,6 +4760,12 @@ This is how you look up a microdeposit to view its status.
 + swiftNumber:`857412369` (string, required) - This is the swift number of the merchant's bank account.
 + ibanNumber:`94001521002421` (string, required) - This is the IBAN number of the merchant's bank account.
 
+## SEPA Bank Account Response
++ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
++ beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
++ swiftNumber:`*********` (string, required) - This is the swift number of the merchant's bank account.
++ ibanNumber:`940015****2421` (string, required) - This is the IBAN number of the merchant's bank account.
+
 ## Terms and Conditions
 + version:`V1` (string, required) - This is the version of the Terms and Conditions.
 
@@ -4835,7 +4851,26 @@ This is how you look up a microdeposit to view its status.
 + routingNumber:`1328514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
 + sortCode:`857412` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
 + swiftNumber:`85774412` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`558541` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
++ beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
++ beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
++ beneficiaryCity:`London` (string, required) - This is the beneficiary's city.
++ beneficiaryRegion:`London` (string, required) - This is the beneficiary's region, state, or province.
++ beneficiaryPostCode:`E15 1AA` (string, required) - This is the beneficiary's post code.
++ beneficiaryBankCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary bank's address.
++ beneficiaryBankName:`First Royal` (string, required) - This is the name of the beneficiary's bank.
++ beneficiaryBankAddress:`12 Field Rd.` (string, required) - This is the street of the beneficiary's bank address.
++ beneficiaryBankCity:`London` (string, required) - This is the city of the beneficiary's bank.
++ beneficiaryBankRegion:`London` (string, required) - This is the region, state, or province of the beneficiary's bank.
++ beneficiaryBankPostCode:`A13 1BB` (string, required) - This is the post code of the beneficiary's bank.
+
+## Wire Bank Account Response
++ accountNumber:`**********214` (string, required) - This is the merchant's bank account number.
++ routingNumber:`****514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
++ sortCode:`******` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
++ swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
++ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
