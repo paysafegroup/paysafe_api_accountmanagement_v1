@@ -3298,7 +3298,7 @@ This is how you delete a business owner international passport.
 
 ## Merchant ACH Bank Account Creation [POST /v1/accounts/{account_id}/achbankaccounts]
 
-This is how you create a merchant ACH bank account that will be associated with the merchant account.
+This is how you create a merchant [ACH bank account](#achbankaccountobject) that will be associated with the merchant account.
 
 + Parameters
 
@@ -3322,7 +3322,7 @@ This is how you create a merchant ACH bank account that will be associated with 
 
 ## Update a Merchant ACH Bank Account [PUT /v1/achbankaccounts/{bank_account_id}]
 
-This is how you update a merchant ACH bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+This is how you update a merchant [ACH bank account](#achbankaccountobject). 
 
 + Parameters
 
@@ -3346,7 +3346,7 @@ This is how you update a merchant ACH bank account. See the [bank account object
 
 ## Look Up a Merchant ACH Bank Account [GET /v1/achbankaccounts/{bank_account_id}]
 
-This is how you look up a merchant ACH bank account. See the [bank account object](#bankaccountobject) for a description of the elements that could be returned in the response for the different bank schemes. 
+This is how you look up a merchant [ACH bank account](#achbankaccountobject).  
 
 + Parameters
 
@@ -3386,7 +3386,7 @@ This is how you delete a merchant ACH bank account.
 
 ## Create a Merchant BACS Bank Account [POST /v1/accounts/{account_id}/bacsbankaccounts]
 
-This is how you create a merchant BACS bank account that will be associated with the merchant account.
+This is how you create a merchant [BACS bank account](#bacsbankaccountobject) that will be associated with the merchant account.
 
 + Parameters
 
@@ -3410,7 +3410,7 @@ This is how you create a merchant BACS bank account that will be associated with
 
 ## Update a Merchant BACS Bank Account [PUT /v1/bacsbankaccounts/{bank_account_id}]
 
-This is how you update a merchant BACS bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+This is how you update a merchant [BACS bank account](#bacsbankaccountobject).
 
 + Parameters
 
@@ -3434,7 +3434,7 @@ This is how you update a merchant BACS bank account. See the [bank account objec
 
 ## Look Up a Merchant BACS Bank Account [GET /v1/bacsbankaccounts/{bank_account_id}]
 
-This is how you look up a BACS merchant bank account. See the [bank account object](#bankaccountobject) for a description of the elements that could be returned in the response for the different bank schemes. 
+This is how you look up a merchant [BACS bank account](#bacsbankaccountobject).
 
 + Parameters
 
@@ -3474,7 +3474,7 @@ This is how you delete a merchant BACS bank account.
 
 ## Create a Merchant EFT Bank Account [POST /v1/accounts/{account_id}/eftbankaccounts]
 
-This is how you create a merchant EFT bank account that will be associated with the merchant account.
+This is how you create a merchant [EFT bank account](#eftbankaccountobject) that will be associated with the merchant account.
 
 + Parameters
 
@@ -3498,7 +3498,7 @@ This is how you create a merchant EFT bank account that will be associated with 
 
 ## Update a Merchant EFT Bank Account [PUT /v1/eftbankaccounts/{bank_account_id}]
 
-This is how you update a merchant EFT bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+This is how you update a merchant [EFT bank account](#eftbankaccountobject).
 
 + Parameters
 
@@ -3522,7 +3522,7 @@ This is how you update a merchant EFT bank account. See the [bank account object
 
 ## Look Up a Merchant EFT Bank Account [GET /v1/eftbankaccounts/{bank_account_id}]
 
-This is how you look up a merchant EFT bank account. See the [bank account object](#bankaccountobject) for a description of the elements that could be returned in the response for the different bank schemes. 
+This is how you look up a merchant [EFT bank account](#eftbankaccountobject).
 
 + Parameters
 
@@ -3562,7 +3562,7 @@ This is how you delete a merchant EFT bank account.
 
 ## Create a Merchant SEPA Bank Account [POST /v1/accounts/{account_id}/sepabankaccounts]
 
-This is how you create a merchant SEPA bank account that will be associated with the merchant account.
+This is how you create a merchant [SEPA bank account](#sepabankaccountobject) that will be associated with the merchant account.
 
 + Parameters
 
@@ -3586,7 +3586,7 @@ This is how you create a merchant SEPA bank account that will be associated with
 
 ## Update a Merchant SEPA Bank Account [PUT /v1/sepabankaccounts/{bank_account_id}]
 
-This is how you update a merchant SEPA bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+This is how you update a merchant [SEPA bank account](#sepabankaccountobject).
 
 + Parameters
 
@@ -3610,7 +3610,7 @@ This is how you update a merchant SEPA bank account. See the [bank account objec
 
 ## Look Up a Merchant SEPA Bank Account [GET /v1/sepabankaccounts/{bank_account_id}]
 
-This is how you look up a merchant SEPA bank account. See the [bank account object](#bankaccountobject) for a description of the elements that could be returned in the response for the different bank schemes. 
+This is how you look up a merchant [SEPA bank account](#sepabankaccountobject).
 
 + Parameters
 
@@ -3650,7 +3650,7 @@ This is how you delete a merchant SEPA bank account.
 
 ## Create a Merchant Wire Bank Account [POST /v1/accounts/{account_id}/wirebankaccounts]
 
-This is how you create a merchant Wire bank account that will be associated with the merchant account.
+This is how you create a merchant [Wire bank account](#wirebankaccountobject) that will be associated with the merchant account.
 
 **Note:** Paysafe supports three currency/bank combinations for **EU-region** merchants.
 
@@ -3682,7 +3682,7 @@ This is how you create a merchant Wire bank account that will be associated with
 
 ## Update a Merchant Wire Bank Account [PUT /v1/wirebankaccounts/{bank_account_id}]
 
-This is how you update a merchant Wire bank account. See the [bank account object](#bankaccountobject) for a description of the elements to include in the bank account update request.
+This is how you update a merchant [Wire bank account](#wirebankaccountobject).
 
 **Note:** While doing an update via a PUT operation, you must provide all the elements of the bank account that you want to update. Elements not included will be removed from the resulting bank account.
 
@@ -3708,7 +3708,7 @@ This is how you update a merchant Wire bank account. See the [bank account objec
 
 ## Look Up a Merchant Wire Bank Account [GET /v1/wirebankaccounts/{bank_account_id}]
 
-This is how you look up a merchant bank account. This is an example for an ACH bank account. See the [bank account object](#bankaccountobject) for a description of the elements that could be returned in the response for the different bank schemes. 
+This is how you look up a merchant [Wire bank account](#wirebankaccountobject).
 
 + Parameters
 
