@@ -3742,6 +3742,98 @@ This is how you delete a merchant Wire bank account.
 
 + Response 200 (application/json)
 
+# Merchant Bank Accounts [/bankaccounts]
+<a name="merchantbankaccounts"></a>
+
+The elements used in the bank account creation requests will vary depending on the [type of bank account](#bankaccountattributes) you are creating. The elements required depend on various factors, including the region, country, and currency. 
+
+## Look Up Required Bank Account Details [GET /v1/bankaccounts/metadata?country={country_id}&region={region_id}&currency={currency_id}]
+
+This is how you look up the banking information required when you add a bank account to a merchant account.
+
++ Parameters
+
+    + country_id:`GB` (string, required) - This is the [country](#countrycodes) where the bank account is located.
+    + region_id:`EU` (string, required) - This is your merchant's region.
+        - EU
+        - US
+        - CA
+    + currency_id:`GBP` (string, required) - This is the [currency](#currencycodes) of the merchant account.
+
++ Request Look Up Required Bank Account Details (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        
+        + bankType:`WIRE` (string, required) - This is the type of [bank account](#bankaccounttypes).
+        + bankFields (array, required) - This is a list of all available bank fields, indicating whether they are REQUIRED, OPTIONAL, or NOT_APPLICABLE for this bank account type.
+            + (object)
+                + name:`accountNumber`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryAccountName`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryAddress`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryBankAddress`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryBankCity`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryBankCountry`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryBankName`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryBankPostCode`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryBankRegion`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryCity`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryCountry`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryPostCode`
+                + status:`REQUIRED`
+            + (object)
+                + name:`beneficiaryRegion`
+                + status:`REQUIRED`
+            + (object)
+                + name:`ibanNumber`
+                + status:`REQUIRED`
+            + (object)
+                + name:`institutionId`
+                + status:`NOT_APPLICABLE`
+            + (object)
+                + name:`routingNumber`
+                + status:`OPTIONAL`
+            + (object)
+                + name:`sortCode`
+                + status:`OPTIONAL`
+            + (object)
+                + name:`swiftNumber`
+                + status:`REQUIRED`
+            + (object)
+                + name:`transitNumber`
+                + status:`NOT_APPLICABLE`
+        + links (array, required) - This is an array of [links](#linksobject).
+            + (object)
+                + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+                + href:`https://api.test.paysafe.com/accountmanagement/v1/bankaccounts/metadata` (string, required) - This is the URI of the resource.
+
 # Terms and Conditions [/termsandconditions]
 <a name="termsandconditions"></a>
 
