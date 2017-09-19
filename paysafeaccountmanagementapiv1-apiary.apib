@@ -15,6 +15,7 @@ The Paysafe Account Management API allows our Partners to create their own white
 
 Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected. The result of improved merchant experiences will be higher on-boarding conversion and increased processing volumes.
 
+<a name="apikey" title="Authentication"></a>
 # Authentication 
 
 In order for you to use the Paysafe REST API, Paysafe must first set you up on their system
@@ -56,6 +57,7 @@ For example:
 
 `https://api.paysafe.com/accountmanagement/v1/merchants/{merchant_id}`
 
+<a name="pagination" title="Pagination"></a>
 # Pagination
 
 In the case where an API GET request returns multiple results, Paysafe returns the first 10 records by default and uses HATEOAS links to provide page navigation. In addition to the default behavior, it is also possible to control the number of results and starting point by passing in query parameters as follows:
@@ -67,6 +69,7 @@ In the case where an API GET request returns multiple results, Paysafe returns t
 | startDate | This is the start date in UTC. Default value is 30 days before the endDate.           |
 | endDate   | This is the end date in UTC. Default value is the current date and time.              |
 
+<a name="globalinvalidcharacters" title="Global Invalid Characters"></a>
 # Global Invalid Characters
 
 You must not include any of the characters in the following table as values in any of your request parameters. If you do, your request will result in an error.
@@ -197,9 +200,10 @@ Click [here](https://developer.paysafe.com/en/rest-api/partners/account-manageme
 
 The Paysafe Test environment can be used to test applications without actually running requests through the live system. It is important to make sure that your systems are working correctly before going into a Live environment. Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/test-and-go-live/) for details of using the Test environment.
 
+<a name="isostandards" title="ISO Standards"></a>
 # ISO Standards
 
-<a name="currencycodes"></a>
+<a name="currencycodes" title="Currency Codes"></a>
 ## Currency Codes
 
 **Note:**
@@ -293,7 +297,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Venezuelan Bolivar |VEF  |
 |Viet Nam Dong  |VND  |
 
-<a name="provincecodes"></a>
+<a name="provincecodes" title="Province Codes"></a>
 ## Province Codes
 
 |Province               |Code   |
@@ -312,7 +316,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Saskatchewan           |SK     |
 |Yukon                  |YT     |
 
-<a name="statecodes"></a>
+<a name="statecodes" title="State Codes"></a>
 ## State Codes
 
 |State                  |Code   |
@@ -380,7 +384,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Wyoming                |WY     |
 
 
-<a name="countrycodes"></a>
+<a name="countrycodes" title="Country Codes"></a>
 ## Country Codes
 | **Country**                       | **Code** |
 |---                                |---       |
@@ -636,7 +640,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 # Complex JSON Objects
 
-<a name="achbankaccountobject"></a>
+<a name="achbankaccountobject" title="ACH Bank Account Object"></a>
 ## ACH Bank Account
 
 |Element                        |Type                       |Description                        |
@@ -652,7 +656,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="bacsbankaccountobject"></a>
+<a name="bacsbankaccountobject" title="BACS Bank Account Object"></a>
 ## BACS Bank Account
 
 |Element                        |Type                       |Description                        |
@@ -672,7 +676,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="businessownersobject"></a>
+<a name="businessownersobject" title="Business Owners Object"></a>
 ## Business Owners
 
 |Element                        |Type           |Description                        |
@@ -708,8 +712,8 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
+<a name="businessowneraddressesobject" title="Business Owner Addresses Object"></a>
 ## Business Owner Addresses
-<a name="businessowneraddressesobject"></a>
 
 |Element                        |Type           |Description                        |
 |---                            |---            |---       |
@@ -733,7 +737,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="businessownercanadiandrivinglicensesobject"></a>
+<a name="businessownercanadiandrivinglicensesobject" title="Business Owner Canadian Driving Licences Object"></a>
 ## Business Owner Canadian Driving Licenses
 
 |Element        |Type                           |Description                        |
@@ -762,7 +766,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="businessownereuropeanidentitycardsobject"></a>
+<a name="businessownereuropeanidentitycardsobject" title="Business Owner European Identity Cards Object"></a>
 ## Business Owner European Identity Cards
 
 |Element        |Type                           |Description                        |
@@ -789,7 +793,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="businessownerinternationalpassportsobject"></a>
+<a name="businessownerinternationalpassportsobject" title="Business Owner International Passports Object"></a>
 ## Business Owner International Passports
 
 |Element        |Type                           |Description                        |
@@ -820,7 +824,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="businessownerukdrivinglicensesobject"></a>
+<a name="businessownerukdrivinglicensesobject" title="Business Owner UK Driving Licenses Object"></a>
 ## Business Owner UK Driving Licenses
 
 |Element        |Type                           |Description                        |
@@ -850,7 +854,7 @@ The Paysafe Test environment can be used to test applications without actually r
 ```
 
 
-<a name="caaccountdetailsobject"></a>
+<a name="caaccountdetailsobject" title="CA Account Details Object"></a>
 ## caAccountDetails
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
@@ -881,7 +885,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="dateobject"></a>
+<a name="dateobject" title="Date Object"></a>
 ## Date
 |Element    |Type                       |Description                        |
 |---        |---                        |---       |
@@ -897,7 +901,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="eftbankaccountobject"></a>
+<a name="eftbankaccountobject" title="EFT Bank Account Object"></a>
 ## EFT Bank Account
 
 |Element                        |Type                       |Description                        |
@@ -915,7 +919,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="euaccountdetailsobject"></a>
+<a name="euaccountdetailsobject" title="EU Account Details Object"></a>
 ## euAccountDetails
 
 |Element                        |Type                       |Description                        |
@@ -949,7 +953,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="linksobject"></a>
+<a name="linksobject" title="Links Object"></a>
 ## links
 
 |Element    |Type          |Required    |Description|
@@ -968,7 +972,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="merchantobject"></a>
+<a name="merchantsobject" title="Merchants Object"></a>
 ## Merchants
 |Element    |Type                       |Description                        |
 |---        |---                        |---       |
@@ -982,7 +986,7 @@ The Paysafe Test environment can be used to test applications without actually r
   }
 ```
 
-<a name="merchantaccountobject"></a>
+<a name="merchantaccountobject" title="Merchant Accounts Object"></a>
 ## Merchant Accounts
 |Element        |Type                       |Description                        |
 |---            |---                        |---       |
@@ -1028,7 +1032,7 @@ The Paysafe Test environment can be used to test applications without actually r
   }
 ```
 
-<a name="merchantaccountaddressesobject"></a>
+<a name="merchantaccountaddressesobject" title="Merchant Account Addresses Object"></a>
 ## Merchant Account Addresses
 
 |Element                        |Type           |Description                        |
@@ -1051,7 +1055,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="merchantaccounttradingaddressesobject"></a>
+<a name="merchantaccounttradingaddressesobject" title="Merchant Account Trading Addresses Object"></a>
 ## Merchant Account Trading Address
 
 |Element                        |Type           |Description                        |
@@ -1077,7 +1081,7 @@ The Paysafe Test environment can be used to test applications without actually r
 ```
 
 
-<a name="merchantdescriptorobject"></a>
+<a name="merchantdescriptorobject" title="Merchant Descriptor Object"></a>
 ## merchantDescriptor
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
@@ -1091,7 +1095,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="microdepositobject"></a>
+<a name="microdepositobject" title="Microdeposit Object"></a>
 ## Microdeposit
 |Element    |Type                       |Description                        |
 |---        |---                        |---       |
@@ -1105,7 +1109,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="recoveryquestionobject"></a>
+<a name="recoveryquestionobject" title="Recovery Question Object"></a>
 ## recoveryQuestion
 
 |Element    |Type                       |Description                        |
@@ -1121,7 +1125,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="sepabankaccountobject"></a>
+<a name="sepabankaccountobject" title="SEPA Bank Account Object"></a>
 ## SEPA Bank Account
 
 |Element                        |Type                       |Description                        |
@@ -1141,7 +1145,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="termsandconditionsobject"></a>
+<a name="termsandconditionsobject" title="Terms and Conditions Object"></a>
 ## Terms and Conditions
 
 |Element    |Type                       |Description                        |
@@ -1157,7 +1161,7 @@ The Paysafe Test environment can be used to test applications without actually r
 ```
 
 
-<a name="usaccountdetailsobject"></a>
+<a name="usaccountdetailsobject" title="US Account Details Object"></a>
 ## usAccountDetails
 
 |Element                        |Type                       |Description                        |
@@ -1189,7 +1193,7 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="usersobject"></a>
+<a name="usersobject" title="Users Object"></a>
 ## Users
 
 |Element    |Type                       |Description                        |
@@ -1211,8 +1215,8 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
-<a name="wirebankaccountobject"></a>
-## Wire Bank Accounts
+<a name="wirebankaccountobject" title="Wire Bank Account Object"></a>
+## Wire Bank Account
 
 |Element            |Type                       |Description                        |
 |---                |---                        |---    |
@@ -1262,15 +1266,15 @@ Click [here](https://developer.paysafe.com/en/rest-api/partners/account-manageme
 
 # Appendices
 
+<a name="bacscountries" title="BACS Countries List"></a>
 ## BACS Countries List
-<a name="bacscountries"></a>
 
 |Country    |Code   |
 |---        |---    |
 |United Kingdom |GB |
 
+<a name="bankaccountattributes" title="Bank Account Attributes"></a>
 ## Bank Account Attributes Required
-<a name="bankaccountattributes"></a>
 
 This table provides an overview of the attributes that are Required, Optional, and Conditional when creating each of the five [bank account types](#bankaccounttypes). 
 
@@ -1298,8 +1302,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 
 \* The *ibanNumber* field is required for Wire bank accounts when the *beneficiaryBankCountry* is within our list of [countries supported for SEPA](#sepacountries).
 
+<a name="bankaccounttypes" title="Bank Account Types"></a>
 ## Bank Account Types Required
-<a name="bankaccounttypes"></a>
 
 |Region     |Currency   |Bank Country   |Required Bank Account Type |
 |---        |---        |---            |---    |
@@ -1309,8 +1313,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 |EU         |GBP        |GB             |[BACS](#bacsbankaccountobject)   |
 |EU         |Not covered by other EU options    |Not covered by other EU options    |[Wire](#wirebankaccountobject)|
 
+<a name="businesstypecodes" title="Business Type Codes"></a>
 ## Business Type Codes
-<a name="businesstypecodes"></a>
 
 |Code           |Description   |
 |---            |---        |
@@ -1327,8 +1331,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 |SOLEPROP       |Sole Proprietorship/Sole Trader |
 |TRUST          |Trust |
 
+<a name="merchantcategorycodes" title="Merchant Category Codes"></a>
 ## Merchant Category Codes
-<a name="merchantcategorycodes"></a>
 
 ### Canada and U.S.
 
@@ -1424,8 +1428,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 | WEB_DEV             | Web Design                                      |
 
 
+<a name="nationalitycodes" title="Nationality Codes"></a>
 ## Nationality Codes
-<a name="nationalitycodes"></a>
 
 |  Code |  Description  |
 |---    |---            |
@@ -1664,8 +1668,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 | ZW    | Zimbabwean                                   |
 | AX    | Ålandic                                      |
 
+<a name="recoveryquestionslist" title="Recovery Questions List"></a>
 ## Recovery Questions
-<a name="recoveryquestionslist"></a>
 
 **Note:** Recovery question answers can contain only the following:<ul><li>Lower case letters</li><li>Upper case letters</li><li>Numbers</li><li>Hyphens</li><li>Spaces</li></ul>Recovery question answers requires at least one digit or one letter.
 
@@ -1682,8 +1686,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 | 9            | In what city and year was your business established? (e.g., Manchester 1999)        |
 | 10           | What high school did you graduate from, and in what year? (e.g., Central High 1999) |
 
+<a name="sepacountries" title="SEPA Countries"></a>
 ## SEPA Countries List
-<a name="sepacountries"></a>
 
 |Country    |Code   |
 |---        |---    |
@@ -1735,8 +1739,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 |United Kingdom |GB |
 |Åland Islands  |AX |
 
+<a name="supportedcountrycodes" title="Supported Country Codes by Region"></a>
 ## Supported Country Codes by Region
-<a name="supportedcountrycodes"></a>
 
 ### US
 
@@ -1795,8 +1799,8 @@ This table provides an overview of the attributes that are Required, Optional, a
 | United Kingdom             | GB   |
 
 
+<a name="supportedcurrencycodes" title="Supported Currency Codes by Region"></a>
 ## Supported Currency Codes by Region
-<a name="supportedcurrencycodes"></a>
 
 ### US
 
@@ -1860,6 +1864,7 @@ When you are ready to test your example, you can switch between the Production a
 To call the API resource, click **Call Resource**. The response is displayed in the Console window.
 
 ## Verify That the Service Is Accessible [GET /monitor]
+<a name="verifyservice" title="Verify Service"></a>
 
 This call returns a status of READY if the API is available.
 
@@ -1872,9 +1877,10 @@ This call returns a status of READY if the API is available.
             }
 
 # Merchants [/merchants]
-<a name="merchants"></a>
+<a name="merchants" title="merchants"></a>
 
 ## Create a Merchant [POST /v1/merchants]
+<a name="createmerchant" title="Create a Merchant"></a>
 
 This is how you submit a merchant creation request.
 
@@ -1895,6 +1901,7 @@ This is how you submit a merchant creation request.
         + Include Merchant Name
         
 ## Update a Merchant [PUT /v1/merchants/{merchant_id}]
+<a name="updatemerchant" title="Update a Merchant"></a>
 
 This is how you update a merchant.
 
@@ -1919,6 +1926,7 @@ This is how you update a merchant.
         + Include Merchant Name
 
 ## Look Up a Merchant [GET /v1/merchants/{merchant_id}]
+<a name="getmerchant" title="Look Up a Merchant"></a>
 
 This is how you look up a merchant.
 
@@ -1940,9 +1948,10 @@ This is how you look up a merchant.
         + Include Merchant Name
 
 # Merchant Accounts [/accounts]
-<a name="merchantaccounts"></a>
+<a name="merchantaccounts" title="Merchant Accounts"></a>
 
 ## Create a Merchant Account [POST /v1/merchants/{merchant_id}/accounts]
+<a name="createmerchantaccount" title="Create a Merchant Account"></a>
 
 This is how you submit a merchant account creation request.
 
@@ -1968,6 +1977,7 @@ This is how you submit a merchant account creation request.
         + Include Merchant Account Response
         
 ## Create a Merchant Account - Consolidated Call [POST /v1/merchants/{merchant_id}/accounts?operationMode={operation_mode}]
+<a name="createmerchantaccountconsolidated" title="Create a Merchant Account - Consolidated"></a>
 
 This is how you submit a merchant account creation request that includes the merchant account address.
 
@@ -1998,6 +2008,7 @@ This is how you submit a merchant account creation request that includes the mer
         + Include Trading Address Object        
 
 ## Update a Merchant Account - PUT [PUT /v1/accounts/{account_id}]
+<a name="updatemerchantaccount" title="Update a Merchant Account"></a>
 
 This is how you update a merchant account with a PUT request.
 
@@ -2023,6 +2034,7 @@ This is how you update a merchant account with a PUT request.
         + Include Merchant Account Update Response            
 
 ## Update a Merchant Account - Consolidated Call - PUT [PUT /v1/accounts/{account_id}?operationMode={operation_mode}]
+<a name="updatemerchantaccountconsolidated" title="Update a Merchant Account - Consolidated"></a>
 
 This is how you update a merchant account and its associated merchant account address with a PUT request.
 
@@ -2053,6 +2065,7 @@ This is how you update a merchant account and its associated merchant account ad
         + Include Address Trading Consolidated        
 
 ## Update a Merchant Account - PATCH [PATCH /v1/accounts/{account_id}]
+<a name="updatemerchantaccountpatch" title="Update a Merchant Account - PATCH"></a>
 
 This is how you update a merchant account with a PATCH request.
 
@@ -2078,6 +2091,7 @@ This is how you update a merchant account with a PATCH request.
         + Include Merchant Account Update Response
 
 ## Update a Merchant Account - Consolidated - PATCH [PATCH /v1/accounts/{account_id}?operationMode={operation_mode}]
+<a name="updatemerchantaccountpatchconsolidated" title="Update a Merchant Account - Consolidated PATCH"></a>
 
 This is how you update a merchant account and its associated merchant account address with a PATCH request.
 
@@ -2108,6 +2122,7 @@ This is how you update a merchant account and its associated merchant account ad
         + Include Address Trading Consolidated
 
 ## Look Up a Merchant Account [GET /v1/accounts/{account_id}]
+<a name="getmerchantaccount" title="Look Up a Merchant Account"></a>
 
 This is how you look up a merchant account using the ID returned in the response to the account creation request.
 
@@ -2128,6 +2143,7 @@ This is how you look up a merchant account using the ID returned in the response
         + Include Merchant Account Response
 
 ## Look Up a Merchant Account - Consolidated [GET /v1/accounts/{account_id}?operationMode={operation_mode}]
+<a name="getmerchantaccountconsolidated" title="Look Up a Merchant Account - Consolidated"></a>
 
 This is how you look up a merchant account using the account ID returned in the response to the account creation request to return the merchant account information along with additional resources that have been added to the account.
 
@@ -2154,6 +2170,7 @@ This is how you look up a merchant account using the account ID returned in the 
         + Include Business Owners
 
 ## Look Up a Merchant Account Using Merchant External Account ID [GET /v1/accounts/{external_account_id}?searchBy={search_by}]
+<a name="getmerchantaccountexternalid" title="Look Up a Merchant Account with an External Account ID"></a>
 
 This is how you look up a merchant account using the external account ID included in the account creation request.  
 
@@ -2175,6 +2192,7 @@ This is how you look up a merchant account using the external account ID include
         + Include Merchant Account Response
 
 ## Look Up a Merchant Account Using Merchant External Account ID - Consolidated [GET /v1/accounts/{external_account_id}?operationMode={operation_mode}&searchBy={search_by}]
+<a name="getmerchantaccountexternalidconsolidated" title="Look Up a Merchant Account with an External Account ID - Consolidated"></a>
 
 This is how you look up a merchant account using the account ID returned in the response to the account creation request to return the merchant account information along with additional resources that have been added to the account.
 
@@ -2201,9 +2219,10 @@ This is how you look up a merchant account using the account ID returned in the 
         + Include Business Owners
 
 # Merchant Account Addresses [/addresses]
-<a name="merchantaccountaddresses"></a>
+<a name="merchantaccountaddresses" title="Merchant Account Addresses"></a>
 
 ## Create a Merchant Account Address [POST /v1/accounts/{account_id}/addresses]
+<a name="createmerchantaccountaddress" title="Create a Merchant Account Address"></a>
 
 This is how you submit a merchant account address creation request.
 
@@ -2230,6 +2249,7 @@ This is how you submit a merchant account address creation request.
         + Include Address
 
 ## Create a Merchant Account Trading Address [POST /v1/accounts/{account_id}/addresses]
+<a name="createmerchantaccounttradingaddress" title="Create a Merchant Account Trading Address"></a>
 
 This is how you submit a merchant account trading address creation request.
 
@@ -2256,6 +2276,7 @@ This is how you submit a merchant account trading address creation request.
         + Include Address Trading Response
 
 ## Update a Merchant Account Address [PUT /v1/addresses/{address_id}]
+<a name="updatemerchantaccountaddress" title="Update a Merchant Account Address"></a>
 
 This is how you update a merchant account address.
 
@@ -2280,6 +2301,7 @@ This is how you update a merchant account address.
         + Include Address
 
 ## Update a Merchant Account Trading Address [PUT /v1/addresses/{address_id}]
+<a name="updatemerchantaccounttradingaddress" title="Update a Merchant Account Trading Address"></a>
 
 This is how you update a merchant account trading address.
 
@@ -2304,6 +2326,7 @@ This is how you update a merchant account trading address.
         + Include Address Trading Response
 
 ## Look Up a Merchant Account Address [GET /v1/addresses/{address_id}]
+<a name="getmerchantaccountaddress" title="Look Up a Merchant Account Address"></a>
 
 This is how you look up a merchant account address.
 
@@ -2325,6 +2348,7 @@ This is how you look up a merchant account address.
         + Include Address
 
 ## Look Up a Merchant Account Trading Address [GET /v1/addresses/{address_id}?type={type}]
+<a name="getmerchantaccounttradingaddress" title="Look Up a Merchant Account Trading Address"></a>
 
 This is how you look up a merchant account trading address.
 
@@ -2347,10 +2371,10 @@ This is how you look up a merchant account trading address.
         + Include Address Trading Response
 
 # Business Owners [/businessowners]
-<a name="businessowners"></a>
+<a name="businessowners" title="Business Owners"></a>
 
 ## Create a Canadian Business Owner [POST /v1/accounts/{account_id}/businessowners]
-<a name="canadianbusinessownersrequest"></a>
+<a name="canadianbusinessownersrequest" title="Create a Canadian Business Owner"></a>
 
 This is how you submit a Canadian business owner creation request.
 
@@ -2377,7 +2401,7 @@ This is how you submit a Canadian business owner creation request.
         + Include Canadian Business Owner
 
 ## Create a US Business Owner [POST /v1/accounts/{account_id}/businessowners]
-<a name="usbusinessownersrequest"></a>
+<a name="usbusinessownersrequest" title="Create a US Business Owner"></a>
 
 This is how you submit a US business owner creation request.
 
@@ -2402,7 +2426,7 @@ This is how you submit a US business owner creation request.
         + Include US Business Owner
 
 ## Create a European Business Owner [POST /v1/accounts/{account_id}/businessowners]
-<a name="europeanbusinessownersrequest"></a>
+<a name="europeanbusinessownersrequest" title="Create a European Business Owner"></a>
 
 This is how you submit a European business owner creation request.
 
@@ -2429,6 +2453,7 @@ This is how you submit a European business owner creation request.
         + Include European Business Owner
 
 ## Create a Business Owner - Consolidated [POST /v1/accounts/{account_id}/businessowners?operationMode={operation_mode}]
+<a name="businessownersrequestconsolidated" title="Create a Business Owner - Consolidated"></a>
 
 This is how you submit a business owner creation request that allows you to also include additional objects. This example included here is for a Canadian business owner.
 Depending on your jurisdiction, you can include the following: 
@@ -2465,6 +2490,7 @@ For the business owner creation request, mandatory parameters vary by regions. F
         
 
 ## Update a Canadian Business Owner - PUT [PUT /v1/businessowners/{business_owner_id}]
+<a name="updatecanadianbusinessowner" title="Update a Canadian Business Owner"></a>
 
 This is how you update a Canadian business owner with a PUT request.
 
@@ -2491,6 +2517,7 @@ This is how you update a Canadian business owner with a PUT request.
         + Include Canadian Business Owner
 
 ## Update a Canadian Business Owner - PATCH [PATCH /v1/businessowners/{business_owner_id}]
+<a name="updatecanadianbusinessownerpatch" title="Update a Canadian Business Owner - PATCH"></a>
 
 This is how you update a Canadian business owner with a PATCH request.
 
@@ -2517,6 +2544,7 @@ This is how you update a Canadian business owner with a PATCH request.
         + Include Canadian Business Owner
 
 ## Update a US Business Owner - PUT [PUT /v1/businessowners/{business_owner_id}]
+<a name="updateusbusinessowner" title="Update a US Business Owner"></a>
 
 This is how you update a US business owner with a PUT request.
 
@@ -2543,6 +2571,7 @@ This is how you update a US business owner with a PUT request.
         + Include US Business Owner
 
 ## Update a US Business Owner - PATCH [PATCH /v1/businessowners/{business_owner_id}]
+<a name="updateusbusinessownerpatch" title="Update a US Business Owner - PATCH"></a>
 
 This is how you update a US business owner with a PATCH request.
 
@@ -2569,6 +2598,7 @@ This is how you update a US business owner with a PATCH request.
         + Include US Business Owner
 
 ## Update a European Business Owner - PUT [PUT /v1/businessowners/{business_owner_id}]
+<a name="updateeuropeanbusinessowner" title="Update a European Business Owner"></a>
 
 This is how you update a European business owner with a PUT request.
 
@@ -2595,6 +2625,7 @@ This is how you update a European business owner with a PUT request.
         + Include European Business Owner
 
 ## Update a European Business Owner - PATCH [PATCH /v1/businessowners/{business_owner_id}]
+<a name="updateeuropeanbusinessownerpatch" title="Update a European Business Owner - PATCH"></a>
 
 This is how you update a European business owner with a PATCH request.
 
@@ -2621,6 +2652,7 @@ This is how you update a European business owner with a PATCH request.
         + Include European Business Owner
 
 ## Update a Business Owner - Consolidated - PUT [PUT /v1/businessowners/{business_owner_id}?operationMode={operation_mode}]
+<a name="updatebusinessownerconsolidated" title="Update a Business Owner - Consolidated"></a>
 
 This is how you update a  business owner and some associated objects with a PUT request. This example is for a Canadian business owner.
 
@@ -2659,6 +2691,7 @@ Depending on your jurisdiction, you can include the following:
 
 
 ## Look Up a Business Owner [GET /v1/businessowners/{business_owner_id}]
+<a name="getbusinessowner" title="Look Up a Business Owner"></a>
 
 This is how you look up a business owner. This example is for a Canadian business owner.
 
@@ -2680,6 +2713,7 @@ This is how you look up a business owner. This example is for a Canadian busines
         + Include Canadian Business Owner
 
 ## Look Up a Business Owner - Consolidated [GET /v1/businessowners/{business_owner_id}?operationMode={operation_mode}]
+<a name="getbusinessownerconsolidated" title="Look Up a Business Owner - Consolidated"></a>
 
 This is how you look up a business owner, along with other elements that are associated with the business owner. This example is for a Canadian business owner, since the business owner *id* used in the request comes from the response for a Canadian business owner creation request.
 
@@ -2706,6 +2740,7 @@ This is how you look up a business owner, along with other elements that are ass
 
 
 ## Delete a Business Owner [DELETE /v1/businessowners/{business_owner_id}]
+<a name="deletebusinessowner" title="Delete a Business Owner"></a>
 
 This is how you delete a business owner. 
 
@@ -2723,9 +2758,10 @@ This is how you delete a business owner.
 
 
 # Business Owner Current Addresses [/currentaddresses]
-<a name="currentaddresses"></a>
+<a name="currentaddresses" title="Business Owner Current Addresses"></a>
 
 ## Create a Business Owner Current Address [POST /v1/businessowners/{business_owner_id}/currentaddresses]
+<a name="createcurrentaddress" title="Create a Business Owner Current Address"></a>
 
 This is how you create a business owner current address. 
 
@@ -2750,6 +2786,7 @@ This is how you create a business owner current address.
         + Include Address Current
 
 ## Update a Business Owner Current Address - PATCH [PATCH /v1/currentaddresses/{current_address_id}]
+<a name="updatecurrentaddresspatch" title="Update a Business Owner Current Address - PATCH"></a>
 
 This is how you update a business owner current address with a PATCH request.
 
@@ -2776,6 +2813,7 @@ This is how you update a business owner current address with a PATCH request.
         + Include Address Current
 
 ## Update a Business Owner Current Address - PUT [PUT /v1/currentaddresses/{current_address_id}]
+<a name="updatecurrentaddressput" title="Update a Business Owner Current Address - PUT"></a>
 
 This is how you update a business owner current address with a PUT request.
 
@@ -2802,6 +2840,7 @@ This is how you update a business owner current address with a PUT request.
         + Include Address Current
 
 ## Look Up a Business Owner Current Address [GET /v1/currentaddresses/{current_address_id}]
+<a name="getcurrentaddress" title="Look Up a Business Owner Current Address"></a>
 
 This is how you look up a business owner current address.
 
@@ -2823,11 +2862,12 @@ This is how you look up a business owner current address.
         + Include Address Current
 
 # Business Owner Previous Addresses [/previousaddresses]
-<a name="previousaddresses"></a>
+<a name="previousaddresses" title="Business Owner Previous Addresses"></a>
 
 You must provide a business owner previous address **only if**:<ul><li>The business owner has resided at the current address for less than 3 years; **and**</li><li>The business owner address is in either Canada or Europe.</li></ul>
 
 ## Create a Business Owner Previous Address [POST /v1/businessowners/{business_owner_id}/previousaddresses]
+<a name="createpreviousaddress" title="Create a Business Owner Previous Address"></a>
 
 This is how you create a business owner previous address. 
 
@@ -2852,6 +2892,7 @@ This is how you create a business owner previous address.
         + Include Address Current
 
 ## Update a Business Owner Previous Address - PATCH [PATCH /v1/previousaddresses/{previous_address_id}]
+<a name="updatepreviousaddresspatch" title="Update a Business Owner Previous Address - PATCH"></a>
 
 This is how you update a business owner previous address with a PATCH request.
 
@@ -2878,6 +2919,7 @@ This is how you update a business owner previous address with a PATCH request.
         + Include Address Current
 
 ## Update a Business Owner Previous Address - PUT [PUT /v1/previousaddresses/{previous_address_id}]
+<a name="updatepreviousaddressput" title="Update a Business Owner Previous Address - PUT"></a>
 
 This is how you update a business owner current address with a PUT request.
 
@@ -2904,6 +2946,7 @@ This is how you update a business owner current address with a PUT request.
         + Include Address Current
 
 ## Look Up a Business Owner Previous Address [GET /v1/previousaddresses/{previous_address_id}]
+<a name="getpreviousaddress" title="Look Up a Business Owner Previous Address"></a>
 
 This is how you look up a business owner previous address.
 
@@ -2925,9 +2968,10 @@ This is how you look up a business owner previous address.
         + Include Address Current
 
 # Canadian Business Owner Driving License [/canadiandrivinglicenses]
-<a name="canadiandrivinglicenses"></a>
+<a name="canadiandrivinglicenses" title="Canadian Business Owner Driving Licenses"></a>
 
 ## Create a Canadian Business Owner Driving License [POST /v1/businessowners/{business_owner_id}/canadiandrivinglicenses]
+<a name="createcanadiandrivinglicense" title="Create a Canadian Business Owner Driving License"></a>
 
 This is how you create a Canadian business owner driving license.
 
@@ -2954,6 +2998,7 @@ This is how you create a Canadian business owner driving license.
         + Include Canadian Driving License Response
 
 ## Update a Canadian Business Owner Driving License [PUT /v1/canadiandrivinglicenses/{document_id}]
+<a name="updatecanadiandrivinglicense" title="Update a Canadian Business Owner Driving License"></a>
 
 This is how you update a Canadian business owner driving license. 
 
@@ -2980,6 +3025,7 @@ This is how you update a Canadian business owner driving license.
         + Include Canadian Driving License Response
 
 ## Look Up a Canadian Business Owner Driving License [GET /v1/canadiandrivinglicenses/{document_id}]
+<a name="getcanadiandrivinglicense" title="Look Up a Canadian Business Owner Driving License"></a>
 
 This is how you look up a Canadian business owner driving license.
 
@@ -3001,6 +3047,7 @@ This is how you look up a Canadian business owner driving license.
         + Include Canadian Driving License Response
 
 ## Delete a Canadian Business Owner Driving License [DELETE /v1/canadiandrivinglicenses/{document_id}]
+<a name="deletecanadiandrivinglicense" title="Delete a Canadian Business Owner Driving License"></a>
 
 This is how you delete a Canadian business owner driving license. 
 
@@ -3017,9 +3064,10 @@ This is how you delete a Canadian business owner driving license.
 + Response 200 (application/json)
 
 # UK Business Owner Driving License [/ukdrivinglicenses]
-<a name="ukdrivinglicenses"></a>
+<a name="ukdrivinglicenses" title="UK Business Owner Driving License"></a>
 
 ## Create a UK Business Owner Driving License [POST /v1/businessowners/{business_owner_id}/ukdrivinglicenses]
+<a name="createukdrivinglicense" title="Create a UK Business Owner Driving License"></a>
 
 This is how you create a UK business owner driving license.
 
@@ -3046,6 +3094,7 @@ This is how you create a UK business owner driving license.
         + Include UK Driving License Response
 
 ## Update a UK Business Owner Driving License [PUT /v1/ukdrivinglicenses/{document_id}]
+<a name="updateukdrivinglicense" title="Update a UK Business Owner Driving License"></a>
 
 This is how you update a UK business owner driving license. 
 
@@ -3072,6 +3121,7 @@ This is how you update a UK business owner driving license.
         + Include UK Driving License Response
 
 ## Look Up a UK Business Owner Driving License [GET /v1/ukdrivinglicenses/{document_id}]
+<a name="getukdrivinglicense" title="Look Up a UK Business Owner Driving License"></a>
 
 This is how you look up a UK business owner driving license.
 
@@ -3093,6 +3143,7 @@ This is how you look up a UK business owner driving license.
         + Include UK Driving License Response
 
 ## Delete a UK Business Owner Driving License [DELETE /v1/ukdrivinglicenses/{document_id}]
+<a name="deleteukdrivinglicense" title="Delete a UK Business Owner Driving License"></a>
 
 This is how you delete a UK business owner driving license. 
 
@@ -3109,9 +3160,10 @@ This is how you delete a UK business owner driving license.
 + Response 200 (application/json)
 
 # European Business Owner Identity Card [/europeanidentitycards]
-<a name="europeanidentitycards"></a>
+<a name="europeanidentitycards" title="European Business Owner Identity Card"></a>
 
 ## Create a European Business Owner Identity Card [POST /v1/businessowners/{business_owner_id}/europeanidentitycards]
+<a name="createeuropeanidentitycard" title="Create a European Business Owner Identity Card"></a>
 
 This is how you create a European business owner identity card.
 
@@ -3138,6 +3190,7 @@ This is how you create a European business owner identity card.
         + Include European Identity Card Response
 
 ## Update a European Business Owner Identity Card [PUT /v1/europeanidentitycards/{document_id}]
+<a name="updateeuropeanidentitycard" title="Update a European Business Owner Identity Card"></a>
 
 This is how you update a European business owner identity card. 
 
@@ -3164,6 +3217,7 @@ This is how you update a European business owner identity card.
         + Include European Identity Card Response
 
 ## Look Up a European Business Owner Identity Card [GET /v1/europeanidentitycards/{document_id}]
+<a name="geteuropeanidentitycard" title="Look Up a European Business Owner Identity Card"></a>
 
 This is how you look up a European business owner identity card.
 
@@ -3185,6 +3239,7 @@ This is how you look up a European business owner identity card.
         + Include European Identity Card Response
 
 ## Delete a European Business Owner Identity Card [DELETE /v1/europeanidentitycards/{document_id}]
+<a name="deleteeuropeanidentitycard" title="Delete a European Business Owner Identity Card"></a>
 
 This is how you delete a European business owner identity card. 
 
@@ -3201,9 +3256,10 @@ This is how you delete a European business owner identity card.
 + Response 200 (application/json)
 
 # Business Owner International Passport [/internationalpassports]
-<a name="internationalpassports"></a>
+<a name="internationalpassports" title="Business Owner International Passport"></a>
 
 ## Create a Business Owner International Passport [POST /v1/businessowners/{business_owner_id}/internationalpassports]
+<a name="createinternationalpassport" title="Create a Business Owner International Passport"></a>
 
 This is how you create a business owner international passport.
 
@@ -3230,6 +3286,7 @@ This is how you create a business owner international passport.
         + Include International Passport Response
 
 ## Update a Business Owner International Passport [PUT /v1/internationalpassports/{document_id}]
+<a name="updateinternationalpassport" title="Update a Business Owner International Passport"></a>
 
 This is how you update a business owner international passport. 
 
@@ -3256,6 +3313,7 @@ This is how you update a business owner international passport.
         + Include International Passport Response
 
 ## Look Up a Business Owner International Passport [GET /v1/internationalpassports/{document_id}]
+<a name="getinternationalpassport" title="Look Up a Business Owner International Passport"></a>
 
 This is how you look up a business owner international passport.
 
@@ -3277,6 +3335,7 @@ This is how you look up a business owner international passport.
         + Include International Passport Response
 
 ## Delete a Business Owner International Passport [DELETE /v1/internationalpassports/{document_id}]
+<a name="deleteinternationalpassport" title="Delete a Business Owner International Passport"></a>
 
 This is how you delete a business owner international passport. 
 
@@ -3293,9 +3352,10 @@ This is how you delete a business owner international passport.
 + Response 200 (application/json)
 
 # Merchant ACH Bank Account [/achbankaccounts]
-<a name="/achbankaccounts"></a>
+<a name="achbankaccounts" title="Merchant ACH Bank Account"></a>
 
 ## Merchant ACH Bank Account Creation [POST /v1/accounts/{account_id}/achbankaccounts]
+<a name="createachbankaccount" title="Create a Merchant ACH Bank Account"></a>
 
 This is how you create a merchant [ACH bank account](#achbankaccountobject) that will be associated with the merchant account.
 
@@ -3320,6 +3380,7 @@ This is how you create a merchant [ACH bank account](#achbankaccountobject) that
         + Include ACH Bank Account Response
 
 ## Update a Merchant ACH Bank Account [PUT /v1/achbankaccounts/{bank_account_id}]
+<a name="updateachbankaccount" title="Update a Merchant ACH Bank Account"></a>
 
 This is how you update a merchant [ACH bank account](#achbankaccountobject). 
 
@@ -3344,6 +3405,7 @@ This is how you update a merchant [ACH bank account](#achbankaccountobject).
         + Include ACH Bank Account Response
 
 ## Look Up a Merchant ACH Bank Account [GET /v1/achbankaccounts/{bank_account_id}]
+<a name="getachbankaccount" title="Look Up a Merchant ACH Bank Account"></a>
 
 This is how you look up a merchant [ACH bank account](#achbankaccountobject).  
 
@@ -3365,6 +3427,7 @@ This is how you look up a merchant [ACH bank account](#achbankaccountobject).
         + Include ACH Bank Account Response
 
 ## Delete an ACH Merchant Bank Account [DELETE /v1/achbankaccounts/{bank_account_id}]
+<a name="deleteachbankaccount" title="Delete a Merchant ACH Bank Account"></a>
 
 This is how you delete a merchant ACH bank account. 
 
@@ -3381,9 +3444,10 @@ This is how you delete a merchant ACH bank account.
 + Response 200 (application/json)
 
 # Merchant BACS Bank Account [/bacsbankaccounts]
-<a name="/bacsbankaccounts"></a>
+<a name="bacsbankaccounts" title="Merchant BACS Bank Account"></a>
 
 ## Create a Merchant BACS Bank Account [POST /v1/accounts/{account_id}/bacsbankaccounts]
+<a name="createbacsbankaccount" title="Create a Merchant BACS Bank Account"></a>
 
 This is how you create a merchant [BACS bank account](#bacsbankaccountobject) that will be associated with the merchant account.
 
@@ -3408,6 +3472,7 @@ This is how you create a merchant [BACS bank account](#bacsbankaccountobject) th
         + Include BACS Bank Account Response
 
 ## Update a Merchant BACS Bank Account [PUT /v1/bacsbankaccounts/{bank_account_id}]
+<a name="updatebacsbankaccount" title="Update a Merchant BACS Bank Account"></a>
 
 This is how you update a merchant [BACS bank account](#bacsbankaccountobject).
 
@@ -3432,6 +3497,7 @@ This is how you update a merchant [BACS bank account](#bacsbankaccountobject).
         + Include BACS Bank Account Response
 
 ## Look Up a Merchant BACS Bank Account [GET /v1/bacsbankaccounts/{bank_account_id}]
+<a name="getbacsbankaccount" title="Look Up a Merchant BACS Bank Account"></a>
 
 This is how you look up a merchant [BACS bank account](#bacsbankaccountobject).
 
@@ -3453,6 +3519,7 @@ This is how you look up a merchant [BACS bank account](#bacsbankaccountobject).
         + Include BACS Bank Account Response
 
 ## Delete a Merchant BACS Bank Account [DELETE /v1/bacsbankaccounts/{bank_account_id}]
+<a name="deletebacsbankaccount" title="Delete a Merchant BACS Bank Account"></a>
 
 This is how you delete a merchant BACS bank account. 
 
@@ -3469,9 +3536,10 @@ This is how you delete a merchant BACS bank account.
 + Response 200 (application/json)
 
 # Merchant EFT Bank Account [/eftbankaccounts]
-<a name="/eftbankaccounts"></a>
+<a name="eftbankaccounts" title="Merchant EFT Bank Account"></a>
 
 ## Create a Merchant EFT Bank Account [POST /v1/accounts/{account_id}/eftbankaccounts]
+<a name="createeftbankaccount" title="Create a Merchant EFT Bank Account"></a>
 
 This is how you create a merchant [EFT bank account](#eftbankaccountobject) that will be associated with the merchant account.
 
@@ -3496,6 +3564,7 @@ This is how you create a merchant [EFT bank account](#eftbankaccountobject) that
         + Include EFT Bank Account Response
 
 ## Update a Merchant EFT Bank Account [PUT /v1/eftbankaccounts/{bank_account_id}]
+<a name="updateeftbankaccount" title="Update a Merchant EFT Bank Account"></a>
 
 This is how you update a merchant [EFT bank account](#eftbankaccountobject).
 
@@ -3520,6 +3589,7 @@ This is how you update a merchant [EFT bank account](#eftbankaccountobject).
         + Include EFT Bank Account Response
 
 ## Look Up a Merchant EFT Bank Account [GET /v1/eftbankaccounts/{bank_account_id}]
+<a name="geteftbankaccount" title="Look Up a Merchant EFT Bank Account"></a>
 
 This is how you look up a merchant [EFT bank account](#eftbankaccountobject).
 
@@ -3541,6 +3611,7 @@ This is how you look up a merchant [EFT bank account](#eftbankaccountobject).
         + Include EFT Bank Account Response
 
 ## Delete a Merchant EFT Bank Account [DELETE /v1/eftbankaccounts/{bank_account_id}]
+<a name="deleteeftbankaccount" title="Delete a Merchant EFT Bank Account"></a>
 
 This is how you delete a merchant EFT bank account. 
 
@@ -3557,9 +3628,10 @@ This is how you delete a merchant EFT bank account.
 + Response 200 (application/json)
 
 # Merchant SEPA Bank Account [/sepabankaccounts]
-<a name="/sepabankaccounts"></a>
+<a name="sepabankaccounts" title="Merchant SEPA Bank Account"></a>
 
 ## Create a Merchant SEPA Bank Account [POST /v1/accounts/{account_id}/sepabankaccounts]
+<a name="createsepabankaccount" title="Create a Merchant SEPA Bank Account"></a>
 
 This is how you create a merchant [SEPA bank account](#sepabankaccountobject) that will be associated with the merchant account.
 
@@ -3584,6 +3656,7 @@ This is how you create a merchant [SEPA bank account](#sepabankaccountobject) th
         + Include SEPA Bank Account Response
 
 ## Update a Merchant SEPA Bank Account [PUT /v1/sepabankaccounts/{bank_account_id}]
+<a name="updatesepabankaccount" title="Update a Merchant SEPA Bank Account"></a>
 
 This is how you update a merchant [SEPA bank account](#sepabankaccountobject).
 
@@ -3608,6 +3681,7 @@ This is how you update a merchant [SEPA bank account](#sepabankaccountobject).
         + Include SEPA Bank Account Response
 
 ## Look Up a Merchant SEPA Bank Account [GET /v1/sepabankaccounts/{bank_account_id}]
+<a name="getsepabankaccount" title="Look Up a Merchant SEPA Bank Account"></a>
 
 This is how you look up a merchant [SEPA bank account](#sepabankaccountobject).
 
@@ -3629,6 +3703,7 @@ This is how you look up a merchant [SEPA bank account](#sepabankaccountobject).
         + Include SEPA Bank Account Response
 
 ## Delete a Merchant SEPA Bank Account [DELETE /v1/sepabankaccounts/{bank_account_id}]
+<a name="deletesepabankaccount" title="Delete a Merchant SEPA Bank Account"></a>
 
 This is how you delete a merchant SEPA bank account. 
 
@@ -3645,9 +3720,10 @@ This is how you delete a merchant SEPA bank account.
 + Response 200 (application/json)
 
 # Merchant Wire Bank Account [/wirebankaccounts]
-<a name="/wirebankaccounts"></a>
+<a name="wirebankaccounts" title="Merchant Wire Bank Account"></a>
 
 ## Create a Merchant Wire Bank Account [POST /v1/accounts/{account_id}/wirebankaccounts]
+<a name="createwirebankaccount" title="Create a Merchant Wire Bank Account"></a>
 
 This is how you create a merchant [Wire bank account](#wirebankaccountobject) that will be associated with the merchant account.
 
@@ -3680,6 +3756,7 @@ This is how you create a merchant [Wire bank account](#wirebankaccountobject) th
         + Include Wire Bank Account Response
 
 ## Update a Merchant Wire Bank Account [PUT /v1/wirebankaccounts/{bank_account_id}]
+<a name="updatewirebankaccount" title="Update a Merchant Wire Bank Account"></a>
 
 This is how you update a merchant [Wire bank account](#wirebankaccountobject).
 
@@ -3706,6 +3783,7 @@ This is how you update a merchant [Wire bank account](#wirebankaccountobject).
         + Include Wire Bank Account Response
 
 ## Look Up a Merchant Wire Bank Account [GET /v1/wirebankaccounts/{bank_account_id}]
+<a name="getwirebankaccount" title="Look Up a Merchant Wire Bank Account"></a>
 
 This is how you look up a merchant [Wire bank account](#wirebankaccountobject).
 
@@ -3727,6 +3805,7 @@ This is how you look up a merchant [Wire bank account](#wirebankaccountobject).
         + Include Wire Bank Account Response
 
 ## Delete a Merchant Wire Bank Account [DELETE /v1/wirebankaccounts/{bank_account_id}]
+<a name="deletewirebankaccount" title="Delete a Merchant Wire Bank Account"></a>
 
 This is how you delete a merchant Wire bank account. 
 
@@ -3743,11 +3822,12 @@ This is how you delete a merchant Wire bank account.
 + Response 200 (application/json)
 
 # Merchant Bank Accounts [/bankaccounts]
-<a name="merchantbankaccounts"></a>
+<a name="merchantbankaccounts" title="Merchant Bank Accounts"></a>
 
 The elements used in the bank account creation requests will vary depending on the [type of bank account](#bankaccountattributes) you are creating. The elements required depend on various factors, including the region, country, and currency. 
 
 ## Look Up Required Bank Account Details [GET /v1/bankaccounts/metadata?country={country_id}&region={region_id}&currency={currency_id}]
+<a name="getmerchantbankaccount" title="Look Up Required Bank Account Details"></a>
 
 This is how you look up the banking information required when you add a bank account to a merchant account.
 
@@ -3835,9 +3915,10 @@ This is how you look up the banking information required when you add a bank acc
                 + href:`https://api.test.paysafe.com/accountmanagement/v1/bankaccounts/metadata` (string, required) - This is the URI of the resource.
 
 # Terms and Conditions [/termsandconditions]
-<a name="termsandconditions"></a>
+<a name="termsandconditions" title="Terms and Conditions"></a>
 
 ## Accept the Terms and Conditions [POST /v1/accounts/{account_id}/termsandconditions]
+<a name="accepttermsandconditions" title="Accept the Terms and Conditions"></a>
 
 This is how you submit a Terms and Conditions acceptance request.
 
@@ -3862,6 +3943,7 @@ This is how you submit a Terms and Conditions acceptance request.
         + Include Terms and Conditions Response
 
 ## Look Up a Terms and Conditions Acceptance Request [GET /v1/termsandconditions/{terms_id}]
+<a name="gettermsandconditions" title="Look Up the Terms and Conditions"></a>
 
 This is how you look up your acceptance of the Terms and Conditions. 
 
@@ -3883,6 +3965,7 @@ This is how you look up your acceptance of the Terms and Conditions.
         + Include Terms and Conditions Response
 
 ## Look Up Terms and Conditions as HTML [GET /v1/accounts/{account_id}/termsandconditions?version={termsandconditions_version}]
+<a name="gettermsandconditionshtml" title="Look Up the Terms and Conditions as HTML"></a>
 
 This is how you look up the Terms and Conditions to view them in HTML format.
 
@@ -3908,9 +3991,10 @@ This is how you look up the Terms and Conditions to view them in HTML format.
             </html>
 
 # Users [/users]
-<a name="users"></a>
+<a name="users" title="Users"></a>
 
 ## Create a User [POST /v1/accounts/{account_id}/users]
+<a name="createuser" title="Create a User"></a>
 
 This is how you submit a user creation request. The user will be associated with the merchant account and have access to the Paysafe Merchant Back Office.
 
@@ -3936,6 +4020,7 @@ This is how you submit a user creation request. The user will be associated with
         + Include Recovery Question Response
 
 ## Look Up a User [GET /v1/accounts/{account_id}/users]
+<a name="getuser" title="Look Up a User"></a>
 
 This is how you look up a user associated with the merchant account.
 
@@ -3956,10 +4041,10 @@ This is how you look up a user associated with the merchant account.
         + Include User Lookup Response
 
 # Recovery Questions [/recoveryquestions]
-<a name="recoveryquestions"></a>
-
+<a name="recoveryquestions" title="Recovery Questions"></a>
 
 ## Look Up Recovery Questions [GET /v1/recoveryquestions]
+<a name="getrecoveryquestions" title="Look Up Recovery Questions"></a>
 
 This is how you look up the recovery questions that can be [presented to your users](#users), which will be used to support password resets in the Merchant Back Office.
 
@@ -3977,6 +4062,7 @@ This is how you look up the recovery questions that can be [presented to your us
 
 
 ## Look Up Recovery Questions with Locale [GET /v1/recoveryquestions/{locale}]
+<a name="getrecoveryquestionslocale" title="Look Up Recovery Questions with Locale"></a>
 
 This is how you look up the recovery questions, using the locale, that can be [presented to your users](users), which will be used to support password resets in the Merchant Back Office. The following locales are supported: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul>
 
@@ -3999,9 +4085,10 @@ This is how you look up the recovery questions, using the locale, that can be [p
         + Include Recovery Questions French
 
 # Identity Verification [/identity]
-<a name="identity"></a>
+<a name="identity" title="Identity Verification"></a>
 
 ## Associate an Identity ID to a Merchant Account [POST /v1/accounts/{account_id}/identity]
+<a name="associateidentity" title="Associate an Identity ID to a Merchant Account"></a>
 
 This is how you submit a merchant account identity verification request.
 
@@ -4026,9 +4113,10 @@ This is how you submit a merchant account identity verification request.
         + Include Identity ID Response
 
 # Merchant Account Activation [/activation]
-<a name="activation"></a>
+<a name="activation" title="Activation"></a>
 
 ## Activate a Merchant Account [POST /v1/accounts/{account_id}/activation]
+<a name="accountactivation" title="Activate a Merchant Account"></a>
 
 This is how you submit a merchant account activation request.
 
@@ -4055,7 +4143,7 @@ This is how you submit a merchant account activation request.
         + Include Account Activation Response
 
 # Bank Account Validation [/microdeposits]
-<a name="microdeposits"></a>
+<a name="microdeposits" title="Bank Account Validation"></a>
 
 Before Paysafe can remit funds to a merchant, their bank account information must first be validated to verify that the applicant is in fact the owner of the bank account associated with the merchant account, and that the banking information provided is accurate. The bank account validation method varies by jurisdiction and bank scheme.
 
@@ -4070,6 +4158,7 @@ For microdeposits, Paysafe will attempt to make a small deposit between 0.01 and
 **Note:** If the microdeposit validation method fails for some reason, then the merchant must use one of the alternative validation methods.
 
 ## Create a Microdeposit [POST /v1/bankaccounts/{bank_account_id}/microdeposits]
+<a name="createmicrodeposit" title="Create a Microdeposit"></a>
 
 This is how you create a microdeposit request for an ACH (U.S.) or EFT (Canadian) bank account.
 
@@ -4100,6 +4189,7 @@ You can create only one microdeposit request for each bank account. In addition,
         + Include Microdeposit Response
 
 ## Validate a Microdeposit [POST /v1/microdeposits/{microdeposit_id}/validate]
+<a name="validatemicrodeposit" title="Validate a Microdeposit"></a>
 
 This is how you create a microdeposit validation request.
 
@@ -4128,6 +4218,7 @@ As a result of a successful microdeposit request, a small deposit (between .01 a
         + Include Microdeposit Validation
 
 ## Look Up a Microdeposit [GET /v1/microdeposits/{microdeposit_id}]
+<a name="getmicrodeposit" title="Look Up a Microdeposit"></a>
 
 This is how you look up a microdeposit to view its status.
 
