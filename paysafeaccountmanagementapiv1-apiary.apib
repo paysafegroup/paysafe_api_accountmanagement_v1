@@ -885,6 +885,25 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
+<a name="creditsobject"></a>
+## Credits
+|Element    |Type                       |Description                        |
+|---        |---                        |---       |
+|amount     |number     |This is the amount to transfer from the linked account in minor currency units.|
+|detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
+|dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
+|linkedAccount|string   |The ID of the linked account from which to remove the credited amount.|
+|merchantRefNum|string  |The merchant's unique identifier for this request.|
+
+```apib
+{
+  "amount": 500,
+  "merchantRefNum": "ORDER_ID:1231",
+  "detail":"Charging 100222222 a fee",
+  "linkedAccount":"100222222"
+}
+```
+
 <a name="dateobject" title="Date Object"></a>
 ## Date
 |Element    |Type                       |Description                        |
@@ -898,6 +917,25 @@ The Paysafe Test environment can be used to test applications without actually r
   "day":"24",
   "month":"10",
   "year":"1981"
+}
+```
+
+<a name="debitsobject"></a>
+## Debits
+|Element    |Type                       |Description                        |
+|---        |---                        |---       |
+|amount     |number     |This is the amount to transfer to the linked account in minor currency units.|
+|detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
+|dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
+|linkedAccount|string   |The ID of the linked account to receive the debited amount.|
+|merchantRefNum|string  |The merchant's unique identifier for this request.|
+
+```apib
+{
+  "amount": 100,
+  "merchantRefNum": "merchantRefNum8",
+  "detail":"Refund",
+  "linkedAccount":"100222222"
 }
 ```
 
@@ -4252,6 +4290,75 @@ This is how you look up a microdeposit to view its status.
         + Include Links Microdeposits
         + Include Response Base        
         + Include Microdeposit Response Valid
+        
+# Balance Transfers [/transfers]
+<a name="transfers"></a>
+
+Partners can transfer balances between their linked merchants and their own account using the  Transfer capability. For example, the partner may want to issue a merchant with credit as a part of a promotion. To be able to perform transfers, Paysafe Technical Support configures the partner account with the capability, which enables it to Transfer Balances with all its linked merchants.  To be able to Transfer Balances, the partner must first be linked to the other accounts during on-boarding, and only accounts settling in the same currency can be linked. Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
+
+## Credit an Account [POST /v1/accounts/{account_id}/credits]
+
+This is how you transfer a balance from the linked account in the body of the request to the account identified in the API endpoint URI.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Credit Account (application/json)
+
+    + Attributes
+        + Include creditsobject
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include creditsobject
+        + status:`COMPLETED` (string, required) - The status of the transaction. 
+        + Include Links Credit
+
+## Debit an Account [POST /v1/accounts/{account_id}/debits]
+
+This is how you transfer a balance from the account identified in the API endpoint URI to the linked account in the body of the request. 
+
+<br>
+<br>
+<br>
+<a name="footer">
+<h1>Legal and Community</h1>
+<ul class="footer-menu">
+<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
+<li><a href="en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
+<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
+<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
+<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
+<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
+</ul>
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Debit Account (application/json)
+
+    + Attributes
+        + Include debitsobject
+
+    + Headers
+
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include debitsobject
+        + status:`COMPLETED` (string, required) - The status of the transaction.
+        + Include Links Debit
 
 # Data Structures
 
@@ -4581,6 +4688,13 @@ This is how you look up a microdeposit to view its status.
             + Include Date Issue
         + expiryDate (object, optional) - This is the expiration date the driving license.
             + Include Date Expiry
+            
+## creditsobject
++ amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
++ detail:`Refund` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
++ dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
++ merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
 
 ## Date
 + day:`15` (string, required) - This is the day of the month.
@@ -4596,6 +4710,13 @@ This is how you look up a microdeposit to view its status.
 + day:`15` (string, required) - This is the day of the month.
 + month:`9` - This is the  month of the year.
 + year:`2021` - This is the year.
+
+## debitsobject
++ amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
++ detail:`Charging a fee` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
++ dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
++ merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
 ## EFT Bank Account
 + accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
@@ -4714,6 +4835,18 @@ This is how you look up a microdeposit to view its status.
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/canadiandrivinglicenses/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
+
+## Links Credit
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/credits/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
+
+## Links Debit
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/debits/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
 
 ## Links EFT Bank Accounts
 + links (array, required) - This is an array of [links](#linksobject).
