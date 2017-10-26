@@ -7,7 +7,8 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
-| 1.0       | December 2016 | <ul><li>Document release</li></ul>|
+| 1.0       |September 2017 | <ul><li>Added Balance Transfers</li><li>Added Subaccounts</li></ul>|
+| 1.0       |December 2016  | <ul><li>Document release</li></ul>|
 
 # Overview
 
@@ -105,15 +106,17 @@ The following request types are supported:
   * [Business Owner UK Driving Licenses](#ukdrivinglicenses)
   * [Business Owner European Identity Cards](#identitycards)
   * [Business Owner International Passports](#internationalpassports)
-  * [Merchant EFT Bank Accounts](#eftbankaccounts)
-  * [Merchant ACH Bank Accounts](#achbankaccounts)
-  * [Merchant BACS Bank Accounts](#bacsbankaccounts)
-  * [Merchant SEPA Bank Accounts](#sepabankaccounts)
-  * [Merchant Wire Bank Accounts](#wirebankaccounts)
+  * [EFT Bank Accounts](#eftbankaccounts)
+  * [ACH Bank Accounts](#achbankaccounts)
+  * [BACS Bank Accounts](#bacsbankaccounts)
+  * [SEPA Bank Accounts](#sepabankaccounts)
+  * [Wire Bank Accounts](#wirebankaccounts)
   * [Terms and Conditions](#termsandconditions)
   * [Identity Verification](#identity)  
   * [Merchant Account Activation](#accountactivation)
   * [Bank Account Validation](#microdeposits)
+  * [Subaccounts](#subaccounts)
+  * [Balance Transfers](#transfers)
   
 **API Endpoint**
 
@@ -185,12 +188,19 @@ The following request types are supported:
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Delete a Wire Merchant Bank Account    |DELETE |
 |/accounts/{account_id}/termsandconditions      |Accept the Terms and Conditions        |POST   |
 |/accounts/{account_id}/identity                 |Associate an Identity ID to a Merchant Account |POST   |
-|/accounts/{account_id}/activation              |Activate a Merchant Account            |POST   |
-|/bankaccounts/{bank_account_id}/microdeposits |Validate a Bank Account         |POST   |
-|/microdeposits/{micro_deposit_id}      |Look Up a Microdeposit |GET    |
-|/microdeposits/{micro_deposit_id}/validate |Validate a Bank Microdeposit   |POST   |
-
-
+|/accounts/{account_id}/activation              |Activate a Merchant Account                |POST   |
+|/bankaccounts/{bank_account_id}/microdeposits |Validate a Bank Account                     |POST   |
+|/microdeposits/{micro_deposit_id}          |Look Up a Microdeposit                         |GET    |
+|/microdeposits/{micro_deposit_id}/validate |Validate a Bank Microdeposit                   |POST   |
+|/achbankaccounts                           |Create an ACH Bank Account for Subaccounts     |POST   |
+|/achbankaccounts/{bank_account_id}         |Update an ACH Bank Account for Subaccounts     |PUT    |
+|/achbankaccounts/{bank_account_id}         |Look Up an ACH Bank Account for Subaccounts    |GET    |
+|/eftbankaccounts                           |Create an EFT Bank Account for Subaccounts     |POST   |
+|/eftbankaccounts/{bank_account_id}         |Update an EFT Bank Account for Subaccounts     |PUT    |
+|/eftbankaccounts/{bank_account_id}         |Look Up an EFT Bank Account for Subaccounts    |GET    |
+|/accounts/{account_id}/subaccounts         |Create a Subaccount                            |POST   |
+|/subaccounts/{subaccount_id}               |Update a Subaccount                            |PATCH  |
+|/subaccounts/{subaccount_id}               |Look Up a Subaccount                           |GET    |
 
 # Getting Started
 
@@ -645,9 +655,9 @@ The Paysafe Test environment can be used to test applications without actually r
 
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's ACH bank account ID returned in the response.|
-|accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
-|routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the merchant's bank account.|
+|id                             |string<br/>`length<=36`    |This is the ACH bank account ID returned in the response.|
+|accountNumber                  |string<br/>`length=1-20`   |This is the bank account number.|
+|routingNumber                  |string<br/>`length=9`      |This is the 9-digit routing number of the bank account.|
 
 ```apib
 {
@@ -661,11 +671,11 @@ The Paysafe Test environment can be used to test applications without actually r
 
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's BACS bank account ID returned in the response.|
+|id                             |string<br/>`length<=36`    |This is the BACS bank account ID returned in the response.|
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary bank's address.|
 |beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary account name.|
-|accountNumber                  |string<br/>`length=8`      |This is the merchant's 8-digit bank account number.|
-|sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
+|accountNumber                  |string<br/>`length=8`      |This is the 8-digit bank account number.|
+|sortCode                       |string<br/>`length=6`      |This is the 6-digit sort code of the bank account.|
 
 ```apib
 {
@@ -944,10 +954,10 @@ The Paysafe Test environment can be used to test applications without actually r
 
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's EFT bank account ID returned in the response.|
-|accountNumber                  |string<br/>`length=1-20`   |This is the merchant's bank account number.|
-|transitNumber                  |string<br/>`length=5`      |This is the 5-digit transit number of the merchant's bank branch.|
-|institutionId                  |string<br/>`length=3`      |This is the 3-digit institution ID of the merchant's bank branch.|
+|id                             |string<br/>`length<=36`    |This is the EFT bank account ID returned in the response.|
+|accountNumber                  |string<br/>`length=1-20`   |This is the bank account number.|
+|transitNumber                  |string<br/>`length=5`      |This is the 5-digit transit number of the bank branch.|
+|institutionId                  |string<br/>`length=3`      |This is the 3-digit institution ID of the bank branch.|
 
 ```apib
 {
@@ -1032,6 +1042,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |name           |string<br/>`length<=250`   |This is the merchant name.|
 |legalEntity    |string<br/>`length<=240`   |This is the business legal/trading name (e.g., "ACME CA").|
 |status         |enum                       |This is the status of the merchant account. Possible values are: <ul><li>APPROVED - The merchant account has been approved, but not yet enabled.</li><li>DEFERRED - The merchant account application has been deferred until underwriting by Risk/Compliance is completed.</li><li>DISABLED - The merchant account application has been disabled due to suspension or termination.</li><li>ENABLED - The merchant account has been enabled for payment processing.</li><li>PENDING - The merchant account application has not yet been completed.</li><li>REJECTED - The merchant account application has been rejected due to Risk/Compliance check failure.</li><li>RETURNED - The merchant account application has been returned from Risk to Compliance for review.</li><li>SUBMITTED - The merchant account has been submitted for review by Paysafe Risk/Compliance.</li><li>WAITING - Compliance is waiting for additional information to be provided by the merchant.</li><li>WITHDRAWN - The merchant account application has been withdrawn.</li></ul>|
+|statusReason   |enum                       |This is the reason if the *status* is being set to *DISABLED*. <ul><li>TERMINATED</li></ul> |
+|statusComment  |string<br/>`length<=255`   |This is a comment on why the account is being set to *DISABLED*.|
 |currency       |enum                       |This is the currency used for transactions on this merchant account. See [Supported Currency Codes](#supportedcurrencycodes). |
 |region         |enum                       |This is the region for the merchant account. Possible values are: <ul><li>US</li><li>CA</li><li>EU</li></ul> |
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
@@ -1147,6 +1159,19 @@ The Paysafe Test environment can be used to test applications without actually r
 }
 ```
 
+<a name="paymentscheduleobject" title="Payment Schedule Object"></a>
+## Payment Schedule
+
+The payment schedule is returned in the response when you [look up a subaccount in expanded format](#getsubaccountexpanded).
+
+|Element        |Type                       |Description                        |
+|---            |---                        |---       |
+|id             |string<br/>`length<=36`    |This is the ID returned in the response. It can be used later to look up or update a payment schedule.|
+|eftId \| achId |string<br/>`length<=36`    |This is the ID of the destination bank account, returned by Paysafe when the bank account for subaccounts was created.|
+|frequency      |enum                       |This is the payment schedule frequency. Possible values are:<ul><li>WEEKDAY &ndash; Every day of the week, Monday through Friday</li><li>MONDAY_WEDNESDAY_FRIDAY &ndash; Every Monday, Wednesday, and Friday</li><li>TUESDAY_THURSDAY &ndash; Every Tuesday and Thursday</li><li>EVERY_WEEK &ndash; Every week</li><li>EVERY_TWO_WEEKS &ndash; Every two weeks</li><li>EVERY_FOUR_WEEKS &ndash; Every four weeks</li><li>TUESDAY_FRIDAY &ndash; Every Tuesday and Friday</li><li>MONDAY_WEDNESDAY &ndash; Every Monday and Wednesday</li><li>WEDNESDAY_FRIDAY &ndash; Every Wednesday and Friday</li><li>MONDAY_TO_THURSDAY &ndash; Every Monday, Tuesday, Wednesday, and Thursday</li></ul>|
+|status         |enum                       |This is the status of the payment schedule. Possible values are: <ul><li>ENABLED &ndash; The subaccount will be funded/debited as scheduled.</li><li>ON_HOLD &ndash; The subaccount will **not** be funded/debited as scheduled. To remove the hold, you must update the destination bank account with new details.</li></ul>|
+|statusReason   |enum                       |This is the reason if the *status* is *ON_HOLD*. <ul><li>INVALID_BANK_ACCOUNT &ndash; To remove the hold, you must update the destination bank account with new details.</li><li>DISABLED_INTERNALLY &ndash; Contact Support to enable.</li><li>BANK_VALIDATION_FAILED  &ndash; Contact Support to enable.</li><li>BANK_VALIDATION_REQUIRED  &ndash; Contact Support to enable.</li></ul> |
+
 <a name="recoveryquestionobject" title="Recovery Question Object"></a>
 ## recoveryQuestion
 
@@ -1168,11 +1193,11 @@ The Paysafe Test environment can be used to test applications without actually r
 
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merchant's SEPA bank account ID returned in the response.|
+|id                             |string<br/>`length<=36`    |This is the SEPA bank account ID returned in the response.|
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#sepacountries) of the beneficiary bank's address.|
 |beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary account name.|
-|swiftNumber                    |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account. Alphanumeric characters only.|
-|ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account. Alphanumeric characters only.|
+|swiftNumber                    |string<br/>`length=8 or 11`|This is the Swift code of the bank account. Alphanumeric characters only.|
+|ibanNumber                     |string<br/>`length=15-32`  |This is the IBAN number of the bank account. Alphanumeric characters only.|
 
 ```apib
 {
@@ -1182,6 +1207,23 @@ The Paysafe Test environment can be used to test applications without actually r
   "beneficiaryBankCountry":"GB"
 }
 ```
+
+<a name="subaccountobject" title="Subaccounts Object"></a>
+## Subaccounts
+
+Subaccounts allow merchants to share and distribute payments among multiple accounts.
+
+**Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
+
+|Element        |Type                       |Description                        |
+|---            |---                        |---       |
+|id             |string<br/>`length<=36`    |This is the account ID returned in the response. It can be used later to look up or update a subaccount.|
+|name           |string<br/>`length<=250`   |This is the subaccount name.|
+|status         |enum                       |This is the status of the subaccount. Possible values are: <ul><li>DISABLED &ndash; The subaccount has been disabled. The payment schedule associated with this subaccount is not disabled.</li><li>ENABLED &ndash; The subaccount has been enabled. This is the default value when the subaccount is created.</li></ul>|
+|statusReason   |enum                       |This is the reason if the *status* is being set to *DISABLED*. <ul><li>TERMINATED</li></ul> |
+|statusComment  |string<br/>`length<=255`   |This is a comment on why the subaccount is being set to *DISABLED*.|
+|eftId \| achId |string<br/>`length<=36`    |This is the ID of the destination bank account, returned by Paysafe when the bank account for subaccounts was created.|
+|paymentScheduleId |string<br/>`length<=36` |This is the ID of the payment schedule created in the background when assigning a destination bank account ID to a subaccount. It can be expanded to retrieve more information.|
 
 <a name="termsandconditionsobject" title="Terms and Conditions Object"></a>
 ## Terms and Conditions
@@ -1258,12 +1300,12 @@ The Paysafe Test environment can be used to test applications without actually r
 
 |Element            |Type                       |Description                        |
 |---                |---                        |---    |
-|id                 |string<br/>`length<=36`    |This is the merchant's wire bank account ID returned in the response.|
-|accountNumber      |string<br/>`length=2-30`   |This is the merchant's bank account number.|
-|routingNumber      |string<br/>`length=1-12`   |This is the routing number of the merchant's bank account.|
-|sortCode           |string<br/>`length=6`      |This is the 6-digit sort code of the merchant's bank account.|
-|swiftNumber        |string<br/>`length=8 or 11`|This is the Swift code of the merchant's bank account. Alphanumeric characters only.|
-|ibanNumber         |string<br/>`length=15-32`  |This is the IBAN number of the merchant's bank account. Alphanumeric characters only.|
+|id                 |string<br/>`length<=36`    |This is the wire bank account ID returned in the response.|
+|accountNumber      |string<br/>`length=2-30`   |This is the bank account number.|
+|routingNumber      |string<br/>`length=1-12`   |This is the routing number of the bank account.|
+|sortCode           |string<br/>`length=6`      |This is the 6-digit sort code of the bank account.|
+|swiftNumber        |string<br/>`length=8 or 11`|This is the Swift code of the bank account. Alphanumeric characters only.|
+|ibanNumber         |string<br/>`length=15-32`  |This is the IBAN number of the bank account. Alphanumeric characters only.|
 |beneficiaryCountry |string<br/>`length=2`      |This is the country of the beneficiary's address. See [Country Codes](#countrycodes).
 |beneficiaryAccountName |string<br/>`length<=250`    |This is the beneficiary account name.|
 |beneficiaryAddress |string<br/>`length<=100`   |This is the beneficiary's address.|
@@ -1314,7 +1356,7 @@ Click [here](https://developer.paysafe.com/en/rest-api/partners/account-manageme
 <a name="bankaccountattributes" title="Bank Account Attributes"></a>
 ## Bank Account Attributes Required
 
-This table provides an overview of the attributes that are Required, Optional, and Conditional when creating each of the five [bank account types](#bankaccounttypes). 
+This table provides an overview of the attributes that are Required, Optional, and Conditional when creating each of the five [merchant bank account types](#bankaccounttypes). 
 
 | Element                 | EFT      | ACH      | SEPA     | BACS     | Wire        |
 |-------------------------|----------|----------|----------|----------|-------------|
@@ -1945,7 +1987,7 @@ This is how you update a merchant.
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
 
 + Request Merchant Update (application/json)
 
@@ -1970,7 +2012,7 @@ This is how you look up a merchant.
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
 
 + Request Get Merchant (application/json)
 
@@ -1997,7 +2039,7 @@ This is how you submit a merchant account creation request.
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
 
 + Request Merchant Account Creation (application/json)
 
@@ -2023,7 +2065,7 @@ This is how you submit a merchant account creation request that includes the mer
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
     + operation_mode:`consolidated` (string, required) - This indicates that you are including the merchant account address in this request. 
 
 + Request Merchant Account Creation (application/json)
@@ -2116,7 +2158,7 @@ This is how you update a merchant account with a PATCH request.
 + Request Merchant Account Update (application/json)    
 
     + Attributes
-        + Include Merchant Account Update
+        + Include Merchant Account Update Patch
 
     + Headers
     
@@ -2143,7 +2185,7 @@ This is how you update a merchant account and its associated merchant account ad
 + Request Merchant Account Update (application/json)    
 
     + Attributes
-        + Include Merchant Account Update
+        + Include Merchant Account Update Patch
         + Include Address Object
         + Include Trading Address Object        
 
@@ -2158,6 +2200,35 @@ This is how you update a merchant account and its associated merchant account ad
         + Include Merchant Account Update Response
         + Include Address Consolidated        
         + Include Address Trading Consolidated
+
+## Disable a Merchant Account - PATCH [PATCH /v1/accounts/{account_id}]
+<a name="disablemerchantaccount" title="Disable a Merchant Account"></a>
+
+This is how you disable a merchant account. 
+
+**Note:** If a merchant account has active subaccounts associated with it, all the [active subaccounts must be disabled](#disablesubaccounts) before you can disable the merchant account.
+
+**Note:** While doing an update via a PATCH operation, you must provide only the elements of the merchant account that you want to update. Elements not included will remain unchanged in the resulting merchant account.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    
++ Request Disable Merchant Account (application/json)    
+
+    + Attributes
+        + status:`DISABLED` (enum, optional) - This is the status of the subaccount. **Note:** You can only change the status of a merchant account from *ENABLED* to *DISABLED*.
+        + statusReason:`TERMINATED` (enum, optional) - This is the reason if the *status* is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
+        + statusComment:`Property manager sold business.` (string, optional) - This is a comment on why the account is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY  
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Merchant Account Disable Response
 
 ## Look Up a Merchant Account [GET /v1/accounts/{account_id}]
 <a name="getmerchantaccount" title="Look Up a Merchant Account"></a>
@@ -2568,7 +2639,7 @@ This is how you update a Canadian business owner with a PATCH request.
 + Request Canadian Business Owner Update (application/json)
 
     + Attributes
-        + Include Canadian Business Owner
+        + Include Canadian Business Owner Patch
         
     + Headers
     
@@ -2622,7 +2693,7 @@ This is how you update a US business owner with a PATCH request.
 + Request US Business Owner Update (application/json)
 
     + Attributes
-        + Include US Business Owner
+        + Include US Business Owner Patch
         
     + Headers
     
@@ -2676,7 +2747,7 @@ This is how you update a European business owner with a PATCH request.
 + Request European Business Owner Update (application/json)
 
     + Attributes
-        + Include European Business Owner
+        + Include European Business Owner Patch
         
     + Headers
     
@@ -2837,7 +2908,7 @@ This is how you update a business owner current address with a PATCH request.
 + Request Business Owner Current Address Update (application/json)
 
     + Attributes
-        + Include Address Current
+        + Include Address Current Patch
         
     + Headers
 
@@ -2943,7 +3014,7 @@ This is how you update a business owner previous address with a PATCH request.
 + Request Business Owner Previous Address Update (application/json)
 
     + Attributes
-        + Include Address Current
+        + Include Address Current Patch
         
     + Headers
 
@@ -3389,10 +3460,10 @@ This is how you delete a business owner international passport.
 
 + Response 200 (application/json)
 
-# Merchant ACH Bank Account [/achbankaccounts]
-<a name="achbankaccounts" title="Merchant ACH Bank Account"></a>
+# ACH Bank Account [/achbankaccounts]
+<a name="achbankaccounts" title="ACH Bank Account"></a>
 
-## Merchant ACH Bank Account Creation [POST /v1/accounts/{account_id}/achbankaccounts]
+## Create a Merchant ACH Bank Account [POST /v1/accounts/{account_id}/achbankaccounts]
 <a name="createachbankaccount" title="Create a Merchant ACH Bank Account"></a>
 
 This is how you create a merchant [ACH bank account](#achbankaccountobject) that will be associated with the merchant account.
@@ -3481,8 +3552,105 @@ This is how you delete a merchant ACH bank account.
 
 + Response 200 (application/json)
 
-# Merchant BACS Bank Account [/bacsbankaccounts]
-<a name="bacsbankaccounts" title="Merchant BACS Bank Account"></a>
+## Create an ACH Bank Account for Subaccounts [POST /v1/merchants/{merchant_id}/achbankaccounts]
+<a name="createachbankaccountsub" title="Create an ACH Bank Account for Subaccounts"></a>
+
+This is how you create an [ACH bank account](#achbankaccountobject) that can be associated with one or more subaccounts.
+
+The *id* returned in the response will be used as the *achId* element in your request to [create a subaccount](#createsubaccounts).
+
+**Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
+
++ Parameters
+
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
+
++ Request Create ACH Bank Account for Subaccounts (application/json)
+
+    + Attributes
+        + Include ACH Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include ACH Bank Account Response
+        + Include Links ACH Bank Accounts
+
+## Update an ACH Bank Account for Subaccounts[PUT /v1/achbankaccounts/{bank_account_id}]
+<a name="updateachbankaccountsub" title="Update an ACH Bank Account for Subaccounts"></a>
+
+This is how you update an [ACH bank account](#achbankaccountobject) that can be [associated with one or more subaccounts](#subaccountobject). 
+
+**Note:** When you update an ACH bank account associated with more than one subaccount, the changes to the banking information will be reflected in all subaccounts. 
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request ACH Bank Account for Subaccounts Update (application/json)
+
+    + Attributes
+        + Include ACH Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include ACH Bank Account Response
+        + Include Links ACH Bank Accounts      
+
+## Look Up an ACH Bank Account for Subaccounts [GET /v1/achbankaccounts/{bank_account_id}]
+<a name="getachbankaccountsub" title="Look Up an ACH Bank Account for Subaccounts"></a>
+
+This is how you look up an [ACH bank account](#achbankaccountobject) that can be [associated with one or more subaccounts](#subaccountobject).
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Get ACH Bank Account for Subaccounts (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include ACH Bank Account Response
+        + Include Links ACH Bank Accounts
+
+## Delete an ACH Bank Account for Subaccounts [DELETE /v1/achbankaccounts/{bank_account_id}]
+<a name="deleteachbankaccountsub" title="Delete an ACH Bank Account for Subaccounts"></a>
+
+This is how you delete an [ACH bank account](#achbankaccountobject) that can be [associated with one or more subaccounts](#subaccountobject). 
+
+**Note:** If the ACH bank account is still assigned to any subaccount, it cannot be deleted. You first have to [update the subaccount to assign a different bank account to it](#updatesubaccounts).
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Delete ACH Bank Account for Subaccounts (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+# BACS Bank Account [/bacsbankaccounts]
+<a name="bacsbankaccounts" title="BACS Bank Account"></a>
 
 ## Create a Merchant BACS Bank Account [POST /v1/accounts/{account_id}/bacsbankaccounts]
 <a name="createbacsbankaccount" title="Create a Merchant BACS Bank Account"></a>
@@ -3573,8 +3741,8 @@ This is how you delete a merchant BACS bank account.
 
 + Response 200 (application/json)
 
-# Merchant EFT Bank Account [/eftbankaccounts]
-<a name="eftbankaccounts" title="Merchant EFT Bank Account"></a>
+# EFT Bank Account [/eftbankaccounts]
+<a name="eftbankaccounts" title="EFT Bank Account"></a>
 
 ## Create a Merchant EFT Bank Account [POST /v1/accounts/{account_id}/eftbankaccounts]
 <a name="createeftbankaccount" title="Create a Merchant EFT Bank Account"></a>
@@ -3665,8 +3833,105 @@ This is how you delete a merchant EFT bank account.
 
 + Response 200 (application/json)
 
-# Merchant SEPA Bank Account [/sepabankaccounts]
-<a name="sepabankaccounts" title="Merchant SEPA Bank Account"></a>
+## Create an EFT Bank Account for Subaccounts [POST /v1/merchants/{merchant_id/eftbankaccounts]
+<a name="createeftbankaccountsub" title="Create an EFT Bank Account for Subaccounts"></a>
+
+This is how you create an [EFT bank account](#eftbankaccountobject) that can be associated with one or more subaccounts.
+
+The *id* returned in the response will be used as the *eftId* element in your request to [create a subaccount](#createsubaccounts).
+
+**Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
+
++ Parameters
+
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
+
++ Request Create EFT Bank Account for Subaccounts (application/json)
+
+    + Attributes
+        + Include EFT Bank Account
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include EFT Bank Account Response
+        + Include Links EFT Bank Accounts
+
+## Update an EFT Bank Account for Subaccounts[PUT /v1/eftbankaccounts/{bank_account_id}]
+<a name="updateeftbankaccountsub" title="Update an EFT Bank Account for Subaccounts"></a>
+
+This is how you update an [EFT bank account](#eftbankaccountobject) that can be [associated with one or more subaccounts](#subaccountobject).
+
+**Note:** When you update an EFT bank account associated with more than one subaccount, the changes to the banking information will be reflected in all subaccounts.
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request EFT Bank Account for Subaccounts Update (application/json)
+
+    + Attributes
+        + Include EFT Bank Account
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include EFT Bank Account Response
+        + Include Links EFT Bank Accounts      
+
+## Look Up a Merchant EFT Bank Account for Subaccounts [GET /v1/eftbankaccounts/{bank_account_id}]
+<a name="geteftbankaccountsub" title="Look Up an EFT Bank Account for Subaccounts"></a>
+
+This is how you look up an [EFT bank account](#eftbankaccountobject) that can be [associated with one or more subaccounts](#subaccountobject).
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Get EFT Bank Account for Subaccounts (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include EFT Bank Account Response
+        + Include Links EFT Bank Accounts
+
+## Delete an EFT Bank Account for Subaccounts [DELETE /v1/eftbankaccounts/{bank_account_id}]
+<a name="deleteeftbankaccountsub" title="Delete an EFT Bank Account for Subaccounts"></a>
+
+This is how you delete an [EFT bank account](#eftbankaccountobject) that can be [associated with one or more subaccounts](#subaccountobject). 
+
+**Note:** If the EFT bank account is still assigned to any subaccount, it cannot be deleted. You first have to [update the subaccount to assign a different bank account to it](#updatesubaccounts).
+
++ Parameters
+
+    + bank_account_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the bank account ID returned in the response to the bank account creation request.
+
++ Request Delete EFT Bank Account for Subaccounts (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+# SEPA Bank Account [/sepabankaccounts]
+<a name="sepabankaccounts" title="SEPA Bank Account"></a>
 
 ## Create a Merchant SEPA Bank Account [POST /v1/accounts/{account_id}/sepabankaccounts]
 <a name="createsepabankaccount" title="Create a Merchant SEPA Bank Account"></a>
@@ -3757,8 +4022,8 @@ This is how you delete a merchant SEPA bank account.
 
 + Response 200 (application/json)
 
-# Merchant Wire Bank Account [/wirebankaccounts]
-<a name="wirebankaccounts" title="Merchant Wire Bank Account"></a>
+# Wire Bank Account [/wirebankaccounts]
+<a name="wirebankaccounts" title="Wire Bank Account"></a>
 
 ## Create a Merchant Wire Bank Account [POST /v1/accounts/{account_id}/wirebankaccounts]
 <a name="createwirebankaccount" title="Create a Merchant Wire Bank Account"></a>
@@ -4260,20 +4525,6 @@ As a result of a successful microdeposit request, a small deposit (between .01 a
 
 This is how you look up a microdeposit to view its status.
 
-<br>
-<br>
-<br>
-<a name="footer">
-<h1>Legal and Community</h1>
-<ul class="footer-menu">
-<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
-<li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
-<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
-<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
-<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
-<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
-</ul>
-
 + Parameters
 
     + microdeposit_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the microdeposit ID returned in the response to the microdeposit creation request.
@@ -4291,12 +4542,183 @@ This is how you look up a microdeposit to view its status.
         + Include Response Base        
         + Include Microdeposit Response Valid
         
+# Subaccounts [/subaccounts]
+<a name="subaccounts" title="Subaccounts"></a>
+
+Subaccounts allow merchants to share and distribute payments among multiple accounts. When you create a subaccount, it will be connected with the merchant account ID that is specified in the request endpoint.
+
+**Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
+
+## Create a Subaccount [POST /v1/accounts/{account_id}/subaccounts]
+<a name="createsubaccounts" title="Create a Subaccount"></a>
+
+This is how you create a [subaccount](#subaccountobject).
+
+You must first create either an [EFT bank account](#createeftbankaccountsub) or an [ACH bank account](#createachbankaccountsub) &ndash; depending on the processing region of the merchant account from which this subacccount is being created &ndash; that you will associate with this subaccount. The *id* returned in the response to the destination bank account creation request will be used as the *eftId* or *achId* element in this request. Note that the *id* can be used in multiple subaccount creation requests.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the [merchant account creation request](#createmerchantaccount).
+
++ Request Create Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response
+
+## Update a Subaccount [PATCH /v1/subaccounts/{subaccount_id}]
+<a name="updatesubaccounts" title="Update a Subaccount"></a>
+
+This is how you update a [subaccount](#subaccountobject).
+
+**Note:** When using the PATCH operation, you must provide only the elements of the subaccount that you want to update. Elements not included will remain unchanged in the resulting subaccount.
+
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+
++ Request Update Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount Patch
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response Patch
+
+## Disable All Subaccounts for a Merchant Account [PATCH /v1/accounts/{account_id}/subaccounts]
+<a name="disablesubaccounts" title="Disable All Subaccounts for a Merchant Account"></a>
+
+You can disable a single subaccount by [updating the subaccount](#updatesubaccounts) and changing its status to DISABLED. 
+With this request, however, you can disable all [subaccounts](#subaccountobject) belonging to a merchant account.
+
+**Note:** When using the PATCH operation, you must provide only the elements of the subaccount that you want to update. Elements not included will remain unchanged in the resulting subaccount.
+
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Update Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount Patch Disable
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Patch Disable Response
+
+## Look Up a Subaccount [GET /v1/subaccounts/{subaccount_id}]
+<a name="getsubaccount" title="Look Up a Subaccount"></a>
+
+This is how you look up a [subaccount](#subaccountobject).
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+
++ Request Get Subaccount (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response
+
+## Look Up All Subaccounts for a Merchant Account [GET /v1/accounts/{account_id}/subaccounts]
+<a name="getsubaccounts" title="Look Up All Subaccounts for a Merchant Account"></a>
+
+This is how you look up all [subaccounts](#subaccountobject) belonging to a merchant account. 
+
+**Note:** If a merchant account has subaccounts associated with it, then the URL used in this request will be listed in the *links* array of the GET response when [looking up that merchant account](#getmerchantaccount) (to be used in this lookup call).
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Get All Subaccounts (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response All
+
+## Look Up a Subaccount - Expanded [GET /v1/subaccounts/{subaccount_id}?expand={fields}]
+<a name="getsubaccountexpanded" title="Look Up a Subaccount in Expanded Format"></a>
+
+This is how you look up a [subaccount](#subaccountobject) in expanded format to view the payment schedule created when assigning a destination bank account to the subaccount.
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+    + fields:`paymentSchedule` (string, required) -  This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+
++ Request Get Subaccount - Expanded (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response Expanded
+
+## Look Up All Subaccounts for a Merchant Account - Expanded [GET /v1/accounts/{account_id}/subaccounts?expand={fields}]
+<a name="getsubaccountsexpanded" title="Look Up All Subaccounts for a Merchant Account in Expanded Format"></a>
+
+This is how you look up all [subaccounts](#subaccountobject) belonging to a merchant account in expanded format to view the payment schedule associated with the subaccounts.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + fields:`paymentSchedule` (string, required) -  This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+
++ Request Get All Subaccounts - Expanded (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response All Expanded
+
+
 # Balance Transfers [/transfers]
-<a name="transfers"></a>
+<a name="transfers" title="Balance Transfers"></a>
 
 Partners can transfer balances between their linked merchants and their own account using the  Transfer capability. For example, the partner may want to issue a merchant with credit as a part of a promotion. To be able to perform transfers, Paysafe Technical Support configures the partner account with the capability, which enables it to Transfer Balances with all its linked merchants.  To be able to Transfer Balances, the partner must first be linked to the other accounts during on-boarding, and only accounts settling in the same currency can be linked. Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
 
 ## Credit an Account [POST /v1/accounts/{account_id}/credits]
+<a name="creditaccount" title="Credit an Account"></a>
 
 This is how you transfer a balance from the linked account in the body of the request to the account identified in the API endpoint URI.
 
@@ -4322,6 +4744,7 @@ This is how you transfer a balance from the linked account in the body of the re
         + Include Links Credit
 
 ## Debit an Account [POST /v1/accounts/{account_id}/debits]
+<a name="debitaccount" title="Debit an Account"></a>
 
 This is how you transfer a balance from the account identified in the API endpoint URI to the linked account in the body of the request. 
 
@@ -4363,12 +4786,12 @@ This is how you transfer a balance from the account identified in the API endpoi
 # Data Structures
 
 ## ACH Bank Account
-+ accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
-+ routingNumber:`854117563` (string, required) - This is the 9-digit routing number of the merchant's bank account.
++ accountNumber:`5807560412853954` (string, required) - This is the bank account number.
++ routingNumber:`854117563` (string, required) - This is the 9-digit routing number of the bank account.
 
 ## ACH Bank Account Response
-+ accountNumber:`*************954` (string, required) - This is the merchant's bank account number.
-+ routingNumber:`******563` (string, required) - This is the 9-digit routing number of the merchant's bank account.
++ accountNumber:`*************954` (string, required) - This is the bank account number.
++ routingNumber:`******563` (string, required) - This is the 9-digit routing number of the bank account.
 
 ## Account Activation Response
 + Include Activate Merchant Account Response Object
@@ -4474,6 +4897,15 @@ This is how you transfer a balance from the account identified in the API endpoi
 + zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
 + yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address. **Note:** This field is optional for US businesses.
 
+## Address Current Patch
++ street:`100 Queen Street West` (string, optional) - This is the first line of the street address.
++ street2:`Apt. 245` (string, optional) - This is the second line of the street address.
++ city:`Toronto` (string, optional) - This is the city where the address is located.
++ state:`ON` (string, optional) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
++ country:`CA` (string, optional) - This is the [country code](#countrycodes) of the address.
++ zip:`M5H 2N2` (string, optional) - This is the zip/postal code of the address.
++ yearsAtAddress:`2` (string, optional) - This is the number of years the business owner has been living at this address. **Note:** This field is optional for US businesses.
+
 ## Address Previous
 + street:`100 Queen Street West` (string, required) - This is the first line of the street address.
 + street2:`Apt. 415` (string, optional) - This is the second line of the street address.
@@ -4560,14 +4992,14 @@ This is how you transfer a balance from the account identified in the API endpoi
 ## BACS Bank Account
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#bacscountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ accountNumber:`94001521` (string, required) - This is the merchant's 8-digit bank account number.
-+ sortCode:`857412` (string, required) - This is the 6-digit sort code of the merchant's bank account.
++ accountNumber:`94001521` (string, required) - This is the 8-digit bank account number.
++ sortCode:`857412` (string, required) - This is the 6-digit sort code of the bank account.
 
 ## BACS Bank Account Response
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#bacscountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ accountNumber:`*****521` (string, required) - This is the merchant's 8-digit bank account number.
-+ sortCode:`******` (string, required) - This is the 6-digit sort code of the merchant's bank account.
++ accountNumber:`*****521` (string, required) - This is the 8-digit bank account number.
++ sortCode:`******` (string, required) - This is the 6-digit sort code of the bank account.
 
 ## Bank Account Lookup Response
 + bankType:`WIRE` (string, required) - This is the bank account type to register with the merchant account.
@@ -4651,6 +5083,17 @@ This is how you transfer a balance from the account identified in the API endpoi
     + Include Date
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
 
+## Canadian Business Owner Patch
++ firstName:`James` (string, optional) - This is the first name of the business owner.
++ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
++ lastName:`Ronald` (string, optional) - This is the last name of the business owner.
++ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
++ jobTitle:`CEO` (string, optional) - This is the job title of the business owner.
++ phone:`5556667777` (string, optional) - This is the phone number of the business owner.
++ dateOfBirth (object, optional) - This is the birth date of the business owner.
+    + Include Date
++ ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
+
 ## Canadian Driving License 
 + number:`DL987654321` (string, required) - This is the driving license number
 + province:`ON` (string, required) - This is the province that issued the license. See [Province Codes](#provincecodes).
@@ -4719,23 +5162,23 @@ This is how you transfer a balance from the account identified in the API endpoi
 + merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
 ## EFT Bank Account
-+ accountNumber:`5807560412853954` (string, required) - This is the merchant's bank account number.
-+ transitNumber:`52487` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
-+ institutionId:`052` (string, required) - This is the 3-digit institution ID of the merchant's bank branch.
++ accountNumber:`5807560412853954` (string, required) - This is the bank account number.
++ transitNumber:`52487` (string, required) - This is the 5-digit transit number of the bank branch.
++ institutionId:`052` (string, required) - This is the 3-digit institution ID of the bank branch.
 
 ## EFT Bank Account Response
-+ accountNumber:`*************954` (string, required) - This is the merchant's bank account number.
-+ transitNumber:`*****` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
-+ institutionId:`052` (string, required) - This is the 3-digit institution ID of the merchant's bank branch.
++ accountNumber:`*************954` (string, required) - This is the bank account number.
++ transitNumber:`*****` (string, required) - This is the 5-digit transit number of the bank branch.
++ institutionId:`052` (string, required) - This is the 3-digit institution ID of the bank branch.
 
 ## EFT Bank Account Resource
 + eftBankAccountResource (object, optional)
 
     + Properties
-        + id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant's EFT bank account ID returned in the response.
-        + accountNumber:`*************954` (string, required) - This is the merchant's bank account number.
-        + transitNumber:`*****` (string, required) - This is the 5-digit transit number of the merchant's bank branch.
-        + institutionId:`052` (string, required) - This is the 3-digit institution ID of the merchant's bank branch.
+        + id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the EFT bank account ID returned in the response.
+        + accountNumber:`*************954` (string, required) - This is the bank account number.
+        + transitNumber:`*****` (string, required) - This is the 5-digit transit number of the bank branch.
+        + institutionId:`052` (string, required) - This is the 3-digit institution ID of the bank branch.
 
 ## Empty Set
 {
@@ -4752,6 +5195,20 @@ This is how you transfer a balance from the account identified in the API endpoi
 + nationality:`CA` (enum, required) - This is the [nationality code](#nationalitycodes) of the business owner. 
 + percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
+    + Include Date
++ gender:`M` (enum, optional) - This is the gender of the business owner.
+
+## European Business Owner Patch
++ firstName:`James` (string, optional) - This is the first name of the business owner.
++ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
++ lastName:`Ronald` (string, optional) - This is the last name of the business owner.
++ previousLastName:`Smith` (string, optional) - This is the previous last name of the business owner.
++ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
++ jobTitle:`CEO` (string, optional) - This is the job title of the business owner.
++ phone:`5556667777` (string, optional) - This is the phone number of the business owner.
++ nationality:`CA` (enum, optional) - This is the [nationality code](#nationalitycodes) of the business owner. 
++ percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
++ dateOfBirth (object, optional) - This is the birth date of the business owner.
     + Include Date
 + gender:`M` (enum, optional) - This is the gender of the business owner.
 
@@ -4848,6 +5305,15 @@ This is how you transfer a balance from the account identified in the API endpoi
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/debits/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
 
+## Links Account Disable
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string)
+        + href:`https://api.paysafe.com/accountmanagement/v1/accounts/1000789670` (string) - This is the URI of the resource.
+    + (object)
+        + rel:`subaccounts` (string)
+        + href:`https://api.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts` (string) - This is the URI of the resource.
+
 ## Links EFT Bank Accounts
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
@@ -4883,6 +5349,9 @@ This is how you transfer a balance from the account identified in the API endpoi
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670` (string, required) - This is the URI of the resource.
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts` (string, required) - This is the URI of the resource.        
         
 ## Links Merchant Account Consolidated
 + links (array, required) - This is an array of [links](#linksobject).
@@ -4920,12 +5389,53 @@ This is how you transfer a balance from the account identified in the API endpoi
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/recoveryquestions/fr_CA` (string, required) - This is the URI of the resource.
 
-
 ## Links SEPA Bank Accounts
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/sepabankaccounts/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704880` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Expanded
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704880?expand=paymentSchedule` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Disable
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1005704880/subaccounts` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Array
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704660` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Get All
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:self (string, required)
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=10&offset=0` (string, required)
+    + (object)
+        + rel:next (string, required)
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=10&offset=10` (string, required)
+
+## Links Subaccounts Get All Expanded
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:self (string, required)
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=10&offset=0&expand=paymentSchedule` (string, required)
+    + (object)
+        + rel:next (string, required)
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=10&offset=10&expand=paymentSchedule` (string, required)
 
 ## Links Terms and Conditions
 + links (array, required) - This is an array of [links](#linksobject).
@@ -5022,6 +5532,37 @@ This is how you transfer a balance from the account identified in the API endpoi
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
 
+## Merchant Account Update Patch
++ name:`Mega Gym` (string, optional) - This is the merchant name.
++ currency:`CAD` (enum, optional) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ region:`CA` (enum, optional) - This is the region for the merchant account.
+    - US
+    - CA
+    - EU
++ legalEntity:`Mega Gym Corp.` (string, optional) - This is the business legal/trading name.
++ productCode:`GOLD` (string, optional) - This is the code of the partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated [yearly volume](#merchantaccountobject) of the business.
+    - LOW
+    - MEDIUM
+    - HIGH
+    - VERY_HIGH
++ locale:`en_CA` (string, optional) - This is the locale used for the merchant account.
+    - en_CA
+    - en_US
+    - en_GB
+    - fr_CA
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
 ## Merchant Account Consolidated
 + name:`Mega Gym` (string, required) - This is the merchant name.
 + currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
@@ -5050,6 +5591,27 @@ This is how you transfer a balance from the account identified in the API endpoi
     - User 1
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
+## Merchant Account Disable Response
++ Include Links Account Disable
++ id:`1000789670` (string, required) - This is the account ID returned in the response.
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ status:`DISABLED` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
++ statusReason:`TERMINATED` (enum, optional) - This is the reason if the *status* is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
++ statusComment:`Property manager sold business.` (string, optional) - This is a comment on why the account is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
++ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ region:`CA` (enum, required) - This is the region for the merchant account.
++ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
 + merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
@@ -5130,6 +5692,14 @@ This is how you transfer a balance from the account identified in the API endpoi
 ## Merchant Name
 + name:`Mega Gym` (string, required) - This is the merchant name.
 
+## Meta Subaccounts
++ _meta (object, optional) - This is meta data about the GET request.
+
+    + Properties
+        + numberOfRecords:`12`
+        + limit:`10`
+        + page:`1`
+
 ## Microdeposit
 + amount:`0.51` (string, required) - This is the amount of the microdeposit made to the bank account.
 
@@ -5142,6 +5712,21 @@ This is how you transfer a balance from the account identified in the API endpoi
 ## Microdeposit Validation
 + status:`VALIDATED` (string, required) - This is the status of the microdeposit.
 + amount:`0.51` (string, required) - This is the amount of the microdeposit made to the bank account.
+
+## Payment Schedule
++ id:`e067d83f-add7-4b6b-8884-dfa8693dde1f`
++ eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1`
++ frequency:`WEEKLY`
++ status:`ENABLED`
+
+## Payment Schedule old
++ paymentSchedule (object, required) - This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+
+    + Properties
+        + id:`e067d83f-add7-4b6b-8884-dfa8693dde1f`
+        + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1`
+        + frequency:`WEEKLY`
+        + status:`ENABLED`
 
 ## Recovery Question
 + recoveryQuestion (object, optional) - These are some details about the recovery question for the user. The recovery question will be used to support password resets in the Merchant Back Office.
@@ -5231,28 +5816,135 @@ This is how you transfer a balance from the account identified in the API endpoi
 ## Response Base Merchant Account
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 
-## US Business Owner
-+ firstName:`James` (string, required) - This is the first name of the business owner.
-+ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
-+ lastName:`Ronald` (string, required) - This is the last name of the business owner.
-+ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
-+ jobTitle:`CEO` (string, required) - This is the job title of the business owner.
-+ phone:`5556667777` (string, required) - This is the phone number of the business owner.
-+ dateOfBirth (object, required) - This is the birth date of the business owner.
-    + Include Date
-+ ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
-
 ## SEPA Bank Account
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ swiftNumber:`85741236` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`94001521002421` (string, required) - This is the IBAN number of the merchant's bank account.
++ swiftNumber:`85741236` (string, required) - This is the swift number of the bank account.
++ ibanNumber:`94001521002421` (string, required) - This is the IBAN number of the bank account.
 
 ## SEPA Bank Account Response
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`940015****2421` (string, required) - This is the IBAN number of the merchant's bank account.
++ swiftNumber:`********` (string, required) - This is the swift number of the bank account.
++ ibanNumber:`940015****2421` (string, required) - This is the IBAN number of the bank account.
+
+## Subaccount
++ name:`Settlement Account` (string, required) - This is the subaccount name.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+
+## Subaccount Get Array
++ subaccounts (array, required) - This is an array of subaccounts associated with this merchant account number.
+    + (object)
+        + id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+        + Include Links Subaccounts
+    + (object)
+        + id:`1005704660` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account Provisional` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206rrrr` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206uuuu` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-k5j67dy65fw3`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+        + Include Links Subaccounts Array
++ Include Links Subaccounts Get All
+
+## Subaccount Get Array Expanded
++ subaccounts (array, required) - This is an array of subaccounts associated with this merchant account number.
+    + (object)
+        + id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+        + Payment Schedule
+            + id:`e067d83f-add7-4b6b-8884-dfa8693dde1f`
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1`
+            + frequency:`WEEKLY`
+            + status:`ENABLED`
+        + Include Links Subaccounts
+    + (object)
+        + id:`1005704660` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account Provisional` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206rrrr` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206uuuu` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-k5j67dy65fw3`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+        + Payment Schedule
+            + id:`e067d83f-add7-4b6b-8884-k5j67dy65fw3`
+            + eftId:`8b670bf0-f218-4710-86a9-1b1002t1l9j7`
+            + frequency:`WEEKLY`
+            + status:`ENABLED`        
+        + Include Links Subaccounts Array
++ Include Links Subaccounts Get All Expanded
+
+## Subaccount Response
++ id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
++ name:`Settlement Account` (string, required) - This is the subaccount name.
++ status:`ENABLED` (enum, required) - This is the status of the subaccount.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
++ paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
++ Include Links Subaccounts
+
+## Subaccount Response Expanded
++ id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
++ name:`Settlement Account` (string, required) - This is the subaccount name.
++ status:`ENABLED` (enum, required) - This is the status of the subaccount.
++ eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination bank account, returned by Paysafe when the bank account for subaccounts was created.
++ paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
++ paymentSchedule (object, required) - This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount
+    + Include Payment Schedule
++ Include Links Subaccounts Expanded
+
+## Subaccount Response All
++ Include Meta Subaccounts
++ Include Subaccount Get Array
+
+## Subaccount Response All Expanded
++ Include Meta Subaccounts
++ Include Subaccount Get Array Expanded
+
+## Subaccount Patch
++ name:`Settlement Account Corporate` (string, optional) - This is the subaccount name.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b1002044yy7` (string, optional) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, optional) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
++ status:`DISABLED` (enum, optional) - This is the status of the subaccount. **Note:** You can only change the status of a subaccount from *ENABLED* to *DISABLED*. 
++ statusReason:`TERMINATED` (enum, optional) - This is the reason if the *status* is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
++ statusComment:`Account Closed` (string, optional) - This is a comment on why the subaccount is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
+
+## Subaccount Response Patch
++ id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
++ name:`Settlement Account Corporate` (string, required) - This is the subaccount name.
++ status:`DISABLED` (enum, required) - This is the status of the subaccount.
++ statusReason:`TERMINATED` (enum, optional) - This is the reason why the *status* is being set to *DISABLED*. 
++ statusComment:`Account Closed` (string, optional) - This is a comment on why the subaccount is being set to *DISABLED*.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b1002044yy7` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
++ paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
++ Include Links Subaccounts
+
+## Subaccount Patch Disable
++ status:`DISABLED` (enum, optional) - This is the status of the subaccount. **Note:** You can only change the status of a subaccount from *ENABLED* to *DISABLED*. 
++ statusReason:`TERMINATED` (enum, optional) - This is the reason if the *status* is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
++ statusComment:`Account Closed` (string, optional) - This is a comment on why the subaccount is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
+
+## Subaccount Patch Disable Response
++ description:`Your request has been accepted and is in progress.` (string)
++ Include Links Subaccounts Disable
 
 ## Terms and Conditions
 + version:`V1` (string, required) - This is the version of the Terms and Conditions.
@@ -5320,6 +6012,28 @@ This is how you transfer a balance from the account identified in the API endpoi
 + expiryDate (object, optional) - This is the expiration date the driving license.
     + Include Date Expiry
 
+## US Business Owner
++ firstName:`James` (string, required) - This is the first name of the business owner.
++ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
++ lastName:`Ronald` (string, required) - This is the last name of the business owner.
++ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
++ jobTitle:`CEO` (string, required) - This is the job title of the business owner.
++ phone:`5556667777` (string, required) - This is the phone number of the business owner.
++ dateOfBirth (object, required) - This is the birth date of the business owner.
+    + Include Date
++ ssn:`999888777` (string, required) - This is the SSN of the business owner.
+
+## US Business Owner Patch
++ firstName:`James` (string, optional) - This is the first name of the business owner.
++ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
++ lastName:`Ronald` (string, optional) - This is the last name of the business owner.
++ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
++ jobTitle:`CEO` (string, optional) - This is the job title of the business owner.
++ phone:`5556667777` (string, optional) - This is the phone number of the business owner.
++ dateOfBirth (object, optional) - This is the birth date of the business owner.
+    + Include Date
++ ssn:`999888777` (string, optional) - This is the SSN of the business owner.
+
 ## User
 + userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
 + password:`Pwd1234!` (string, required) - This is the password that the user will use to access the merchant account in the Merchant Back Office.
@@ -5335,11 +6049,11 @@ This is how you transfer a balance from the account identified in the API endpoi
 + email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
 
 ## Wire Bank Account
-+ accountNumber:`6358555211214` (string, required) - This is the merchant's bank account number.
-+ routingNumber:`1328514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
-+ sortCode:`857412` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
-+ swiftNumber:`85774412` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ accountNumber:`6358555211214` (string, required) - This is the bank account number.
++ routingNumber:`1328514` (string, optional) - This is the routing number or the bank code of the bank account.
++ sortCode:`857412` (string, optional) - This is the 6-digit sort code of the bank account.
++ swiftNumber:`85774412` (string, required) - This is the swift number of the bank account.
++ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
@@ -5354,11 +6068,11 @@ This is how you transfer a balance from the account identified in the API endpoi
 + beneficiaryBankPostCode:`A13 1BB` (string, required) - This is the post code of the beneficiary's bank.
 
 ## Wire Bank Account Response
-+ accountNumber:`**********214` (string, required) - This is the merchant's bank account number.
-+ routingNumber:`****514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
-+ sortCode:`******` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
-+ swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ accountNumber:`**********214` (string, required) - This is the bank account number.
++ routingNumber:`****514` (string, optional) - This is the routing number or the bank code of the bank account.
++ sortCode:`******` (string, optional) - This is the 6-digit sort code of the bank account.
++ swiftNumber:`********` (string, required) - This is the swift number of the bank account.
++ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
