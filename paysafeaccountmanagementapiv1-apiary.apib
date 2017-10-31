@@ -4001,17 +4001,44 @@ This is how you look up your acceptance of the Terms and Conditions.
         + Include Response Base
         + Include Terms and Conditions Response
 
-## Look Up Terms and Conditions as HTML [GET /v1/accounts/{account_id}/termsandconditions?version={termsandconditions_version}]
+## Look Up Terms and Conditions as HTML [GET /v1/accounts/{account_id}/termsandconditions]
 <a name="gettermsandconditionshtml" title="Look Up the Terms and Conditions as HTML"></a>
 
 This is how you look up the Terms and Conditions to view them in HTML format.
+
+**Note:** If you do not include the version in the URL, then the version that is applicable for the respective account will be returned in the *x_terms_version* response header.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Get Terms and Conditions (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Body
+
+            <html>
+                <body>
+                HTML Version of Terms and Conditions
+                </body>
+            </html>
+
+## Look Up Terms and Conditions as HTML by Version [GET /v1/accounts/{account_id}/termsandconditions?version={termsandconditions_version}]
+<a name="gettermsandconditionshtml" title="Look Up the Terms and Conditions as HTML"></a>
+
+This is how you look up a specific version of the Terms and Conditions to view them in HTML format.
 
 + Parameters
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
     + termsandconditions_version:`V1` (string, required) - This is version of the Terms and Conditions. 
 
-+ Request Get Terms and Conditions (application/json)
++ Request Get Terms and Conditions by Version (application/json)
 
     + Headers
     
@@ -4074,8 +4101,8 @@ This is how you look up a user associated with the merchant account.
 + Response 200 (application/json)
 
     + Attributes
+        + Include User Lookup Response        
         + Include Links User
-        + Include User Lookup Response
 
 # Recovery Questions [/recoveryquestions]
 <a name="recoveryquestions" title="Recovery Questions"></a>
@@ -4942,7 +4969,7 @@ This is how you transfer a balance from the account identified in the API endpoi
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
-        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/user` (string, required) - This is the URI of the resource.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/users` (string, required) - This is the URI of the resource.
 
 ## Links Wire Bank Accounts
 + links (array, required) - This is an array of [links](#linksobject).
@@ -5330,8 +5357,12 @@ This is how you transfer a balance from the account identified in the API endpoi
 + email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
 
 ## User Lookup Response
-+ userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
-+ email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
++ userName:`john_smith` (string) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
++ email:`johnsmith@email.com` (string) - This is the email address that will be associated with the user.
++ users (array) - This is an array of [users](#usersobject).
+    + (object)
+        + userName:`john_smith` (string) - This is the user's name.
+        + email:`sam_smith@email.com` (string) - This is the user's email address.
 
 ## Wire Bank Account
 + accountNumber:`6358555211214` (string, required) - This is the merchant's bank account number.
