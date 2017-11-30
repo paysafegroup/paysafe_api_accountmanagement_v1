@@ -1900,6 +1900,16 @@ When you are ready to test your example, you can switch between the Production a
 
 To call the API resource, click **Call Resource**. The response is displayed in the Console window.
 
+# Legal and Community
+<ul>
+<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
+<li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
+<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
+<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
+<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
+<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
+</ul>
+
 ## Verify That the Service Is Accessible [GET /monitor]
 <a name="verifyservice" title="Verify Service"></a>
 
@@ -4290,20 +4300,6 @@ As a result of a successful microdeposit request, a small deposit (between .01 a
 
 This is how you look up a microdeposit to view its status.
 
-<br>
-<br>
-<br>
-<a name="footer">
-<h1>Legal and Community</h1>
-<ul class="footer-menu">
-<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
-<li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
-<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
-<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
-<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
-<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
-</ul>
-
 + Parameters
 
     + microdeposit_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the microdeposit ID returned in the response to the microdeposit creation request.
@@ -4355,20 +4351,6 @@ This is how you transfer a balance from the linked account in the body of the re
 
 This is how you transfer a balance from the account identified in the API endpoint URI to the linked account in the body of the request. 
 
-<br>
-<br>
-<br>
-<a name="footer">
-<h1>Legal and Community</h1>
-<ul class="footer-menu">
-<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
-<li><a href="en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
-<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
-<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
-<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
-<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
-</ul>
-
 + Parameters
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
@@ -4389,6 +4371,27 @@ This is how you transfer a balance from the account identified in the API endpoi
         + Include debitsobject
         + status:`COMPLETED` (string, required) - The status of the transaction.
         + Include Links Debit
+        
+## Look Up a Debit Transfer [GET v1/accounts/{account_id}/debits/{transaction_id}]
+
+This is how you look up a debit transfer.
+
++ Parameters
+
+    + transaction_id:`82e0094d-1083-4c17-a6bc-d1c1fed1bdc7` (string, required) - This is the ID returned in the response to a debit transfer request.
+
++ Request Get Merchant (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Links Merchant
+        + Include Response Base
+        + Include Merchant Name
 
 # Data Structures
 
