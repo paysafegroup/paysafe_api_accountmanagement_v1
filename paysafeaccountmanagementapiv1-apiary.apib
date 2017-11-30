@@ -4373,15 +4373,17 @@ This is how you transfer a balance from the account identified in the API endpoi
         + status:`COMPLETED` (string, required) - The status of the transaction.
         + Include Links Debit
         
-## Look Up a Debit Transfer [GET v1/accounts/{account_id}/debits/{transaction_id}]
+## Look Up a Debit Transfer [GET /v1/accounts/{account_id}/debits/{transaction_id}]
+<a name="getdebitt" title="Look Up a Debit Transfer"></a>
 
 This is how you look up a debit transfer.
 
 + Parameters
 
-    + transaction_id:`82e0094d-1083-4c17-a6bc-d1c1fed1bdc7` (string, required) - This is the ID returned in the response to a debit transfer request.
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + transaction_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID returned in the response to a debit transfer request.
 
-+ Request Get Merchant (application/json)
++ Request Get Debit Transfer (application/json)
 
     + Headers
     
@@ -4390,9 +4392,34 @@ This is how you look up a debit transfer.
 + Response 200 (application/json)
 
     + Attributes
-        + Include Links Merchant
         + Include Response Base
-        + Include Merchant Name
+        + Include debitsobjectGet
+        + status:`COMPLETED` (string, required) - The status of the transaction.
+        + Include Links Debit
+
+## Look Up a Credit Transfer [GET /v1/accounts/{account_id}/credits/{transaction_id}]
+<a name="getcreditt" title="Look Up a Credit Transfer"></a>
+
+This is how you look up a credit transfer.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + transaction_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID returned in the response to a credit transfer request.
+
++ Request Get Credit Transfer (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include creditsobjectGet
+        + status:`COMPLETED` (string, required) - The status of the transaction.
+        + Include Links Credit
 
 # Data Structures
 
@@ -4730,6 +4757,11 @@ This is how you look up a debit transfer.
 + linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
 + merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
 
+## creditsobjectGet
++ amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
++ merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
+
 ## Date
 + day:`15` (string, required) - This is the day of the month.
 + month:`9` - This is the  month of the year.
@@ -4749,6 +4781,11 @@ This is how you look up a debit transfer.
 + amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + detail:`Charging a fee` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
++ merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
+
+## debitsobjectGet
++ amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
 + merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
