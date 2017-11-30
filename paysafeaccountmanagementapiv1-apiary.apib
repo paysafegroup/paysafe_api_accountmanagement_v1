@@ -4397,6 +4397,29 @@ This is how you look up a debit transfer.
         + status:`COMPLETED` (string, required) - The status of the transaction.
         + Include Links Debit
 
+## Look Up a Debit Transfer By Merchant Reference [GET /v1/accounts/{account_id}/debits?merchantRefNum={merchant_ref}]
+<a name="getdebittM" title="Look Up a Debit Transfer by Merchant Reference Number"></a>
+
+This is how you look up a debit transfer using the merchant reference number.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + merchant_ref:`merchantRefNum8` (string, required) - The merchant's unique identifier for the debit transfer.
+    
++ Request Get Debit Transfer (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Meta
+        + Include Transfers
+        + Include Links Debit
+
 ## Look Up a Credit Transfer [GET /v1/accounts/{account_id}/credits/{transaction_id}]
 <a name="getcreditt" title="Look Up a Credit Transfer"></a>
 
@@ -5201,6 +5224,14 @@ This is how you look up a credit transfer.
 ## Merchant Name
 + name:`Mega Gym` (string, required) - This is the merchant name.
 
+## Meta
++ meta (object, required) - This defines the number of records per page
+
+    + Properties
+        + numberOfRecords:`1` (number, required) - This is the number of transfers in the transaction.
+        + limit:`10` (number, required) - This is the number of records to be returned per page. The default is 10 and the maximum is 100.
+        + page:`1` (number, required) - This is the number of pages to display.
+
 ## Microdeposit
 + amount:`0.51` (string, required) - This is the amount of the microdeposit made to the bank account.
 
@@ -5374,6 +5405,14 @@ This is how you look up a credit transfer.
         + state:`ON`
         + country:`CA`
         + zip:`M5H 2N2`
+        
+## Transfers
++ transfers (array, required) - This is an array of the transfers in the transaction
+
+    + (object)
+        + Include Response Base
+        + Include debitsobjectGet
+        + status:`COMPLETED` (string, required) - The status of the transaction.
 
 ## UK Driving License 
 + number:`SMITH411015R99AB` (string, required) - This is the driving license number
