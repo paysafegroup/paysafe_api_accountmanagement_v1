@@ -7,7 +7,8 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
-| 1.0       | December 2016 | <ul><li>Document release</li></ul>|
+| 1.0       | December 2016 | Document release |
+| 1.0       | December 2017 | Updated Balance Transfers |
 
 # Overview
 
@@ -114,6 +115,7 @@ The following request types are supported:
   * [Identity Verification](#identity)  
   * [Merchant Account Activation](#accountactivation)
   * [Bank Account Validation](#microdeposits)
+  * [Balance Transfers](#transfers)
   
 **API Endpoint**
 
@@ -1899,6 +1901,16 @@ When you are ready to test your example, you can switch between the Production a
 * Mock server – This environment simply returns the dummy values in the example response irrespective of the parameters you supply. You do not need to use your profile ID or Test API key for this request.
 
 To call the API resource, click **Call Resource**. The response is displayed in the Console window.
+
+# Legal and Community
+<ul>
+<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
+<li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
+<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
+<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
+<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
+<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
+</ul>
 
 ## Verify That the Service Is Accessible [GET /monitor]
 <a name="verifyservice" title="Verify Service"></a>
@@ -4290,20 +4302,6 @@ As a result of a successful microdeposit request, a small deposit (between .01 a
 
 This is how you look up a microdeposit to view its status.
 
-<br>
-<br>
-<br>
-<a name="footer">
-<h1>Legal and Community</h1>
-<ul class="footer-menu">
-<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
-<li><a href="https://developer.paysafe.com/en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
-<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
-<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
-<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
-<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
-</ul>
-
 + Parameters
 
     + microdeposit_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the microdeposit ID returned in the response to the microdeposit creation request.
@@ -4355,20 +4353,6 @@ This is how you transfer a balance from the linked account in the body of the re
 
 This is how you transfer a balance from the account identified in the API endpoint URI to the linked account in the body of the request. 
 
-<br>
-<br>
-<br>
-<a name="footer">
-<h1>Legal and Community</h1>
-<ul class="footer-menu">
-<li><a href="https://www.paysafe.com/privacy-policy/" target="_blank">Privacy Policy</a></li>
-<li><a href="en/resources-and-support/terms-of-use/" target="_blank">Terms of Use</a></li>
-<li><a href="http://www.paysafe.com/regulatory-disclosure/" target="_blank">Regulatory Disclosures</a></li>
-<li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
-<li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
-<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
-</ul>
-
 + Parameters
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
@@ -4389,6 +4373,100 @@ This is how you transfer a balance from the account identified in the API endpoi
         + Include debitsobject
         + status:`COMPLETED` (string, required) - The status of the transaction.
         + Include Links Debit
+        
+## Look Up a Debit Transfer [GET /v1/accounts/{account_id}/debits/{transaction_id}]
+<a name="getdebitt" title="Look Up a Debit Transfer"></a>
+
+This is how you look up a debit transfer.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + transaction_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID returned in the response to a debit transfer request.
+
++ Request Get Debit Transfer (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include debitsobjectGet
+        + status:`COMPLETED` (string, required) - The status of the transaction.
+        + Include Links Debit
+
+## Look Up a Debit Transfer By Merchant Reference [GET /v1/accounts/{account_id}/debits?merchantRefNum={merchant_ref}]
+<a name="getdebittM" title="Look Up a Debit Transfer by Merchant Reference Number"></a>
+
+This is how you look up a debit transfer using the merchant reference number.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + merchant_ref:`merchantRefNum8` (string, required) - The merchant's unique identifier for the debit transfer.
+    
++ Request Get Debit Transfer (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Meta
+        + Include Transfers
+        + Include Links Debit
+
+## Look Up a Credit Transfer [GET /v1/accounts/{account_id}/credits/{transaction_id}]
+<a name="getcreditt" title="Look Up a Credit Transfer"></a>
+
+This is how you look up a credit transfer.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + transaction_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID returned in the response to a credit transfer request.
+
++ Request Get Credit Transfer (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Response Base
+        + Include creditsobjectGet
+        + status:`COMPLETED` (string, required) - The status of the transaction.
+        + Include Links Credit
+
+## Look Up a Credit Transfer By Merchant Reference [GET /v1/accounts/{account_id}/credits?merchantRefNum={merchant_ref}]
+<a name="getcredittM" title="Look Up a Credit Transfer by Merchant Reference Number"></a>
+
+This is how you look up a credit transfer using the merchant reference number.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + merchant_ref:`merchantRefNum8` (string, required) - The merchant's unique identifier for the credit transfer.
+    
++ Request Get Credit Transfer (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Meta
+        + Include Transfers
+        + Include Links Credit
 
 # Data Structures
 
@@ -4726,6 +4804,11 @@ This is how you transfer a balance from the account identified in the API endpoi
 + linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
 + merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
 
+## creditsobjectGet
++ amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
++ merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
+
 ## Date
 + day:`15` (string, required) - This is the day of the month.
 + month:`9` - This is the  month of the year.
@@ -4745,6 +4828,11 @@ This is how you transfer a balance from the account identified in the API endpoi
 + amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + detail:`Charging a fee` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
++ merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
+
+## debitsobjectGet
++ amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
 + merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
@@ -5160,6 +5248,14 @@ This is how you transfer a balance from the account identified in the API endpoi
 ## Merchant Name
 + name:`Mega Gym` (string, required) - This is the merchant name.
 
+## Meta
++ meta (object, required) - This defines the number of records per page
+
+    + Properties
+        + numberOfRecords:`1` (number, required) - This is the number of transfers in the transaction.
+        + limit:`10` (number, required) - This is the number of records to be returned per page. The default is 10 and the maximum is 100.
+        + page:`1` (number, required) - This is the number of pages to display.
+
 ## Microdeposit
 + amount:`0.51` (string, required) - This is the amount of the microdeposit made to the bank account.
 
@@ -5333,6 +5429,14 @@ This is how you transfer a balance from the account identified in the API endpoi
         + state:`ON`
         + country:`CA`
         + zip:`M5H 2N2`
+        
+## Transfers
++ transfers (array, required) - This is an array of the transfers in the transaction
+
+    + (object)
+        + Include Response Base
+        + Include debitsobjectGet
+        + status:`COMPLETED` (string, required) - The status of the transaction.
 
 ## UK Driving License 
 + number:`SMITH411015R99AB` (string, required) - This is the driving license number
