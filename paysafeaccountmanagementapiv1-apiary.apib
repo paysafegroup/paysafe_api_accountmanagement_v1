@@ -196,11 +196,11 @@ The following request types are supported:
 
 # Getting Started
 
-Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Account Management API.
+Click [here](https://developer.paysafe.com/en/rest-api/turnkey/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Account Management API.
 
 # Testing Instructions
 
-The Paysafe Test environment can be used to test applications without actually running requests through the live system. It is important to make sure that your systems are working correctly before going into a Live environment. Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/test-and-go-live/) for details of using the Test environment.
+The Paysafe Test environment can be used to test applications without actually running requests through the live system. It is important to make sure that your systems are working correctly before going into a Live environment. Click [here](https://developer.paysafe.com/en/rest-api/turnkey/account-management/test-and-go-live/) for details of using the Test environment.
 
 <a name="isostandards" title="ISO Standards"></a>
 # ISO Standards
@@ -1301,7 +1301,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 # Error Summary
 
-Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/test-and-go-live/account-management-errors/) for a summary and description of errors you might encounter using the Account Management API.
+Click [here](https://developer.paysafe.com/en/rest-api/turnkey/account-management/test-and-go-live/account-management-errors/) for a summary and description of errors you might encounter using the Account Management API.
 
 # Appendices
 
@@ -4030,7 +4030,7 @@ This is how you look up the Terms and Conditions to view them in HTML format.
     
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
 
-+ Response 200 (application/json)
++ Response 200 (text/html; charset=UTF-8)
 
     + Headers
     
@@ -4060,7 +4060,7 @@ This is how you look up a specific version of the Terms and Conditions to view t
     
             Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
 
-+ Response 200 (application/json)
++ Response 200 (text/html; charset=UTF-8)
 
     + Body
 
@@ -4172,7 +4172,7 @@ This is how you look up the recovery questions, using the locale, that can be [p
 
 This is how you submit a merchant account identity verification request.
 
-**Note:** The *identityId* value used for this request is the *id* value returned in the response from the Paysafe Identity Verification API. See [Business Owner Identity Verification](https://developer.paysafe.com/en/rest-api/partners/account-management/typical-api-calls/business-owner-identity-verification/) for more information.
+**Note:** The *identityId* value used for this request is the *id* value returned in the response from the Paysafe Identity Verification API. See [Business Owner Identity Verification](https://developer.paysafe.com/en/rest-api/turnkey/account-management/typical-api-calls/business-owner-identity-verification/) for more information.
 
 + Parameters
 
@@ -4200,7 +4200,7 @@ This is how you submit a merchant account identity verification request.
 
 This is how you submit a merchant account activation request.
 
-**Note:** When the merchant account is successfully activated, Paysafe sends a confirmation email to the email address that was included in the [user creation](https://developer.paysafe.com/en/partners/accounts/api/#/reference/0/users/create-a-user) request.
+**Note:** When the merchant account is successfully activated, Paysafe sends a confirmation email to the email address that was included in the [user creation](https://developer.paysafe.com/en/turnkey/accounts/api/#/reference/0/users/create-a-user) request.
 
 + Parameters
 
@@ -4242,7 +4242,7 @@ For microdeposits, Paysafe will attempt to make a small deposit between 0.01 and
 
 This is how you create a microdeposit request for an ACH (U.S.) or EFT (Canadian) bank account.
 
-**Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/partners/accounts/api/#/reference/0/users/create-a-user) request.
+**Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/turnkey/accounts/api/#/reference/0/users/create-a-user) request.
 
 You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
 
