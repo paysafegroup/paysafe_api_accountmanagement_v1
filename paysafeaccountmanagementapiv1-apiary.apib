@@ -860,15 +860,17 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |type                           |enum                       |This is the type code of the business. See [Business Type Codes](#businesstypecodes).|
-|description                    |string<br/>`length<=50`    |This is a description of the business.|
+|description                    |string<br/>`length<=255`   |This is a description of the business.|
 |isCardPresent                  |boolean                    |This indicates whether the customers' cards will be physically present when processing payments.|
 |hasPreviouslyProcessedCards    |boolean                    |This indicates whether the business has previously accepted credit cards.|
 |shipsGoods                     |boolean                    |This indicates whether the business will physically deliver goods.|
 |deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
-|refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy.|
+|refundPolicyDescription        |string<br/>`length<=255`   |This is a description of the business's refund policy.|
 |federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li><li>VISA_DEBIT</li></ul>|
+
+**Note:** The following three elements are **not** supported for Direct Debit merchant processing accounts: <ul><li>*isCardPresent*</li><li>*additionalPaymentMethods*</li><li>*hasPreviouslyProcessedCards*</li></ul>
 
 ```apib
 {
@@ -1124,8 +1126,10 @@ The Paysafe Test environment can be used to test applications without actually r
 ## merchantDescriptor
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|dynamicDescriptor              |string<br/>`length<=20`    |This is the dynamic descriptor field.|
+|dynamicDescriptor              |string<br/>For credit card merchant processing accounts `length<=20`<br/>For Direct Debit merchant processing accounts `length<=32`    |This is the dynamic descriptor field.|
 |phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor.|
+
+**Note:** <ul><li>The *phone* element is *not* supported for **Direct Debit** processing merchants.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
 
 ```apib
 {
@@ -1206,15 +1210,17 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |type                           |enum                       |This is the type code of the business. See [Business Type Codes](#businesstypecodes).|
-|description                    |string<br/>`length<=50`    |This is a description of the business.|
+|description                    |string<br/>`length<=255`   |This is a description of the business.|
 |isCardPresent                  |boolean                    |This indicates whether the customers' cards will be physically present when processing payments.|
 |hasPreviouslyProcessedCards    |boolean                    |This indicates whether the business has previously accepted credit cards.|
 |shipsGoods                     |boolean                    |This indicates whether the business will physically deliver goods.|
 |deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment. **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
-|refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.|
+|refundPolicyDescription        |string<br/>`length<=255`   |This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.|
 |federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li></ul>|
+
+**Note:** The following three elements are **not** supported for Direct Debit merchant processing accounts: <ul><li>*isCardPresent*</li><li>*additionalPaymentMethods*</li><li>*hasPreviouslyProcessedCards*</li></ul>
 
 ```apib
 {
@@ -4510,8 +4516,8 @@ re-ordered the API examples
 ## Account Details
 + type:`CORP` (enum, optional) - This is the [type code of the business](#businesstypecodes).
 + description:`Fitness` (string, optional) - This is a description of the business.
-+ isCardPresent:`false` (boolean, optional) - This indicates whether the customers' cards will be physically present when processing payments.
-+ hasPreviouslyProcessedCards:`true` (boolean, optional) - This indicates whether the business has previously accepted credit cards.
++ isCardPresent:`false` (boolean, optional) - This indicates whether the customers' cards will be physically present when processing payments. **Note:** Not supported for Direct Debit merchant processing accounts.
++ hasPreviouslyProcessedCards:`true` (boolean, optional) - This indicates whether the business has previously accepted credit cards. **Note:** Not supported for Direct Debit merchant processing accounts.
 + shipsGoods:`true` (boolean, optional) - This indicates whether the business will physically deliver goods.
 + deliveryTimeRange:SHORT (enum, optional) - This is the [time range](#caaccountdetailsobject) for the business's order fulfillment. **Note:** This value is required when *shipsGoods* is set to *true*.
     - SHORT
@@ -4520,7 +4526,7 @@ re-ordered the API examples
 + refundPolicy:`true` (boolean, optional) - This indicates whether the business has a refund policy.
 + refundPolicyDescription:`Timely` (string, optional) - This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.
 + federalTaxNumber:`987654321` (string, optional) - This is the tax identification/registration number of the business.
-+ additionalPaymentMethods: (array, optional) - These are optional payment types for the business.
++ additionalPaymentMethods: (array, optional) - These are optional payment types for the business. **Note:** Not supported for Direct Debit merchant processing accounts.
     - DIRECT_DEBIT
     - VISA_DEBIT
 
@@ -4557,7 +4563,7 @@ re-ordered the API examples
             - User 2
         + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
         + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-        + merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
+        + merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
         + Include Merchant Descriptor
         + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
             + Include Account Details
@@ -5104,7 +5110,7 @@ re-ordered the API examples
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5135,7 +5141,7 @@ re-ordered the API examples
     - fr_CA
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5169,7 +5175,7 @@ re-ordered the API examples
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5204,7 +5210,7 @@ re-ordered the API examples
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5236,14 +5242,14 @@ re-ordered the API examples
 + locale:`en_US` (string, optional) - This is the locale used for the merchant account.
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
 
 ## Merchant Descriptor
-+ dynamicDescriptor:`megagym` (string, optional) - This text is used in the credit card descriptor.
-+ phone:`555 888-9999` (string, optional) - This is the phone number used in the credit card descriptor.
++ dynamicDescriptor:`megagym` (string, optional) - This text is used in the credit card descriptor. **Note:** For credit card processing merchants, an extra prefix might be added to the *dynamicDescriptor* element, depending on the processing bank.
++ phone:`555 888-9999` (string, optional) - This is the phone number used in the credit card descriptor. **Note:** The *phone* element is not supported for Direct Debit processing merchants.
 
 ## Merchant Name
 + name:`Mega Gym` (string, required) - This is the merchant name.
