@@ -978,6 +978,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |registrationNumber             |string<br/>`length<=20`    |This is the registration number of the business.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>SEPA</li><li>IDEAL</li><li>GIROPAY</li><li>SOFORT</li><li>UK_DIRECT_DEBIT</li></ul>|
 
+**Note:** The following three elements are **not** supported for Direct Debit merchant processing accounts: <ul><li>*isCardPresent*</li><li>*additionalPaymentMethods*</li><li>*hasPreviouslyProcessedCards*</li></ul>
+
 ```apib
 {
   "type":"CORP",
@@ -990,7 +992,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "taxIdentificationNumber":"123654789",
   "registrationNumber":"BB765432",
   "additionalPaymentMethods":[
-    "SEPA", "IDEAL"
+    "SEPA", "SOFORT"
     ]
 }
 ```
@@ -1049,7 +1051,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |users          |enum                       |This a comma-separated list of users configured to have access to the merchant account in the back office ["user 1", "user 2", ...]. You can add users that have [already been created](#users) for this merchant account. **Note:** The maximum number of users that can be added using the Account Management API is 100.
 |amexMid        |string<br/>`length=10`     |This is the merchant's American Express ID. |
 |externalAccountId |string<br/>`length=36`  |This is the external account ID.|
-|merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor.|
+|merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor. **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.|
 |tradingAddress     |[tradingAddress](#merchantaccounttradingaddressesobject) |This is the merchant's trading address.|
 |usAccountDetails   |[usAccountDetails](#usaccountdetailsobject) |These are the merchant account details.|
 |caAccountDetails   |[caAccountDetails](#caaccountdetailsobject)  |These are the merchant account details.|
@@ -1130,7 +1132,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |dynamicDescriptor              |string<br/>For credit card merchant processing accounts `length<=20`<br/>For Direct Debit merchant processing accounts `length<=32`    |This is the dynamic descriptor field.|
 |phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor.|
 
-**Note:** <ul><li>The *phone* element is *not* supported for **Direct Debit** processing merchants.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
+**Note:** <ul><li>For **Direct Debit** processing merchants, the *merchantDescriptor* object is supported only in Canada and the U.S.</li><li>The *phone* element is *not* supported for **Direct Debit** processing merchants.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
 
 ```apib
 {
@@ -1737,6 +1739,7 @@ This table provides an overview of the attributes that are Required, Optional, a
 
 |Country    |Code   |
 |---        |---    |
+|Åland Islands  |AX |
 |Austria    |AT     |
 |Belgium    |BE     |
 |Bulgaria   |BG     |
@@ -1783,7 +1786,6 @@ This table provides an overview of the attributes that are Required, Optional, a
 |Switzerland    |CH     |
 |The Netherlands    |NL |
 |United Kingdom |GB |
-|Åland Islands  |AX |
 
 <a name="supportedcountrycodes" title="Supported Country Codes by Region"></a>
 ## Supported Country Codes by Region
@@ -5164,7 +5166,7 @@ re-ordered the API examples
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5195,7 +5197,7 @@ re-ordered the API examples
     - fr_CA
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5229,7 +5231,7 @@ re-ordered the API examples
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
