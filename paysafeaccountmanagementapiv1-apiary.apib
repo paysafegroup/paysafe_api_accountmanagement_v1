@@ -1130,9 +1130,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |dynamicDescriptor              |string<br/>For credit card merchant processing accounts `length<=20`<br/>For Direct Debit merchant processing accounts `length<=32`    |This is the dynamic descriptor field.|
-|phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor.|
+|phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor. **Note:** This element is *not* supported for **Direct Debit** processing merchants.|
 
-**Note:** <ul><li>For **Direct Debit** processing merchants, the *merchantDescriptor* object is supported only in Canada and the U.S.</li><li>The *phone* element is *not* supported for **Direct Debit** processing merchants.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
+**Note:** <ul><li>For **Direct Debit** processing merchants, the *merchantDescriptor* object is supported only in Canada and the U.S.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
 
 ```apib
 {
