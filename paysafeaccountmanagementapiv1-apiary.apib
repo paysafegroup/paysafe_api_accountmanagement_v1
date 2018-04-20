@@ -7,9 +7,9 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
-| 1.0       | April 2018    | Updated Supported Country Codes by Region |
-| 1.0       | December 2017 | Updated Balance Transfers |
-| 1.0       | December 2016 | Document release |
+| 1.0       | April 2018    | <ul><li>Updated Supported Country Codes by Region</li><li>Added content for processing currency for merchant accounts</li></ul> |
+| 1.0       | December 2017 | <ul><li>Updated Balance Transfers</li></ul> |
+| 1.0       | December 2016 | <ul><li>Document release</li></ul> |
 
 # Overview
 
@@ -1038,7 +1038,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |name           |string<br/>`length<=250`   |This is the merchant name.|
 |legalEntity    |string<br/>`length<=240`   |This is the business legal/trading name (e.g., "ACME CA").|
 |status         |enum                       |This is the status of the merchant account. Possible values are: <ul><li>APPROVED - The merchant account has been approved, but not yet enabled.</li><li>DEFERRED - The merchant account application has been deferred until underwriting by Risk/Compliance is completed.</li><li>DISABLED - The merchant account application has been disabled due to suspension or termination.</li><li>ENABLED - The merchant account has been enabled for payment processing.</li><li>PENDING - The merchant account application has not yet been completed.</li><li>REJECTED - The merchant account application has been rejected due to Risk/Compliance check failure.</li><li>RETURNED - The merchant account application has been returned from Risk to Compliance for review.</li><li>SUBMITTED - The merchant account has been submitted for review by Paysafe Risk/Compliance.</li><li>WAITING - Compliance is waiting for additional information to be provided by the merchant.</li><li>WITHDRAWN - The merchant account application has been withdrawn.</li></ul>|
-|currency       |enum                       |This is the currency used for transactions on this merchant account. See [Supported Currency Codes](#supportedcurrencycodes). |
+|processingCurrency |enum                   |This is the *processing* currency used for transactions on this merchant account.  <br>**Note:** Partners configured by Paysafe for multicurrency processing use this parameter to specify the *processing* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
+|currency       |enum                       |Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.   <br>**Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the *settlement* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |region         |enum                       |This is the region for the merchant account. Possible values are: <ul><li>US</li><li>CA</li><li>EU</li></ul> |
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
 |productCode    |string<br/>`length<=50`    |This is the code of the partner product.|
@@ -4614,7 +4615,7 @@ re-ordered the API examples
         + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
         + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
         + locale:`en_US` (string, optional) - This is the locale used for the merchant account.
-        + users: (array, optional) - This is a list of users that will have access the merchant account in the Merchant Back Office.
+        + users: (array, optional) - This is a list of existing users that will have access the merchant account in the Merchant Back Office.
             - User 1
             - User 2
         + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
@@ -5136,10 +5137,11 @@ re-ordered the API examples
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/ext_0914?searchBy=ext` (string, required) - This is the URI of the resource.
-        
+
 ## Merchant Account
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ currency:`CAD` (enum, required) - Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter must use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
     - US
     - CA
@@ -5161,7 +5163,7 @@ re-ordered the API examples
     - en_US
     - en_GB
     - fr_CA
-+ users: (array, optional) - This is a list of users that will have access to the merchant account in the Merchant Back Office. Use this parameter if you want to add multiple users. Max = 100.
++ users: (array, optional) - Use this parameter to assign existing users to the merchant account. You can add multiple users. Max=100.
     - User 1
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
@@ -5173,7 +5175,8 @@ re-ordered the API examples
     
 ## Merchant Account Update
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ currency:`CAD` (enum, required) - Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
     - US
     - CA
@@ -5226,7 +5229,7 @@ re-ordered the API examples
     - en_US
     - en_GB
     - fr_CA
-+ users: (array, optional) - This is a list of users that will have access to the merchant account in the Merchant Back Office. Use this parameter if you want to add multiple users. Max = 100.
++ users: (array, optional) - Use this parameter to assign existing users to the merchant account. You can add multiple users. Max=100.
     - User 1
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
@@ -5239,7 +5242,8 @@ re-ordered the API examples
 ## Merchant Account Response
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`GOLD` (string, required) - This is the code of the partner product.
@@ -5261,7 +5265,7 @@ re-ordered the API examples
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
 + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
 + locale:`en_US` (string, optional) - This is the locale used for the merchant account.
-+ users: (array, optional) - This is a list of users that will be have access to the merchant account in the Merchant Back Office. Max = 100.
++ users: (array, optional) - This is a list of existing users that will have access to the merchant account in the Merchant Back Office. Max = 100.
     - User 1
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
@@ -5274,7 +5278,8 @@ re-ordered the API examples
 ## Merchant Account Update Response
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`GOLD` (string, required) - This is the code of the partner product.
