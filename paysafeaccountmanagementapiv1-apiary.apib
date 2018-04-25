@@ -674,7 +674,7 @@ The Paysafe Test environment can be used to test applications without actually r
 {
   "sortCode":"857412",
   "accountNumber":"94001521",
-  "beneficiaryAccountName":"Pmparapspd",
+  "beneficiaryAccountName":"BACS Bank",
   "beneficiaryBankCountry":"GB"
 }
 ```
@@ -1326,7 +1326,7 @@ Click [here](https://developer.paysafe.com/en/rest-api/platforms/account-managem
 <a name="bankaccountattributes" title="Bank Account Attributes"></a>
 ## Bank Account Attributes Required
 
-This table provides an overview of the attributes that are Required, Optional, and Conditional when creating each of the five [bank account types](#bankaccounttypes). 
+This table provides an overview of the attributes that are Required, Optional, and Conditional when creating each of the five [merchant bank account types](#bankaccounttypes). 
 
 | Element                 | EFT      | ACH      | SEPA     | BACS     | Wire        |
 |-------------------------|----------|----------|----------|----------|-------------|
@@ -3476,7 +3476,7 @@ This is how you create a merchant [ACH bank account](#achbankaccountobject) that
 
     + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
 
-+ Request Create Merchant ACH Bank Account (application/json)
++ Request Merchant ACH Bank Account Creation (application/json)
 
     + Attributes
         + Include ACH Bank Account
@@ -4181,7 +4181,7 @@ This is how you look up a user associated with the merchant account.
 + Response 200 (application/json)
 
     + Attributes
-        + Include User Lookup Response        
+        + Include User Lookup Response
         + Include Links User
 
 # Recovery Questions [/recoveryquestions]
@@ -4383,12 +4383,14 @@ This is how you look up a microdeposit to view its status.
         + Include Response Base        
         + Include Microdeposit Response Valid
         
+
 # Balance Transfers [/transfers]
-<a name="transfers"></a>
+<a name="transfers" title="Balance Transfers"></a>
 
 Partners can transfer balances between their linked merchants and their own account using the  Transfer capability. For example, the partner may want to issue a merchant with credit as a part of a promotion. To be able to perform transfers, Paysafe Technical Support configures the partner account with the capability, which enables it to Transfer Balances with all its linked merchants.  To be able to Transfer Balances, the partner must first be linked to the other accounts during on-boarding, and only accounts settling in the same currency can be linked. Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
 
 ## Credit an Account [POST /v1/accounts/{account_id}/credits]
+<a name="creditaccount" title="Credit an Account"></a>
 
 This is how you transfer a balance from the linked account in the body of the request to the account identified in the API endpoint URI.
 
@@ -4461,6 +4463,7 @@ This is how you look up a credit transfer using the merchant reference number.
         + Include Links Credit
 
 ## Debit an Account [POST /v1/accounts/{account_id}/debits]
+<a name="debitaccount" title="Debit an Account"></a>
 
 This is how you transfer a balance from the account identified in the API endpoint URI to the linked account in the body of the request. 
 
@@ -4484,7 +4487,7 @@ This is how you transfer a balance from the account identified in the API endpoi
         + Include debitsobject
         + status:`COMPLETED` (string, required) - The status of the transaction.
         + Include Links Debit
-        
+
 ## Look Up a Debit Transfer [GET /v1/accounts/{account_id}/debits/{transaction_id}]
 <a name="getdebitt" title="Look Up a Debit Transfer"></a>
 
