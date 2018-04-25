@@ -153,7 +153,7 @@ The following request types are supported:
   * [Merchant ACH Bank Accounts](#achbankaccounts)
   * [Merchant BACS Bank Accounts](#bacsbankaccounts)
   * [Merchant SEPA Bank Accounts](#sepabankaccounts)
-  * [Wire Bank Accounts](#wirebankaccounts)
+  * [Merchant Wire Bank Accounts](#wirebankaccounts)
   * [Terms and Conditions](#termsandconditions)
   * [Identity Verification](#identity)  
   * [Merchant Account Activation](#accountactivation)
@@ -249,11 +249,11 @@ The following request types are supported:
 
 # Getting Started
 
-Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Account Management API.
+Click [here](https://developer.paysafe.com/en/rest-api/platforms/account-management/typical-api-calls/) for details of some common scenarios for on-boarding merchants with the Account Management API.
 
 # Testing Instructions
 
-The Paysafe Test environment can be used to test applications without actually running requests through the live system. It is important to make sure that your systems are working correctly before going into a Live environment. Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/test-and-go-live/) for details of using the Test environment.
+The Paysafe Test environment can be used to test applications without actually running requests through the live system. It is important to make sure that your systems are working correctly before going into a Live environment. Click [here](https://developer.paysafe.com/en/rest-api/platforms/account-management/test-and-go-live/) for details of using the Test environment.
 
 <a name="isostandards" title="ISO Standards"></a>
 # ISO Standards
@@ -715,7 +715,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
-|id                             |string<br/>`length<=36`    |This is the merechant's BACS bank account ID returned in the response.|
+|id                             |string<br/>`length<=36`    |This is the merchant's BACS bank account ID returned in the response.|
 |beneficiaryBankCountry         |string<br/>`length=2`      |This is the [country](#bacscountries) of the beneficiary bank's address.|
 |beneficiaryAccountName         |string<br/>`length<=250`   |This is the beneficiary account name.|
 |accountNumber                  |string<br/>`length=8`      |This is the merchant's 8-digit bank account number.|
@@ -1395,7 +1395,7 @@ Subaccounts allow merchants to share and distribute payments among multiple acco
 
 # Error Summary
 
-Click [here](https://developer.paysafe.com/en/rest-api/partners/account-management/test-and-go-live/account-management-errors/) for a summary and description of errors you might encounter using the Account Management API.
+Click [here](https://developer.paysafe.com/en/rest-api/platforms/account-management/test-and-go-live/account-management-errors/) for a summary and description of errors you might encounter using the Account Management API.
 
 In addition, you might encounter the following errors when working with subaccounts.
 
@@ -1918,7 +1918,6 @@ This table provides an overview of the attributes that are Required, Optional, a
 | Hungary                    | HU   |
 | Iceland                    | IS   |
 | Ireland                    | IE   |
-| Isle of Man                | IM   |
 | Italy                      | IT   |
 | Jersey                     | JE   |
 | Latvia                     | LV   |
@@ -4550,7 +4549,7 @@ This is how you look up the recovery questions, using the locale, that can be [p
 
 This is how you submit a merchant account identity verification request.
 
-**Note:** The *identityId* value used for this request is the *id* value returned in the response from the Paysafe Identity Verification API. See [Business Owner Identity Verification](https://developer.paysafe.com/en/rest-api/partners/account-management/typical-api-calls/business-owner-identity-verification/) for more information.
+**Note:** The *identityId* value used for this request is the *id* value returned in the response from the Paysafe Identity Verification API. See [Business Owner Identity Verification](https://developer.paysafe.com/en/rest-api/platforms/account-management/typical-api-calls/business-owner-identity-verification/) for more information.
 
 + Parameters
 
@@ -4578,7 +4577,7 @@ This is how you submit a merchant account identity verification request.
 
 This is how you submit a merchant account activation request.
 
-**Note:** When the merchant account is successfully activated, Paysafe sends a confirmation email to the email address that was included in the [user creation](https://developer.paysafe.com/en/partners/accounts/api/#/reference/0/users/create-a-user) request.
+**Note:** When the merchant account is successfully activated, Paysafe sends a confirmation email to the email address that was included in the [user creation](https://developer.paysafe.com/en/platforms/accounts/api/#/reference/0/users/create-a-user) request.
 
 + Parameters
 
@@ -4620,7 +4619,7 @@ For microdeposits, Paysafe will attempt to make a small deposit between 0.01 and
 
 This is how you create a microdeposit request for an ACH (U.S.) or EFT (Canadian) bank account.
 
-**Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/partners/accounts/api/#/reference/0/users/create-a-user) request.
+**Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/platforms/accounts/api/#/reference/0/users/create-a-user) request.
 
 You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
 
@@ -5230,8 +5229,8 @@ This is how you look up a debit transfer using the merchant reference number.
 ## BACS Bank Account Response
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#bacscountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ accountNumber:`*****521` (string, required) - This is the 8-digit bank account number.
-+ sortCode:`******` (string, required) - This is the 6-digit sort code of the bank account.
++ accountNumber:`*****521` (string, required) - This is the merchant's 8-digit bank account number.
++ sortCode:`******` (string, required) - This is the 6-digit sort code of the merchant's bank account.
 
 ## Bank Account Lookup Response
 + bankType:`WIRE` (string, required) - This is the bank account type to register with the merchant account.
@@ -5856,12 +5855,12 @@ This is how you look up a debit transfer using the merchant reference number.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
 + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
 + locale:`en_US` (string, optional) - This is the locale used for the merchant account.
-+ users: (array, optional) - This is a list of users that will be have access to the merchant account in the Merchant Back Office. Max = 100.
++ users: (array, optional) - This is a list of existing users that will have access to the merchant account in the Merchant Back Office. Max = 100.
     - User 1
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card transaction descriptor](#merchantdescriptorobject).
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -6041,14 +6040,14 @@ This is how you look up a debit transfer using the merchant reference number.
 ## SEPA Bank Account
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ swiftNumber:`85741236` (string, required) - This is the swift number of the bank account.
-+ ibanNumber:`94001521002421` (string, required) - This is the IBAN number of the bank account.
++ swiftNumber:`85741236` (string, required) - This is the swift number of the merchant's bank account.
++ ibanNumber:`94001521002421` (string, required) - This is the IBAN number of the merchant's bank account.
 
 ## SEPA Bank Account Response
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
-+ swiftNumber:`********` (string, required) - This is the swift number of the bank account.
-+ ibanNumber:`940015****2421` (string, required) - This is the IBAN number of the bank account.
++ swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
++ ibanNumber:`940015****2421` (string, required) - This is the IBAN number of the merchant's bank account.
 
 ## Subaccount
 + name:`Settlement Account` (string, required) - This is the subaccount name.
@@ -6274,18 +6273,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + phone:`5556667777` (string, required) - This is the phone number of the business owner.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
-+ ssn:`999888777` (string, required) - This is the SSN of the business owner.
-
-## US Business Owner Patch
-+ firstName:`James` (string, optional) - This is the first name of the business owner.
-+ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
-+ lastName:`Ronald` (string, optional) - This is the last name of the business owner.
-+ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
-+ jobTitle:`CEO` (string, optional) - This is the job title of the business owner.
-+ phone:`5556667777` (string, optional) - This is the phone number of the business owner.
-+ dateOfBirth (object, optional) - This is the birth date of the business owner.
-    + Include Date
-+ ssn:`999888777` (string, optional) - This is the SSN of the business owner.
++ ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
 
 ## User
 + userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
@@ -6298,15 +6286,19 @@ This is how you look up a debit transfer using the merchant reference number.
 + email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
 
 ## User Lookup Response
-+ userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
-+ email:`johnsmith@email.com` (string, required) - This is the email address that will be associated with the user.
++ userName:`john_smith` (string) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
++ email:`johnsmith@email.com` (string) - This is the email address that will be associated with the user.
++ users (array) - This is an array of [users](#usersobject).
+    + (object)
+        + userName:`john_smith` (string) - This is the user's name.
+        + email:`sam_smith@email.com` (string) - This is the user's email address.
 
 ## Wire Bank Account
-+ accountNumber:`6358555211214` (string, required) - This is the bank account number.
-+ routingNumber:`1328514` (string, optional) - This is the routing number or the bank code of the bank account.
-+ sortCode:`857412` (string, optional) - This is the 6-digit sort code of the bank account.
-+ swiftNumber:`85774412` (string, required) - This is the swift number of the bank account.
-+ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ accountNumber:`6358555211214` (string, required) - This is the merchant's bank account number.
++ routingNumber:`1328514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
++ sortCode:`857412` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
++ swiftNumber:`85774412` (string, required) - This is the swift number of the merchant's bank account.
++ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
@@ -6321,11 +6313,11 @@ This is how you look up a debit transfer using the merchant reference number.
 + beneficiaryBankPostCode:`A13 1BB` (string, required) - This is the post code of the beneficiary's bank.
 
 ## Wire Bank Account Response
-+ accountNumber:`**********214` (string, required) - This is the bank account number.
-+ routingNumber:`****514` (string, optional) - This is the routing number or the bank code of the bank account.
-+ sortCode:`******` (string, optional) - This is the 6-digit sort code of the bank account.
-+ swiftNumber:`********` (string, required) - This is the swift number of the bank account.
-+ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ accountNumber:`**********214` (string, required) - This is the merchant's bank account number.
++ routingNumber:`****514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
++ sortCode:`******` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
++ swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
++ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
