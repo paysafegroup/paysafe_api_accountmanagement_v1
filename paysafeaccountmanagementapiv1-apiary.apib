@@ -4531,7 +4531,7 @@ This is how you look up a debit transfer using the merchant reference number.
         + Include Meta
         + Include Transfers
         + Include Links Debit
-re-ordered the API examples
+
 # Data Structures
 
 ## ACH Bank Account
@@ -5078,6 +5078,12 @@ re-ordered the API examples
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/merchants/8b670bf0-f218-4710-86a9-1b100206e1c1/accounts/1000789670` (string, required) - This is the URI of the resource.
 
+## Links Merchant Account ExtID
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/ext_0914?searchBy=ext` (string, required) - This is the URI of the resource.
+
 ## Links Microdeposits
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
@@ -5132,12 +5138,6 @@ re-ordered the API examples
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/wirebankaccounts/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
-
-## Links Merchant Account ExtID
-+ links (array, required) - This is an array of [links](#linksobject).
-    + (object)
-        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
-        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/ext_0914?searchBy=ext` (string, required) - This is the URI of the resource.
 
 ## Merchant Account
 + name:`Mega Gym` (string, required) - This is the merchant name.
@@ -5425,17 +5425,6 @@ re-ordered the API examples
 ## Response Base Merchant Account
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 
-## US Business Owner
-+ firstName:`James` (string, required) - This is the first name of the business owner.
-+ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
-+ lastName:`Ronald` (string, required) - This is the last name of the business owner.
-+ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
-+ jobTitle:`CEO` (string, required) - This is the job title of the business owner.
-+ phone:`5556667777` (string, required) - This is the phone number of the business owner.
-+ dateOfBirth (object, required) - This is the birth date of the business owner.
-    + Include Date
-+ ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
-
 ## SEPA Bank Account
 + beneficiaryBankCountry:`GB` (string, required) - This is the [country](#sepacountries) of the beneficiary bank's address.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
@@ -5521,6 +5510,17 @@ re-ordered the API examples
     + Include Date Issue
 + expiryDate (object, optional) - This is the expiration date the driving license.
     + Include Date Expiry
+
+## US Business Owner
++ firstName:`James` (string, required) - This is the first name of the business owner.
++ middleName:`Robert` (string, optional) - This is the middle name of the business owner.
++ lastName:`Ronald` (string, required) - This is the last name of the business owner.
++ email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
++ jobTitle:`CEO` (string, required) - This is the job title of the business owner.
++ phone:`5556667777` (string, required) - This is the phone number of the business owner.
++ dateOfBirth (object, required) - This is the birth date of the business owner.
+    + Include Date
++ ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
 
 ## User
 + userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
