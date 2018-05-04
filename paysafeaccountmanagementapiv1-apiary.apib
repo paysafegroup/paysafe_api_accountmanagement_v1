@@ -7,7 +7,7 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
-| 1.0       | April 2018    | <ul><li>Updated Supported Country Codes by Region</li><li>Added content for processing currency for merchant accounts</li></ul> |
+| 1.0       |April 2018     | <ul><li>Updated Supported Country Codes by Region</li><li>Added content for processing currency for merchant accounts</li></ul> |
 | 1.0       |September 2017 | <ul><li>Added Balance Transfers</li><li>Added Subaccounts</li></ul>|
 | 1.0       |December 2016  | <ul><li>Document release</li></ul>|
 
@@ -804,6 +804,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 ```apib
 {
+"canadianDrivingLicense": {
   "number":"DL1233456",
   "city":"Toronto",
   "province":"ON",
@@ -816,6 +817,7 @@ The Paysafe Test environment can be used to test applications without actually r
     "day":"24",
     "month":"10",
     "year":"1981"
+  }
   }
 }
 ```
@@ -835,6 +837,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 ```apib
 {
+"europeanIdCard": {
   "countryOfIssue": "GB",
   "expiryDate": {
     "day": 1,
@@ -844,6 +847,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "idNumberLine1": "IDGBRAA30003303<<<<<<<<<<<<<<<",
   "idNumberLine2": "7502020M1801019GBR<<<<<<<<<<<0",
   "idNumberLine3": "MCLAREN<<ALBERT<<<<<<<<<<<<<<<"
+}
 }
 ```
 
@@ -862,6 +866,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 ```apib
 {
+"internationalPassport": {
   "number":"123456787",
   "passportNumberLine2": "1234567897GBR4511012M1803035<<<<<<<<<<<<<<00",
   "countryOfIssue": "GB",
@@ -875,6 +880,7 @@ The Paysafe Test environment can be used to test applications without actually r
     "month": 3,
     "year": 2020
   }
+}
 }
 ```
 
@@ -891,6 +897,7 @@ The Paysafe Test environment can be used to test applications without actually r
 
 ```apib
 {
+"ukDrivingLicense": {
   "number":"DL1233456",
   "city":"Toronto",
   "postCode":"BA133BN",
@@ -903,6 +910,7 @@ The Paysafe Test environment can be used to test applications without actually r
     "day":"24",
     "month":"10",
     "year":"1981"
+  }
   }
 }
 ```
@@ -2687,9 +2695,8 @@ This is how you submit a European business owner creation request.
 ## Create a Business Owner - Consolidated [POST /v1/accounts/{account_id}/businessowners?operationMode={operation_mode}]
 <a name="businessownersrequestconsolidated" title="Create a Business Owner - Consolidated"></a>
 
-This is how you submit a business owner creation request that allows you to also include additional objects. This example included here is for a Canadian business owner.
-Depending on your jurisdiction, you can include the following: 
-<ul><li>Current Address</li><li>Previous Address</li><li>Canadian Driving License</li><li>UK Driving License</li><li>International Passport</li><li>European Identity Card</li></ul>
+This is how you submit a business owner creation request that allows you to also include additional objects. The example included here is for a Canadian business owner.
+Depending on your jurisdiction, you can include the following: <ul><li>Current Address</li><li>Previous Address</li><li>[Canadian Driving License](#businessownercanadiandrivinglicensesobject) &ndash; *canadianDrivingLicense*</li><li>[UK Driving License](#businessownerukdrivinglicensesobject) &ndash; *ukDrivingLicense*</li><li>[International Passport](#businessownerinternationalpassportsobject) &ndash; *internationalPassport*</li><li>[European Identity Card](#businessownereuropeanidentitycardsobject) &ndash; *europeanIdCard*</li></ul>
 
 For the business owner creation request, mandatory parameters vary by regions. For details, see: <ul><li>[Create a Canadian Business Owner](#canadianbusinessownersrequest)</li><li>[Create a US Business Owner](#usbusinessownersrequest)</li><li>[Create a European Business Owner](#europeanbusinessownersrequest)</li></ul>
 
