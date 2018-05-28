@@ -2284,7 +2284,7 @@ This is how you look up a merchant account using the account ID returned in the 
 
     + Attributes
         + Include Links Merchant Account Consolidated
-        + Include Merchant Account Response
+        + Include Merchant Account Response Consolidated
         + Include Address Consolidated
         + Include Trading Address Consolidated        
         + Include EFT Bank Account Resource
@@ -4610,17 +4610,21 @@ This is how you look up a debit transfer using the merchant reference number.
         + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
         + productCode:`GOLD` (string, required) - This is the code of the partner product.
         + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-        + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+        + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
             - APPROVED
             - DEFERRED
             - DISABLED
             - ENABLED
-            - PENDING            
+            - PENDING
+            - PROCESSING
             - REJECTED
             - RETURNED            
             - SUBMITTED
             - WAITING
             - WITHDRAWN
+        + statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
+            - IN_GRPL_COMP - Being reviewed by Compliance.
+            - IN_RISK - Being reviewed by Risk.
         + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
         + url:`www.megagym.com` (string, optional) - This is the website of the business.
         + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
@@ -5273,6 +5277,46 @@ This is how you look up a debit transfer using the merchant reference number.
     - SUBMITTED
     - WAITING
     - WITHDRAWN
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
++ locale:`en_US` (string, optional) - This is the locale used for the merchant account.
++ users: (array, optional) - This is a list of existing users that will have access to the merchant account in the Merchant Back Office. Max = 100.
+    - User 1
+    - User 2
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
+## Merchant Account Response Consolidated
++ id:`1000789670` (string, required) - This is the account ID returned in the response.
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ region:`CA` (enum, required) - This is the region for the merchant account.
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+    - APPROVED
+    - DEFERRED
+    - DISABLED
+    - ENABLED
+    - PENDING
+    - PROCESSING
+    - REJECTED
+    - RETURNED
+    - SUBMITTED
+    - WAITING
+    - WITHDRAWN
++ statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
+    - IN_GRPL_COMP - Being reviewed by Compliance.
+    - IN_RISK - Being reviewed by Risk.
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
