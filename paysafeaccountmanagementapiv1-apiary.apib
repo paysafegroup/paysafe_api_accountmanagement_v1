@@ -7,6 +7,7 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
+| 1.0       | May 2018      |<ul><li>Added *isApplicant* parameter to business owner object.</li></ul> |
 | 1.0       |April 2018     | <ul><li>Updated Supported Country Codes by Region</li><li>Added content for processing currency for merchant accounts</li></ul> |
 | 1.0       |September 2017 | <ul><li>Added Balance Transfers</li><li>Added Subaccounts</li></ul>|
 | 1.0       |December 2016  | <ul><li>Document release</li></ul>|
@@ -16,6 +17,38 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 The Paysafe Account Management API allows our Partners to create their own white-labelled merchant on-boarding experience, via a set of REST-based calls. With this API, Partners will be able to tailor their user experience to their business, using client information that they have already collected and verified.
 
 Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected. The result of improved merchant experiences will be higher on-boarding conversion and increased processing volumes.
+
+## Merchant Accounts and Subaccounts 
+
+Subaccounts allow merchants to share and distribute payments among multiple accounts. When you create a subaccount, it will be connected with the merchant account ID that is specified in the request endpoint.
+
+**Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
+
+1. Paysafe creates your platform revenue accounts, e.g., one for credit cards and one for Direct Debit. 
+2. [Create the merchants](#createmerchant) you require. In the graphic below, you can see there are two Merchants created &ndash; Property Manager A and Property Manager B.
+3. [Create the merchant accounts](#createmerchantaccount) you require. In the graphic below, for each Property Manager Merchant there is one Merchant Account for processing credit cards and one Merchant Account for processing Direct Debits.
+4. [Create the subaccounts](#createsubaccounts) you require. In the graphic below, you can see the following were created:
+  * Two subaccounts for credit card funding and two subaccounts for credit card debits for Property Manager A
+  * One subaccount for Direct Debit funding and one subaccount for Direct Debit debits for Property Manager A
+  * One subaccount for credit card funding and one subaccount for credit card debits for Property Manager B
+  * One subaccount for Direct Debit funding and one subaccount for Direct Debit debits for Property Manager B
+ 
+ QUESTIONS:
+  * What are "revenue" accounts? Are these the equivalent of a Partner account in Geneva?
+  * Do both "revenue" accounts use the same API key for Account Management API? The diagram makes it look like they'd be different (otherwise, e.g., how would DD merchant account be connected with DD revenue account?).
+  * Is there a different *productCode* for each merchant account in the diagram? E.g., would you need a different *productCode* for accounts to process CC USD, CC CAD, ACH USD, SEPA EUR, SEPA GBP, etc.?
+  * What is the relationship between the Direct Debit "revenue" account and the Merchant entities, and then with the multiple DD merchant accounts associated with them?
+
+![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy.png)
+
+## Subaccount Settlement Flows
+
+![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Settle.png)
+
+## Subaccount Chargeback Flows
+
+![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Chargeback.png)
+
 
 <a name="apikey" title="Authentication"></a>
 # Authentication 
@@ -746,6 +779,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |nationality    |enum                           |This is the nationality code of the business owner.  **Note:** This is used for European business owners only. See [Nationality Codes](#nationalitycodes).|
 |dateOfBirth    |[dateOfBirth](#date)           |This is the birth date of the business owner.|
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
+|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account. **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant.|
 |gender         |enum                           |This is the gender of the business owner. **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
 |percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.  **Note:** This is used for European business owners only.|
 
@@ -1097,8 +1131,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |id             |string<br/>`length<=36`    |This is the ID returned in the response. It can be used later to look up or update a merchant.|
 |name           |string<br/>`length<=250`   |This is the merchant name.|
 |legalEntity    |string<br/>`length<=240`   |This is the business legal/trading name (e.g., "ACME CA").|
-|status         |enum                       |This is the status of the merchant account. Possible values are: <ul><li>APPROVED - The merchant account has been approved, but not yet enabled.</li><li>DEFERRED - The merchant account application has been deferred until underwriting by Risk/Compliance is completed.</li><li>DISABLED - The merchant account application has been disabled due to suspension or termination.</li><li>ENABLED - The merchant account has been enabled for payment processing.</li><li>PENDING - The merchant account application has not yet been completed.</li><li>REJECTED - The merchant account application has been rejected due to Risk/Compliance check failure.</li><li>RETURNED - The merchant account application has been returned from Risk to Compliance for review.</li><li>SUBMITTED - The merchant account has been submitted for review by Paysafe Risk/Compliance.</li><li>WAITING - Compliance is waiting for additional information to be provided by the merchant.</li><li>WITHDRAWN - The merchant account application has been withdrawn.</li></ul>|
-|statusReason   |enum                       |This is the reason for the status of the merchant account. <ul><li>TERMINATED</li><li>IN_COMP</li><li>IN_RISK</li><li>SUSPENDED</li></ul> |
+|status         |enum                       |This is the status of the merchant account. Possible values are: <ul><li>APPROVED - The merchant account has been approved, but not yet enabled.</li><li>PROCESSING - The merchant account application is being processed by Risk/Compliance.</li><li>DEFERRED - The merchant account application has been deferred until underwriting by Risk/Compliance is completed.</li><li>DISABLED - The merchant account application has been disabled due to suspension or termination.</li><li>ENABLED - The merchant account has been enabled for payment processing.</li><li>PENDING - The merchant account application has not yet been completed.</li><li>REJECTED - The merchant account application has been rejected due to Risk/Compliance check failure.</li><li>RETURNED - The merchant account application has been returned from Risk to Compliance for review.</li><li>SUBMITTED - The merchant account has been submitted for review by Paysafe Risk/Compliance.</li><li>WAITING - Compliance is waiting for additional information to be provided by the merchant.</li><li>WITHDRAWN - The merchant account application has been withdrawn.</li></ul>|
+|statusReason   |enum                       |This is the reason for the status of the merchant account. <ul><li>TERMINATED</li><li>IN_COMP</li><li>IN_GRPL_COMP</li><li>IN_RISK</li><li>SUSPENDED</li></ul> |
 |statusComment  |string<br/>`length<=255`   |This is a comment on why the account status is being changed from *ENABLED* to *DISABLED*.|
 |processingCurrency |enum                   |This is the *processing* currency used for transactions on this merchant account.  <br>**Note:** Partners configured by Paysafe for multicurrency processing use this parameter to specify the *processing* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |currency       |enum                       |Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.   <br>**Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the *settlement* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
@@ -2402,7 +2436,7 @@ This is how you look up a merchant account using the account ID returned in the 
 
     + Attributes
         + Include Links Merchant Account Consolidated
-        + Include Merchant Account Response
+        + Include Merchant Account Response Consolidated
         + Include Address Consolidated
         + Include Trading Address Consolidated        
         + Include EFT Bank Account Resource
@@ -5097,17 +5131,21 @@ This is how you look up a debit transfer using the merchant reference number.
         + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
         + productCode:`GOLD` (string, required) - This is the code of the partner product.
         + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-        + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+        + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
             - APPROVED
             - DEFERRED
             - DISABLED
             - ENABLED
             - PENDING            
+            - PROCESSING
             - REJECTED
             - RETURNED            
             - SUBMITTED
             - WAITING
             - WITHDRAWN
+        + statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
+            - IN_GRPL_COMP - Being reviewed by Compliance.
+            - IN_RISK - Being reviewed by Risk.
         + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
         + url:`www.megagym.com` (string, optional) - This is the website of the business.
         + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
@@ -5320,6 +5358,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
 
 ## Canadian Driving License 
 + number:`DL987654321` (string, required) - This is the driving license number
@@ -5434,6 +5473,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + gender:`M` (enum, optional) - This is the gender of the business owner.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
 
 ## European Identity Card 
 + countryOfIssue:`GB` (string, required) - This is the country in which the identity card was issued. See [Country Codes](#countrycodes).
@@ -5872,6 +5912,50 @@ This is how you look up a debit transfer using the merchant reference number.
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
 
+## Merchant Account Response Consolidated
++ id:`1000789670` (string, required) - This is the account ID returned in the response.
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ region:`CA` (enum, required) - This is the region for the merchant account.
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+    - APPROVED
+    - DEFERRED
+    - DISABLED
+    - ENABLED
+    - PENDING
+    - PROCESSING
+    - REJECTED
+    - RETURNED
+    - SUBMITTED
+    - WAITING
+    - WITHDRAWN
++ statusReason:`IN_GRPL_COMP` (enum, optional) - This is the reason for the status of the merchant account. This is not returned for all statuses.
+    - IN_COMP
+    - IN_GRPL_COMP
+    - IN_RISK
+    - SUSPENDED
+    - TERMINATED
++ statusComment:`Merchant sold business.` (string, optional) - This is a comment on why the account is being set to *DISABLED*.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
++ locale:`en_US` (string, optional) - This is the locale used for the merchant account.
++ users: (array, optional) - This is a list of existing users that will have access to the merchant account in the Merchant Back Office. Max = 100.
+    - User 1
+    - User 2
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
 ## Merchant Account Update Response
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
@@ -6281,6 +6365,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
 
 ## User
 + userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
