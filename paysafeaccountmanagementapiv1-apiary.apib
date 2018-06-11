@@ -24,26 +24,41 @@ Subaccounts allow merchants to share and distribute payments among multiple acco
 
 **Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
 
-1. Paysafe creates your platform revenue accounts, e.g., one for credit cards and one for Direct Debit. 
-2. [Create the merchants](#createmerchant) you require. In the graphic below, you can see there are two Merchants created &ndash; Property Manager A and Property Manager B.
-3. [Create the merchant accounts](#createmerchantaccount) you require. In the graphic below, for each Property Manager Merchant there is one Merchant Account for processing credit cards and one Merchant Account for processing Direct Debits.
-4. [Create the subaccounts](#createsubaccounts) you require. In the graphic below, you can see the following were created:
+1. Paysafe creates your platform revenue accounts, e.g., one for each credit card/currency and Direct Debit/currency combination. Any revenues resulting from Merchant Accounts that process credit cards will flow to the appropriate credit card revenue account, while any revenues resulting from Merchant Accounts that process Direct Debit will flow to the appropriate Direct Debit revenue account.
+2. [Create the Merchants](#createmerchant) you require. In the graphic below, there are two Merchants created &ndash; Property Manager A and Property Manager B.
+3. [Create the Merchant Accounts](#createmerchantaccount) you require. In the graphic below, for each Property Manager Merchant there is one Merchant Account for processing credit cards and one Merchant Account for processing Direct Debits.
+You must create a **different merchant account** for each payment method/currency combination you want to support (e.g., USD credit card, CAD Direct Debit, etc.) &ndash; each will have its own *productCode*, which Paysafe provides to you. The *productCode* is a required parameter in the Merchant Account creation request.
+4. [Create the subaccounts](#createsubaccounts) you require. The subaccounts are settlement accounts only, connected with Merchant Accounts whose account IDs are included in the endpoint for the subaccount creation requests. No transaction requests are processed through the subaccounts. In the graphic below, you can see the following were created:
   * Two subaccounts for credit card funding and two subaccounts for credit card debits for Property Manager A
   * One subaccount for Direct Debit funding and one subaccount for Direct Debit debits for Property Manager A
   * One subaccount for credit card funding and one subaccount for credit card debits for Property Manager B
   * One subaccount for Direct Debit funding and one subaccount for Direct Debit debits for Property Manager B
- 
- QUESTIONS:
-  * What are "revenue" accounts? Are these the equivalent of a Partner account in Geneva?
-  * Do both "revenue" accounts use the same API key for Account Management API? The diagram makes it look like they'd be different (otherwise, e.g., how would DD merchant account be connected with DD revenue account?).
-  * Is there a different *productCode* for each merchant account in the diagram? E.g., would you need a different *productCode* for accounts to process CC USD, CC CAD, ACH USD, SEPA EUR, SEPA GBP, etc.?
-  * What is the relationship between the Direct Debit "revenue" account and the Merchant entities, and then with the multiple DD merchant accounts associated with them?
 
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy.png)
 
 ## Subaccount Settlement Flows
 
+The diagram below shows a typical flow of settlement funds when you have Subaccounts associated with your Merchant Accounts. 
+1. Property Manager A (Merchant) receives a credit card rental payment of $1030 to their Merchant Account.
+2. $1000 of the total amount automatically goes to their funding Subaccount 1, which is a settlement account only and has a bank account assigned to it. 
+3. $30 of the total amount is automatically directed to their credit card platform revenue account.
+4. Property Manager B (different Merchant) receives a Direct Debit rental payment of $1050 to their Merchant Account.
+5. $1000 of the total amount automatically goes to their funding Subaccount 1, which is also a settlement accountly only and has a bank account assigned to it. 
+6. $50 of the total amount is automatically directed to their Direct Debit platform revenue account.
+
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Settle.png)
+
+## Subaccount Credit Flows
+
+The diagram below shows a typical flow of credit funds when you have Subaccounts associated with your Merchant Accounts. 
+1. Property Manager A (Merchant) issues a credit card refund of $1030 from their Merchant Account.
+2. $1000 of the total amount is automatically transferred from their funding Subaccount 1 to the Merchant Account. 
+3. $30 of the total amount is automatically transferred from to their credit card platform revenue account to the Merchant Account.
+4. Property Manager B (different Merchant) issues a Direct Debit credit of $1050 from their Merchant Account.
+5. $1000 of the total amount is automatically transferred from their funding Subaccount 1 to the Merchant Account. 
+6. $50 of the total amount is automatically transferred from their Direct Debit platform revenue account to the Merchant Account.
+
+![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Credit.png)
 
 ## Subaccount Chargeback Flows
 
