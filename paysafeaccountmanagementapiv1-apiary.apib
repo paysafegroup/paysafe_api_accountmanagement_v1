@@ -53,7 +53,7 @@ The diagram below shows a typical flow of settlement funds when you have Subacco
 The diagram below shows a typical flow of credit funds when you have Subaccounts associated with your Merchant Accounts. 
 1. Property Manager A (Merchant) issues a credit card refund of $1030 from their Merchant Account.
 2. $1000 of the total amount is automatically transferred from their funding Subaccount 1 to the Merchant Account. 
-3. $30 of the total amount is automatically transferred from to their credit card platform revenue account to the Merchant Account.
+3. $30 of the total amount is automatically transferred from their credit card platform revenue account to the Merchant Account.
 4. Property Manager B (different Merchant) issues a Direct Debit credit of $1050 from their Merchant Account.
 5. $1000 of the total amount is automatically transferred from their funding Subaccount 1 to the Merchant Account. 
 6. $50 of the total amount is automatically transferred from their Direct Debit platform revenue account to the Merchant Account.
@@ -61,6 +61,14 @@ The diagram below shows a typical flow of credit funds when you have Subaccounts
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Credit.png)
 
 ## Subaccount Chargeback Flows
+
+The diagram below shows a typical flow of credit funds when you have Subaccounts associated with your Merchant Accounts. 
+1. A chargeback of $1030 is levied against the credit card Merchant Account of Property Manager A (Merchant).
+2. $1000 of the total amount is automatically transferred from their debiting Subaccount 1 to the Merchant Account. 
+3. The merchant processes a $30 [balance transfer request](#creditaccount) from their credit card platform revenue account to credit the Merchant Account.
+4. A chargeback of $1050 is levied against the Direct Debit Merchant Account of Property Manager B (Merchant).
+5. $1000 of the total amount is automatically transferred from their debiting Subaccount 1 to the Merchant Account.
+6. The merchant processes a $50 [balance transfer request](#creditaccount) from their Direct Debit platform revenue account to credit the Merchant Account.
 
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Chargeback.png)
 
