@@ -1053,7 +1053,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |currency       |enum                       |Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.   <br>**Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the *settlement* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |region         |enum                       |This is the region for the merchant account. Possible values are: <ul><li>US</li><li>CA</li><li>EU</li></ul> |
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
-|productCode    |string<br/>`length<=50`    |This is the code of the partner product.|
+|productCode    |string<br/>`length<=50`    |This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.|
 |category       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
 |averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units. |
 |url            |string<br/>`length<=60`    |This is the website of the business. |
@@ -1078,7 +1078,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "currency":"CAD",
   "region":"CA",
   "locale":"en_CA",
-  "productCode":"987",
+  "productCode":"G987",
   "category":"PC",
   "averageTransactionAmount": 50000,
   "url":"www.acmepc.ca",
@@ -4609,7 +4609,7 @@ This is how you look up a debit transfer using the merchant reference number.
         + currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
         + region:`CA` (enum, required) - This is the region for the merchant account.
         + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-        + productCode:`GOLD` (string, required) - This is the code of the partner product.
+        + productCode:`G987` (string, required) - This is the code of the partner product.
         + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
         + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
             - APPROVED
@@ -5166,7 +5166,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5201,7 +5201,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5232,7 +5232,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5265,7 +5265,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
@@ -5301,7 +5301,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
@@ -5341,7 +5341,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
