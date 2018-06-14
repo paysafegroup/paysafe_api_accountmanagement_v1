@@ -18,13 +18,13 @@ The Paysafe Account Management API allows our Partners to create their own white
 
 Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected. The result of improved merchant experiences will be higher on-boarding conversion and increased processing volumes.
 
-## Merchant Accounts and Subaccounts 
+# Merchant Accounts and Subaccounts 
 
 Subaccounts allow merchants to share and distribute payments among multiple accounts. When you create a subaccount, it will be connected with the merchant account ID that is specified in the request endpoint.
 
 **Note:** Not all merchant account types support subaccounts. Contact your account manager for more information.
 
-1. Paysafe creates your platform revenue accounts, e.g., one for each credit card/currency and Direct Debit/currency combination. Any revenues resulting from Merchant Accounts that process credit cards will flow to the appropriate credit card revenue account, while any revenues resulting from Merchant Accounts that process Direct Debit will flow to the appropriate Direct Debit revenue account.
+1. Paysafe creates your platform Revenue Accounts, e.g., one for each credit card/currency and Direct Debit/currency combination. Any revenues resulting from Merchant Accounts that process credit cards can be directed to the appropriate credit card Revenue Account, while any revenues resulting from Merchant Accounts that process Direct Debit can be directed to the appropriate Direct Debit Revenue Account.
 2. [Create the Merchants](#createmerchant) you require. In the graphic below, there are two Merchants created &ndash; Property Manager A and Property Manager B.
 3. [Create the Merchant Accounts](#createmerchantaccount) you require. In the graphic below, for each Property Manager Merchant there is one Merchant Account for processing credit cards and one Merchant Account for processing Direct Debits.
 You must create a **different merchant account** for each payment method/currency combination you want to support (e.g., USD credit card, CAD Direct Debit, etc.) &ndash; each will have its own *productCode*, which Paysafe provides to you. The *productCode* is a required parameter in the Merchant Account creation request.
@@ -38,37 +38,41 @@ You must create a **different merchant account** for each payment method/currenc
 
 ## Subaccount Settlement Flows
 
-The diagram below shows a typical flow of settlement funds when you have Subaccounts associated with your Merchant Accounts. 
+The diagram below shows a sample flow of settlement funds when you have Subaccounts associated with your Merchant Accounts. 
 1. Property Manager A (Merchant) receives a credit card rental payment of $1030 to their Merchant Account.
-2. $1000 of the total amount automatically goes to their funding Subaccount 1, which is a settlement account only and has a bank account assigned to it. 
-3. $30 of the total amount is automatically directed to their credit card platform revenue account.
-4. Property Manager B (different Merchant) receives a Direct Debit rental payment of $1050 to their Merchant Account.
-5. $1000 of the total amount automatically goes to their funding Subaccount 1, which is also a settlement accountly only and has a bank account assigned to it. 
-6. $50 of the total amount is automatically directed to their Direct Debit platform revenue account.
+2. Property Manager A [processes a Split Payout purchase request](https://developer.paysafe.com/en/rest-api/platforms/split-payouts/processing-a-split-payouts-card-purchase/), specifying the Revenue Account and Subaccount 1 each as a *linkedAccount* and the amount to go to each.
+3. $1000 of the total amount goes to their funding Subaccount 1, which is a settlement account only and has a bank account assigned to it. 
+4. $30 of the total amount goes to their credit card platform Revenue Account.
+5. Property Manager B (different Merchant) receives a Direct Debit rental payment of $1050 to their Merchant Account.
+6. Property Manager B [processes a Split Payout Direct Debit purchase request](https://developer.paysafe.com/en/rest-api/platforms/split-payouts/processing-a-split-payouts-direct-debit-purchase/), specifying the Revenue Account and Subaccount 3 each as a *linkedAccount* and the amount to go to each. 
+7. $1000 of the total amount goes to their funding Subaccount 3, which is also a settlement account only and has a bank account assigned to it. 
+8. $50 of the total amount goes to their Direct Debit platform Revenue Account.
 
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Settle.png)
 
 ## Subaccount Credit Flows
 
-The diagram below shows a typical flow of credit funds when you have Subaccounts associated with your Merchant Accounts. 
+The diagram below shows a sample flow of credit funds when you have Subaccounts associated with your Merchant Accounts. 
 1. Property Manager A (Merchant) issues a credit card refund of $1030 from their Merchant Account.
-2. $1000 of the total amount is automatically transferred from their funding Subaccount 1 to the Merchant Account. 
-3. $30 of the total amount is automatically transferred from their credit card platform revenue account to the Merchant Account.
-4. Property Manager B (different Merchant) issues a Direct Debit credit of $1050 from their Merchant Account.
-5. $1000 of the total amount is automatically transferred from their funding Subaccount 1 to the Merchant Account. 
-6. $50 of the total amount is automatically transferred from their Direct Debit platform revenue account to the Merchant Account.
+2. Property Manager A [processes a Split Payout refund request](https://developer.paysafe.com/en/rest-api/platforms/split-payouts/processing-a-split-payouts-card-refund/), specifying the Revenue Account and Subaccount 1 each as a *linkedAccount* and the amount to come from each.
+3. $1000 of the total amount goes from their funding Subaccount 1 to the Merchant Account. 
+4. $30 of the total amount goes from their credit card platform Revenue Account to the Merchant Account.
+5. Property Manager B (different Merchant) issues a Direct Debit credit of $1050 from their Merchant Account.
+6. Property Manager B [processes a Split Payout Direct Debit standalone credit request](https://developer.paysafe.com/en/rest-api/platforms/split-payouts/processing-a-split-payouts-direct-debit-standalone-credit/), specifying the Revenue Account and Subaccount 3 each as a *linkedAccount* and the amount to come from each.
+7. $1000 of the total amount goes from their funding Subaccount 3 to the Merchant Account. 
+8. $50 of the total amount goes from their Direct Debit platform Revenue Account to the Merchant Account.
 
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Credit.png)
 
-## Subaccount Chargeback Flows
+## Subaccount Chargeback/Return Flows
 
-The diagram below shows a typical flow of credit funds when you have Subaccounts associated with your Merchant Accounts. 
+The diagram below shows a sample flow of funds for credit card chargebacks and Direct Debit returns when you have Subaccounts associated with your Merchant Accounts. 
 1. A chargeback of $1030 is levied against the credit card Merchant Account of Property Manager A (Merchant).
-2. $1000 of the total amount is automatically transferred from their debiting Subaccount 1 to the Merchant Account. 
-3. The merchant processes a $30 [balance transfer request](#creditaccount) from their credit card platform revenue account to credit the Merchant Account.
-4. A chargeback of $1050 is levied against the Direct Debit Merchant Account of Property Manager B (Merchant).
-5. $1000 of the total amount is automatically transferred from their debiting Subaccount 1 to the Merchant Account.
-6. The merchant processes a $50 [balance transfer request](#creditaccount) from their Direct Debit platform revenue account to credit the Merchant Account.
+2. Property Manager A [processes a credit transfer request](https://developer.paysafe.com/en/rest-api/platforms/balance-transfers/#create-a-debit-transfer) to transfer $1000 from their debiting Subaccount 2 (the *linkedAccount* in the request body) to the Merchant Account.
+3. Property Manager A [processes another credit transfer request](https://developer.paysafe.com/en/rest-api/platforms/balance-transfers/#create-a-debit-transfer) to transfer $30 from their credit card Revenue Account (the *linkedAccount* in the request body) to the Merchant Account. 
+4. A return of $1050 is levied against the Direct Debit Merchant Account of Property Manager B (Merchant).
+5. Property Manager B [processes a credit transfer request](https://developer.paysafe.com/en/rest-api/platforms/balance-transfers/#create-a-debit-transfer) to transfer $1000 from their debiting Subaccount 2 (the *linkedAccount* in the request body) to the Merchant Account.
+6. Property Manager B [processes another credit transfer request](https://developer.paysafe.com/en/rest-api/platforms/balance-transfers/#create-a-debit-transfer) to transfer $50 from their Direct Debit Revenue Account (the *linkedAccount* in the request body) to the Merchant Account. 
 
 ![](https://developer.paysafe.com/fileadmin/images/Apiary/Account_Hierarchy_Chargeback.png)
 
@@ -1013,7 +1017,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |amount     |number     |This is the amount to transfer from the linked account in minor currency units.|
 |detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
 |dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
-|linkedAccount|string   |The ID of the linked account from which to remove the credited amount.|
+|linkedAccount|string   |This is the ID of the linked account from which to remove the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.|
 |merchantRefNum|string  |The merchant's unique identifier for this request.|
 
 ```apib
@@ -1048,7 +1052,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |amount     |number     |This is the amount to transfer to the linked account in minor currency units.|
 |detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
 |dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
-|linkedAccount|string   |The ID of the linked account to receive the debited amount.|
+|linkedAccount|string   |The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.|
 |merchantRefNum|string  |The merchant's unique identifier for this request.|
 
 ```apib
@@ -1161,7 +1165,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |currency       |enum                       |Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.   <br>**Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the *settlement* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |region         |enum                       |This is the region for the merchant account. Possible values are: <ul><li>US</li><li>CA</li><li>EU</li></ul> |
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
-|productCode    |string<br/>`length<=50`    |This is the code of the partner product.|
+|productCode    |string<br/>`length<=50`    |This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.|
 |category       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
 |averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units. |
 |url            |string<br/>`length<=60`    |This is the website of the business. |
@@ -1186,7 +1190,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "currency":"CAD",
   "region":"CA",
   "locale":"en_CA",
-  "productCode":"987",
+  "productCode":"G987",
   "category":"PC",
   "averageTransactionAmount": 50000,
   "url":"www.acmepc.ca",
@@ -4939,7 +4943,10 @@ If there are no subaccounts associated with the merchant account, then an empty 
 # Balance Transfers [/transfers]
 <a name="transfers" title="Balance Transfers"></a>
 
-Partners can transfer balances between their linked merchants and their own account using the  Transfer capability. For example, the partner may want to issue a merchant with credit as a part of a promotion. To be able to perform transfers, Paysafe Technical Support configures the partner account with the capability, which enables it to Transfer Balances with all its linked merchants.  To be able to Transfer Balances, the partner must first be linked to the other accounts during on-boarding, and only accounts settling in the same currency can be linked. Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
+Partners can transfer balances between their linked merchants and their own account using the  Balance Transfer capability. For example, the partner may want to issue a merchant with credit as a part of a promotion. 
+To be able to perform transfers, Paysafe Technical Support configures the partner account with the capability, which enables it to transfer balances with all its linked merchants. 
+To be able to transfer balances, the partner must first be linked to the other accounts during onboarding, and only accounts settling in the same currency can be linked. 
+Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
 
 ## Credit an Account [POST /v1/accounts/{account_id}/credits]
 <a name="creditaccount" title="Credit an Account"></a>
@@ -5425,7 +5432,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
 + detail:`Refund` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
-+ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.
 + merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
 
 ## creditsobjectGet
@@ -5452,7 +5459,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + detail:`Charging a fee` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
-+ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.
 + merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
 ## debitsobjectGet
@@ -5780,7 +5787,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5815,7 +5822,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5846,7 +5853,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5882,7 +5889,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + statusComment:`Merchant sold business.` (string, optional) - This is a comment on why the account is being set to *DISABLED*. **Note:** This field is required if *status* field is included.
 + currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
@@ -5900,7 +5907,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
@@ -5942,7 +5949,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
@@ -5986,7 +5993,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
