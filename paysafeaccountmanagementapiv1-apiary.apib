@@ -2227,6 +2227,8 @@ This is how you look up a merchant.
 
 This is how you submit a merchant account creation request.
 
+You must create a different merchant account  (each with its unique *productCode*) for each payment method/currency combination you want to offer – e.g., credit card USD, Direct Debit EFT, etc.
+
 **Note:** You should wait 5 seconds before using the *id* returned in the merchant account creation response in any subsequent API call that requires it in the endpoint (e.g., updating the merchant account).
 
 + Parameters
@@ -2252,6 +2254,8 @@ This is how you submit a merchant account creation request.
 <a name="createmerchantaccountconsolidated" title="Create a Merchant Account - Consolidated"></a>
 
 This is how you submit a merchant account creation request that includes the merchant account address.
+
+You must create a different merchant account  (each with its unique *productCode*) for each payment method/currency combination you want to offer – e.g., credit card USD, Direct Debit EFT, etc.
 
 **Note:** You should wait 5 seconds before using the *id* returned in the merchant account creation response in any subsequent API call that requires it in the endpoint (e.g., updating the merchant account).
 
