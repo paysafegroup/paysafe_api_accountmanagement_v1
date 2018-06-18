@@ -14,7 +14,7 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 # Overview
 
-The Paysafe Account Management API allows our Partners to create their own white-labelled merchant on-boarding experience, via a set of REST-based calls. With this API, Partners will be able to tailor their user experience to their business, using client information that they have already collected and verified.
+The Paysafe Account Management API allows our Platform Partners to create their own white-labelled merchant on-boarding experience, via a set of REST-based calls. With this API, Platform Partners will be able to tailor their user experience to their business, using client information that they have already collected and verified.
 
 Once a merchant application has been received, Paysafe will quickly enable the merchant to accept payments using the payment method selected. The result of improved merchant experiences will be higher on-boarding conversion and increased processing volumes.
 
@@ -92,7 +92,7 @@ You must not include any of the characters in the following table as values in a
 
 # API 
 
-The Account Management API allows partners to board merchants using the REST protocol. The protocol uses JSON for all requests and responses.
+The Account Management API allows Platform Partners to board merchants using the REST protocol. The protocol uses JSON for all requests and responses.
 
 The following request types are supported:
 
@@ -906,7 +906,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |amount     |number     |This is the amount to transfer from the linked account in minor currency units.|
 |detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
 |dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
-|linkedAccount|string   |The ID of the linked account from which to remove the credited amount.|
+|linkedAccount|string   |This is the ID of the linked account from which to remove the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account.|
 |merchantRefNum|string  |The merchant's unique identifier for this request.|
 
 ```apib
@@ -941,7 +941,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |amount     |number     |This is the amount to transfer to the linked account in minor currency units.|
 |detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
 |dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
-|linkedAccount|string   |The ID of the linked account to receive the debited amount.|
+|linkedAccount|string   |The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account or a subaccount.|
 |merchantRefNum|string  |The merchant's unique identifier for this request.|
 
 ```apib
@@ -1049,11 +1049,11 @@ The Paysafe Test environment can be used to test applications without actually r
 |legalEntity    |string<br/>`length<=240`   |This is the business legal/trading name (e.g., "ACME CA").|
 |status         |enum                       |This is the status of the merchant account. Possible values are: <ul><li>APPROVED - The merchant account has been approved, but not yet enabled.</li><li>PROCESSING - The merchant account application is being processed by Risk/Compliance.</li><li>DEFERRED - The merchant account application has been deferred until underwriting by Risk/Compliance is completed.</li><li>DISABLED - The merchant account application has been disabled due to suspension or termination.</li><li>ENABLED - The merchant account has been enabled for payment processing.</li><li>PENDING - The merchant account application has not yet been completed.</li><li>REJECTED - The merchant account application has been rejected due to Risk/Compliance check failure.</li><li>RETURNED - The merchant account application has been returned from Risk to Compliance for review.</li><li>SUBMITTED - The merchant account has been submitted for review by Paysafe Risk/Compliance.</li><li>WAITING - Compliance is waiting for additional information to be provided by the merchant.</li><li>WITHDRAWN - The merchant account application has been withdrawn.</li></ul>|
 |statusReason   |enum                       |This parameter is returned in some responses when *status* is *PROCESSING*. Possible values are:<ul><li>IN_GRPL_COMP - Being reviewed by Compliance</li><li>IN_RISK - Being reviewed by Risk</li></ul>|
-|processingCurrency |enum                   |This is the *processing* currency used for transactions on this merchant account.  <br>**Note:** Partners configured by Paysafe for multicurrency processing use this parameter to specify the *processing* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
-|currency       |enum                       |Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.   <br>**Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the *settlement* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
+|processingCurrency |enum                   |This is the *processing* currency used for transactions on this merchant account.  <br>**Note:** Platform Partners configured by Paysafe for multicurrency processing use this parameter to specify the *processing* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
+|currency       |enum                       |Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.   <br>**Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the *settlement* currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).|
 |region         |enum                       |This is the region for the merchant account. Possible values are: <ul><li>US</li><li>CA</li><li>EU</li></ul> |
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
-|productCode    |string<br/>`length<=50`    |This is the code of the partner product.|
+|productCode    |string<br/>`length<=50`    |This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.|
 |category       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
 |averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units. |
 |url            |string<br/>`length<=60`    |This is the website of the business. |
@@ -1078,7 +1078,7 @@ The Paysafe Test environment can be used to test applications without actually r
   "currency":"CAD",
   "region":"CA",
   "locale":"en_CA",
-  "productCode":"987",
+  "productCode":"G987",
   "category":"PC",
   "averageTransactionAmount": 50000,
   "url":"www.acmepc.ca",
@@ -2030,7 +2030,7 @@ This is how you update a merchant.
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
 
 + Request Merchant Update (application/json)
 
@@ -2055,7 +2055,7 @@ This is how you look up a merchant.
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
 
 + Request Get Merchant (application/json)
 
@@ -2078,11 +2078,13 @@ This is how you look up a merchant.
 
 This is how you submit a merchant account creation request.
 
+You must create a different merchant account (each with its unique *productCode*) for each payment method/currency combination you want to offer – e.g., credit card USD, Direct Debit EFT, etc.
+
 **Note:** You should wait 5 seconds before using the *id* returned in the merchant account creation response in any subsequent API call that requires it in the endpoint (e.g., updating the merchant account).
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
 
 + Request Merchant Account Creation (application/json)
 
@@ -2104,11 +2106,13 @@ This is how you submit a merchant account creation request.
 
 This is how you submit a merchant account creation request that includes the merchant account address.
 
+You must create a different merchant account (each with its unique *productCode*) for each payment method/currency combination you want to offer – e.g., credit card USD, Direct Debit EFT, etc.
+
 **Note:** You should wait 5 seconds before using the *id* returned in the merchant account creation response in any subsequent API call that requires it in the endpoint (e.g., updating the merchant account).
 
 + Parameters
 
-    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the merchant creation request.
+    + merchant_id:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the merchant ID returned in the response to the [merchant creation request](#createmerchant).
     + operation_mode:`consolidated` (string, required) - This indicates that you are including the merchant account address in this request. 
 
 + Request Merchant Account Creation (application/json)
@@ -3476,7 +3480,7 @@ This is how you delete a business owner international passport.
 # Merchant ACH Bank Account [/achbankaccounts]
 <a name="achbankaccounts" title="Merchant ACH Bank Account"></a>
 
-## Merchant ACH Bank Account Creation [POST /v1/accounts/{account_id}/achbankaccounts]
+## Create a Merchant ACH Bank Account [POST /v1/accounts/{account_id}/achbankaccounts]
 <a name="createachbankaccount" title="Create a Merchant ACH Bank Account"></a>
 
 This is how you create a merchant [ACH bank account](#achbankaccountobject) that will be associated with the merchant account.
@@ -4396,7 +4400,10 @@ This is how you look up a microdeposit to view its status.
 # Balance Transfers [/transfers]
 <a name="transfers" title="Balance Transfers"></a>
 
-Partners can transfer balances between their linked merchants and their own account using the  Transfer capability. For example, the partner may want to issue a merchant with credit as a part of a promotion. To be able to perform transfers, Paysafe Technical Support configures the partner account with the capability, which enables it to Transfer Balances with all its linked merchants.  To be able to Transfer Balances, the partner must first be linked to the other accounts during on-boarding, and only accounts settling in the same currency can be linked. Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
+Platform Partners can transfer balances between their linked merchants and their own account using the  Balance Transfer capability. For example, the Platform Partner may want to issue a merchant with credit as a part of a promotion. 
+To be able to perform transfers, Paysafe Technical Support configures the Platform Partner account with the capability, which enables it to transfer balances with all its linked merchants. 
+To be able to transfer balances, the Platform Partner must first be linked to the other accounts during onboarding, and only accounts settling in the same currency can be linked. 
+Balances can be transferred from only one account to another at a time, and the transfer amount cannot exceed the positive balance of the source account.
 
 ## Credit an Account [POST /v1/accounts/{account_id}/credits]
 <a name="creditaccount" title="Credit an Account"></a>
@@ -4609,7 +4616,7 @@ This is how you look up a debit transfer using the merchant reference number.
         + currency:`CAD` (enum, required) - This is the currency used for transactions on this merchant account. See [Currency Codes](#currencycodes).
         + region:`CA` (enum, required) - This is the region for the merchant account.
         + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-        + productCode:`GOLD` (string, required) - This is the code of the partner product.
+        + productCode:`G987` (string, required) - This is the code of the Platform Partner product.
         + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
         + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
             - APPROVED
@@ -4882,7 +4889,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
 + detail:`Refund` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
-+ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account.
 + merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
 
 ## creditsobjectGet
@@ -4909,7 +4916,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + detail:`Charging a fee` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
-+ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account.
 + merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
 ## debitsobjectGet
@@ -5159,14 +5166,14 @@ This is how you look up a debit transfer using the merchant reference number.
 
 ## Merchant Account
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
-+ currency:`CAD` (enum, required) - Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter must use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by Platform Partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ currency:`CAD` (enum, required) - Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter must use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
     - US
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5194,14 +5201,14 @@ This is how you look up a debit transfer using the merchant reference number.
     
 ## Merchant Account Update
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
-+ currency:`CAD` (enum, required) - Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by Platform Partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ currency:`CAD` (enum, required) - Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
     - US
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5232,7 +5239,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - CA
     - EU
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
@@ -5261,11 +5268,11 @@ This is how you look up a debit transfer using the merchant reference number.
 ## Merchant Account Response
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
-+ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
@@ -5297,11 +5304,11 @@ This is how you look up a debit transfer using the merchant reference number.
 ## Merchant Account Response Consolidated
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
-+ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PROCESSING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
@@ -5337,11 +5344,11 @@ This is how you look up a debit transfer using the merchant reference number.
 ## Merchant Account Update Response
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for partners configured by Paysafe for multicurrency processing.
-+ currency:`CAD` (enum, required) - For partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
-+ productCode:`GOLD` (string, required) - This is the code of the partner product.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
     - APPROVED
