@@ -7,7 +7,7 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
-| 1.0       | May 2018      |<ul><li>Added *isApplicant* parameter to business owner object.</li></ul> |
+| 1.0       | May 2018      | <ul><li>Added *isApplicant* parameter to business owner object.</li></ul> |
 | 1.0       |April 2018     | <ul><li>Updated Supported Country Codes by Region</li><li>Added content for processing currency for merchant accounts</li></ul> |
 | 1.0       |September 2017 | <ul><li>Added Balance Transfers</li><li>Added Subaccounts</li></ul>|
 | 1.0       |December 2016  | <ul><li>Document release</li></ul>|
@@ -1017,7 +1017,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |amount     |number     |This is the amount to transfer from the linked account in minor currency units.|
 |detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
 |dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
-|linkedAccount|string   |This is the ID of the linked account from which to remove the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.|
+|linkedAccount|string   |This is the ID of the linked account from which to remove the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's or a subaccount.|
 |merchantRefNum|string  |The merchant's unique identifier for this request.|
 
 ```apib
@@ -1052,7 +1052,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |amount     |number     |This is the amount to transfer to the linked account in minor currency units.|
 |detail     |string     |This is a description of the transaction, added by the merchant. Maximum length 4000 characters.|
 |dupCheck   |boolean    |Set to "false" to override the default duplicate transaction check.|
-|linkedAccount|string   |The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.|
+|linkedAccount|string   |The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account or a subaccount.|
 |merchantRefNum|string  |The merchant's unique identifier for this request.|
 
 ```apib
@@ -5436,7 +5436,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
 + detail:`Refund` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
-+ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account from which to transfer the credited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account or a subaccount.
 + merchantRefNum:`ORDER_ID:1231` (string, required) - The merchant's unique identifier for this request.
 
 ## creditsobjectGet
@@ -5463,7 +5463,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + amount:`100` (number, required) - This is the amount to transfer to the linked account in minor currency units.
 + detail:`Charging a fee` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
 + dupCheck:`false` (boolean, optional) - Set to "false" to override the default duplicate transaction check.
-+ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform's revenue account or a subaccount.
++ linkedAccount:`100222222` (string, required) - The ID of the linked account to receive the debited amount. A *linkedAccount* is not another processing merchant account, but rather the platform partner's account or a subaccount.
 + merchantRefNum:`merchantRefNum8` (string, required) - The merchant's unique identifier for this request.
 
 ## debitsobjectGet
