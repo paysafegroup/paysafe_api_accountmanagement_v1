@@ -7,6 +7,7 @@ HOST: https://api.test.paysafe.com/accountmanagement/
 
 | Version   | Date          | Details |
 |---        |---            |---      |
+| 1.0       | July 2018     | <ul><li>Removed Identity Verification call </li></ul> |
 | 1.0       | May 2018      |<ul><li>Added *isApplicant* parameter to business owner object.</li></ul> |
 | 1.0       | April 2018    | <ul><li>Updated Supported Country Codes by Region</li><li>Added content for processing currency for merchant accounts</li><li>Changed "turnkey" in URLs to "platforms"</li></ul> |
 | 1.0       | December 2017 | <ul><li>Updated Balance Transfers</li></ul> |
@@ -114,7 +115,6 @@ The following request types are supported:
   * [Merchant SEPA Bank Accounts](#sepabankaccounts)
   * [Merchant Wire Bank Accounts](#wirebankaccounts)
   * [Terms and Conditions](#termsandconditions)
-  * [Identity Verification](#identity)  
   * [Merchant Account Activation](#accountactivation)
   * [Bank Account Validation](#microdeposits)
   * [Balance Transfers](#transfers)
@@ -188,7 +188,6 @@ The following request types are supported:
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Look Up a Wire Merchant Bank Account   |GET    |
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Delete a Wire Merchant Bank Account    |DELETE |
 |/accounts/{account_id}/termsandconditions      |Accept the Terms and Conditions        |POST   |
-|/accounts/{account_id}/identity                 |Associate an Identity ID to a Merchant Account |POST   |
 |/accounts/{account_id}/activation              |Activate a Merchant Account            |POST   |
 |/bankaccounts/{bank_account_id}/microdeposits |Validate a Bank Account         |POST   |
 |/microdeposits/{micro_deposit_id}      |Look Up a Microdeposit |GET    |
@@ -2500,6 +2499,8 @@ This is how you look up a merchant account trading address.
 # Business Owners [/businessowners]
 <a name="businessowners" title="Business Owners"></a>
 
+[Consult this table](https://developer.paysafe.com/en/rest-api/platforms/account-management/typical-api-calls/create-a-business-owner/business-owner-requirements/) to see requirements for adding a business owner to a merchant account.
+
 ## Create a Canadian Business Owner [POST /v1/accounts/{account_id}/businessowners]
 <a name="canadianbusinessownersrequest" title="Create a Canadian Business Owner"></a>
 
@@ -4241,34 +4242,6 @@ This is how you look up the recovery questions, using the locale, that can be [p
         + Include Links Recovery Questions Locale
         + Include Recovery Questions French
 
-# Identity Verification [/identity]
-<a name="identity" title="Identity Verification"></a>
-
-## Associate an Identity ID to a Merchant Account [POST /v1/accounts/{account_id}/identity]
-<a name="associateidentity" title="Associate an Identity ID to a Merchant Account"></a>
-
-This is how you submit a merchant account identity verification request.
-
-**Note:** The *identityId* value used for this request is the *id* value returned in the response from the Paysafe Identity Verification API. See [Business Owner Identity Verification](https://developer.paysafe.com/en/rest-api/platforms/account-management/typical-api-calls/business-owner-identity-verification/) for more information.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Identity Verification (application/json)
-
-    + Attributes
-        + Include Identity ID
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Identity ID Response
-
 # Merchant Account Activation [/activation]
 <a name="activation" title="Activation"></a>
 
@@ -4979,13 +4952,6 @@ This is how you look up a debit transfer using the merchant reference number.
 + number:`*********89` (string, optional) - This is the European identity card number.
 + expiryDate (object, required) - This is the expiration date the identity card.
     + Include Date Expiry
-
-## Identity ID
-+ identityId:`31380` (number, required) - This is the identity ID (*id*) returned by the identity verification service.
-
-## Identity ID Response
-+ identityId:`31380` 
-+ Include Links Merchant Account
 
 ## International Passport 
 + number:`ID123456789` (string, required) - This is the passport number.
