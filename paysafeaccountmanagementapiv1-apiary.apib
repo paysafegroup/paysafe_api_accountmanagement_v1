@@ -2073,10 +2073,36 @@ This is how you look up a merchant.
 # Merchant Accounts [/accounts]
 <a name="merchantaccounts" title="Merchant Accounts"></a>
 
+#### Mandatory Merchant Account Elements
+
+When you create a merchant account, only the following elements are mandatory: 
+
+- name
+- currency
+- region
+- legalEntity
+- productCode
+
+This is to make the account creation requirements as minimal as possible. However, before you can [activate the merchant account](#activation), the following elements are required and you must [update the merchant account](#updatemerchantaccount) to include them:
+
+- category
+- phone
+- yearlyVolumeRange
+- averageTransactionAmount
+- merchantDescriptor
+
+**Note:** The *merchantDescriptor* is itself an object that contains two elements – *dynamicDescriptor* and *phone* – both of which are mandatory.
+
+In addition, depending on the jurisdiction in which you are boarding merchants, one of the following objects is also mandatory before you can activate the merchant account:
+
+- Canada – *caAccountDetails*, for which *type* and *federalTaxNumber* are mandatory elements
+- United States – *usAccountDetails*, for which *type* and *federalTaxNumber* are mandatory elements
+- Europe – *euAccountDetails*, for which *type* is mandatory, and *registrationNumber* is mandatory **unless** the value for *type* is set to one of TRUST, SOLEPROP, GOV, or PARTNERSHIP (in which case *registrationNumber* is optional)
+
 ## Create a Merchant Account [POST /v1/merchants/{merchant_id}/accounts]
 <a name="createmerchantaccount" title="Create a Merchant Account"></a>
 
-This is how you submit a merchant account creation request.
+Click on **Create a Merchant Account** above to submit a merchant account creation request.
 
 You must create a different merchant account (each with its unique *productCode*) for each payment method/currency combination you want to offer – e.g., credit card USD, Direct Debit EFT, etc.
 
@@ -4271,6 +4297,32 @@ This is how you submit a merchant account identity verification request.
 
 # Merchant Account Activation [/activation]
 <a name="activation" title="Activation"></a>
+
+#### Mandatory Merchant Account Elements
+
+When you [create a merchant account](#createmerchantaccount), only the following elements are mandatory: 
+
+- name
+- currency
+- region
+- legalEntity
+- productCode
+
+This is to make the account creation requirements as minimal as possible. However, **before you can activate the merchant account**, the following elements are required and you must [update the merchant account](#updatemerchantaccount) to include them:
+
+- category
+- phone
+- yearlyVolumeRange
+- averageTransactionAmount
+- merchantDescriptor
+
+**Note:** The *merchantDescriptor* is itself an object that contains two elements – *dynamicDescriptor* and *phone* – both of which are mandatory.
+
+In addition, depending on the jurisdiction in which you are boarding merchants, one of the following objects is also mandatory before you can activate the merchant account:
+
+- Canada – *caAccountDetails*, for which *type* and *federalTaxNumber* are mandatory elements
+- United States – *usAccountDetails*, for which *type* and *federalTaxNumber* are mandatory elements
+- Europe – *euAccountDetails*, for which *type* is mandatory, and *registrationNumber* is mandatory **unless** the value for *type* is set to one of TRUST, SOLEPROP, GOV, or PARTNERSHIP (in which case *registrationNumber* is optional)
 
 ## Activate a Merchant Account [POST /v1/accounts/{account_id}/activation]
 <a name="accountactivation" title="Activate a Merchant Account"></a>
