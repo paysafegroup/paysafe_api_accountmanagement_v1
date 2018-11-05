@@ -1983,7 +1983,6 @@ To call the API resource, click **Call Resource**. The response is displayed in 
 <li><a href="https://www.paysafe.com/paysafegroup/regulatory-disclosures/" target="_blank">Regulatory Disclosures</a></li>
 <li><a href="http://community.paysafe.com/spaces/11/index.html" target="_blank">FAQs</a></li>
 <li><a href="http://community.paysafe.com/index.html" target="_blank">Community</a></li>
-<li><a href="http://community.paysafe.com/spaces/10/index.html" target="_blank">Paysafe Blog</a></li>
 </ul>
 
 ## Verify That the Service Is Accessible [GET /monitor]
@@ -5637,7 +5636,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + phone:`5556667777` (string, required) - This is the phone number of the business owner.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
-+ ssn:`999888777` (string, required) - This is the SSN/SIN of the business owner.
++ ssn:`999888777` (string, required) - This is the SSN of the business owner.
+    **Note:** The *ssn* parameter is not required when the *type* parameter in the *usAccountDetails* object is set to NPCORP. This object is included when you [create a merchant account](#createmerchantaccount).
 + isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
 
 ## User
