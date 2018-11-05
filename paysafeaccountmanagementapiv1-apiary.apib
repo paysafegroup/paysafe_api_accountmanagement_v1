@@ -688,16 +688,16 @@ The Paysafe Test environment can be used to test applications without actually r
 |firstName      |string<br/>`length<=50`        |This is the first name of the business owner.|
 |middleName     |string<br/>`length<=50`        |This is the middle name of the business owner.|
 |lastName      |string<br/>`length<=50`         |This is the last name of the business owner.|
-|previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner. **Note:** This is used for European business owners only.|
+|previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner.<br/> **Note:** This is used for European business owners only.|
 |email          |string<br/>`length<=255`       |This is the email address of the business owner.|
 |jobTitle       |string<br/>`length<=50`        |This is the job title of the business owner. |
 |phone          |string<br/>`length<=40`        |This is the phone number of the business owner.|
-|nationality    |enum                           |This is the nationality code of the business owner.  **Note:** This is used for European business owners only. See [Nationality Codes](#nationalitycodes).|
+|nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/>See [Nationality Codes](#nationalitycodes).|
 |dateOfBirth    |[dateOfBirth](#date)           |This is the birth date of the business owner.|
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
-|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account. **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant.|
-|gender         |enum                           |This is the gender of the business owner. **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
-|percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.  **Note:** This is used for European business owners only.|
+|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account.<br/> **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant.|
+|gender         |enum                           |This is the gender of the business owner.<br/> **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
+|percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.<br/>  **Note:** This is used for European business owners only.|
 
 ```apib
 {
@@ -981,9 +981,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |isCardPresent                  |boolean                    |This indicates whether the customers' cards will be physically present when processing payments.|
 |hasPreviouslyProcessedCards    |boolean                    |This indicates whether the business has previously accepted credit cards.|
 |shipsGoods                     |boolean                    |This indicates whether the business will physically deliver goods.|
-|deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment. **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
+|deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment.<br/> **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
-|refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.|
+|refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy.<br/> **Note:** This value is required when *refundPolicy* is set to *true*.|
 |taxIdentificationNumber        |string<br/>`length<=30`    |This is the tax identification (VAT) number of the business.|
 |registrationNumber             |string<br/>`length<=20`    |This is the registration number of the business.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>SEPA</li><li>IDEAL</li><li>GIROPAY</li><li>SOFORT</li><li>UK_DIRECT_DEBIT</li></ul>|
@@ -1060,10 +1060,10 @@ The Paysafe Test environment can be used to test applications without actually r
 |phone          |string<br/>`length<=40`    |This is the customer support phone number of the business. |
 |email          |string<br/>`length<=240`   |This is the customer support email of the business. |
 |yearlyVolumeRange  |enum                   |This is the estimated yearly volume of the business, by transaction. Possible values are: <ul><li>LOW &ndash; 0–50k</li><li>MEDIUM &ndash; 50k–100k</li><li>HIGH &ndash; 100k–250k</li><li>VERY_HIGH &ndash; 250k+</li></ul> |
-|users          |enum                       |This a comma-separated list of users configured to have access to the merchant account in the back office ["user 1", "user 2", ...]. You can add users that have [already been created](#users) for this merchant account. **Note:** The maximum number of users that can be added using the Account Management API is 100.
+|users          |enum                       |This a comma-separated list of users configured to have access to the merchant account in the back office ["user 1", "user 2", ...]. You can add users that have [already been created](#users) for this merchant account.<br/> **Note:** The maximum number of users that can be added using the Account Management API is 100.
 |amexMid        |string<br/>`length=10`     |This is the merchant's American Express ID. |
 |externalAccountId |string<br/>`length=36`  |This is the external account ID.|
-|merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor. **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.|
+|merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor.<br/> **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.|
 |tradingAddress     |[tradingAddress](#merchantaccounttradingaddressesobject) |This is the merchant's trading address.|
 |usAccountDetails   |[usAccountDetails](#usaccountdetailsobject) |These are the merchant account details.|
 |caAccountDetails   |[caAccountDetails](#caaccountdetailsobject)  |These are the merchant account details.|
@@ -1142,7 +1142,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |dynamicDescriptor              |string<br/>For credit card merchant processing accounts `length<=20`<br/>For Direct Debit merchant processing accounts `length<=32`    |This is the dynamic descriptor field.|
-|phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor. **Note:** This element is *not* supported for **Direct Debit** processing merchants.|
+|phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor. <br/>**Note:** This element is *not* supported for **Direct Debit** processing merchants.|
 
 **Note:** <ul><li>For **Direct Debit** processing merchants, the *merchantDescriptor* object is supported only in Canada and the U.S.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
 
@@ -1229,9 +1229,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |isCardPresent                  |boolean                    |This indicates whether the customers' cards will be physically present when processing payments.|
 |hasPreviouslyProcessedCards    |boolean                    |This indicates whether the business has previously accepted credit cards.|
 |shipsGoods                     |boolean                    |This indicates whether the business will physically deliver goods.|
-|deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment. **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
+|deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment.<br/> **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
-|refundPolicyDescription        |string<br/>`length<=255`   |This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.|
+|refundPolicyDescription        |string<br/>`length<=255`   |This is a description of the business's refund policy.<br/> **Note:** This value is required when *refundPolicy* is set to *true*.|
 |federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li></ul>|
 
@@ -4644,17 +4644,22 @@ This is how you look up a debit transfer using the merchant reference number.
 ## Account Details
 + type:`CORP` (enum, optional) - This is the [type code of the business](#businesstypecodes).
 + description:`Fitness` (string, optional) - This is a description of the business.
-+ isCardPresent:`false` (boolean, optional) - This indicates whether the customers' cards will be physically present when processing payments. **Note:** Not supported for Direct Debit merchant processing accounts.
-+ hasPreviouslyProcessedCards:`true` (boolean, optional) - This indicates whether the business has previously accepted credit cards. **Note:** Not supported for Direct Debit merchant processing accounts.
++ isCardPresent:`false` (boolean, optional) - This indicates whether the customers' cards will be physically present when processing payments.
+    **Note:** Not supported for Direct Debit merchant processing accounts.
++ hasPreviouslyProcessedCards:`true` (boolean, optional) - This indicates whether the business has previously accepted credit cards.
+    **Note:** Not supported for Direct Debit merchant processing accounts.
 + shipsGoods:`true` (boolean, optional) - This indicates whether the business will physically deliver goods.
-+ deliveryTimeRange:SHORT (enum, optional) - This is the [time range](#caaccountdetailsobject) for the business's order fulfillment. **Note:** This value is required when *shipsGoods* is set to *true*.
++ deliveryTimeRange:SHORT (enum, optional) - This is the [time range](#caaccountdetailsobject) for the business's order fulfillment.
+    **Note:** This value is required when *shipsGoods* is set to *true*.
     - SHORT
     - MEDIUM
     - LONG
 + refundPolicy:`true` (boolean, optional) - This indicates whether the business has a refund policy.
-+ refundPolicyDescription:`Timely` (string, optional) - This is a description of the business's refund policy. **Note:** This value is required when *refundPolicy* is set to *true*.
++ refundPolicyDescription:`Timely` (string, optional) - This is a description of the business's refund policy.
+    **Note:** This value is required when *refundPolicy* is set to *true*.
 + federalTaxNumber:`987654321` (string, optional) - This is the tax identification/registration number of the business.
-+ additionalPaymentMethods: (array, optional) - These are optional payment types for the business. **Note:** Not supported for Direct Debit merchant processing accounts.
++ additionalPaymentMethods: (array, optional) - These are optional payment types for the business.
+    **Note:** Not supported for Direct Debit merchant processing accounts.
     - DIRECT_DEBIT
     - VISA_DEBIT
 
@@ -4718,7 +4723,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
 + zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
-+ yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address. **Note:** This field is optional for US businesses.
++ yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address.
+    **Note:** This field is optional for US businesses.
 
 ## Address Previous
 + street:`100 Queen Street West` (string, required) - This is the first line of the street address.
@@ -4727,7 +4733,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
 + zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
-+ yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address. **Note:** This field is optional for US businesses.
++ yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address.
+    **Note:** This field is optional for US businesses.
  
 
 ## Address Current Object
@@ -4896,7 +4903,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
-+ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
+    **Note:** You can only designate one business owner as the applicant.
 
 ## Canadian Driving License 
 + number:`DL987654321` (string, required) - This is the driving license number
@@ -5011,7 +5019,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + gender:`M` (enum, optional) - This is the gender of the business owner.
-+ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
+    **Note:** You can only designate one business owner as the applicant.
 
 ## European Identity Card 
 + countryOfIssue:`GB` (string, required) - This is the country in which the identity card was issued. See [Country Codes](#countrycodes).
@@ -5217,8 +5226,10 @@ This is how you look up a debit transfer using the merchant reference number.
 
 ## Merchant Account
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by Platform Partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
-+ currency:`CAD` (enum, required) - Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter must use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account.
+    **Note:** This parameter can be used only by Platform Partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ currency:`CAD` (enum, required) - Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.
+    **Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter must use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
     - US
     - CA
@@ -5245,15 +5256,18 @@ This is how you look up a debit transfer using the merchant reference number.
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
     
 ## Merchant Account Update
 + name:`Mega Gym` (string, required) - This is the merchant name.
-+ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account. **Note:** This parameter can be used only by Platform Partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
-+ currency:`CAD` (enum, required) - Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account. **Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ processingCurrency:`USD` (enum, optional) - This is the processing currency used for transactions on this merchant account.
+    **Note:** This parameter can be used only by Platform Partners configured by Paysafe for multicurrency processing, in which case it is **mandatory**. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
++ currency:`CAD` (enum, required) - Platform Partners not configured by Paysafe for multicurrency processing use this parameter to specify the single currency used for processing and settlement for this merchant account.
+    **Note:** Platform Partners configured by Paysafe for multicurrency processing and who include the *processingCurrency* parameter use this parameter to specify the settlement currency for this merchant account. You can use only those currencies for which you have been configured by Paysafe. See [Supported Currency Codes](#supportedcurrencycodes).
 + region:`CA` (enum, required) - This is the region for the merchant account.
     - US
     - CA
@@ -5277,7 +5291,8 @@ This is how you look up a debit transfer using the merchant reference number.
     - fr_CA
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5311,7 +5326,8 @@ This is how you look up a debit transfer using the merchant reference number.
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5320,7 +5336,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
 + processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
-+ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account.
+    **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product.
@@ -5356,7 +5373,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
 + processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
-+ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account.
+    **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product.
@@ -5396,7 +5414,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + id:`1000789670` (string, required) - This is the account ID returned in the response.
 + name:`Mega Gym` (string, required) - This is the merchant name.
 + processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
-+ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account. **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account.
+    **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
 + region:`CA` (enum, required) - This is the region for the merchant account.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product.
@@ -5426,8 +5445,10 @@ This is how you look up a debit transfer using the merchant reference number.
     + Include Account Details
 
 ## Merchant Descriptor
-+ dynamicDescriptor:`megagym` (string, optional) - This text is used in the credit card descriptor. **Note:** For credit card processing merchants, an extra prefix might be added to the *dynamicDescriptor* element, depending on the processing bank.
-+ phone:`555 888-9999` (string, optional) - This is the phone number used in the credit card descriptor. **Note:** The *phone* element is not supported for Direct Debit processing merchants.
++ dynamicDescriptor:`megagym` (string, optional) - This text is used in the credit card descriptor.
+    **Note:** For credit card processing merchants, an extra prefix might be added to the *dynamicDescriptor* element, depending on the processing bank.
++ phone:`555 888-9999` (string, optional) - This is the phone number used in the credit card descriptor.
+    **Note:** The *phone* element is not supported for Direct Debit processing merchants.
 
 ## Merchant Name
 + name:`Mega Gym` (string, required) - This is the merchant name.
@@ -5638,7 +5659,8 @@ This is how you look up a debit transfer using the merchant reference number.
     + Include Date
 + ssn:`999888777` (string, required) - This is the SSN of the business owner.
     **Note:** The *ssn* parameter is not required when the *type* parameter in the *usAccountDetails* object is set to NPCORP. This object is included when you [create a merchant account](#createmerchantaccount).
-+ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. **Note:** You can only designate one business owner as the applicant.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
+    **Note:** You can only designate one business owner as the applicant.
 
 ## User
 + userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
@@ -5663,7 +5685,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + routingNumber:`1328514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
 + sortCode:`857412` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
 + swiftNumber:`85774412` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ ibanNumber:`94001521002421` (string, optional) - This is the IBAN number of the merchant's bank account.
+    **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
@@ -5682,7 +5705,8 @@ This is how you look up a debit transfer using the merchant reference number.
 + routingNumber:`****514` (string, optional) - This is the routing number or the bank code of the merchant's bank account.
 + sortCode:`******` (string, optional) - This is the 6-digit sort code of the merchant's bank account.
 + swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
-+ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the merchant's bank account. **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
++ ibanNumber:`940015****2421` (string, optional) - This is the IBAN number of the merchant's bank account.
+    **Note:** This field is required when *beneficiaryBankCountry* is  within our [SEPA supported countries list](#sepacountries).
 + beneficiaryCountry:`GB` (string, required) - This is the [country](#countrycodes) of the beneficiary's address. 
 + beneficiaryAccountName:`Main Account` (string, required) - This is the beneficiary account name.
 + beneficiaryAddress:`99 Spalding Green` (string, required) - This is the beneficiary's address.
