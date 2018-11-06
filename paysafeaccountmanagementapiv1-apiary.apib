@@ -4649,8 +4649,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + hasPreviouslyProcessedCards:`true` (boolean, optional) - This indicates whether the business has previously accepted credit cards.
     **Note:** Not supported for Direct Debit merchant processing accounts.
 + shipsGoods:`true` (boolean, optional) - This indicates whether the business will physically deliver goods.
-+ deliveryTimeRange:SHORT (enum, optional) - This is the [time range](#caaccountdetailsobject) for the business's order fulfillment.
-    **Note:** This value is required when *shipsGoods* is set to *true*.
++ deliveryTimeRange:SHORT (enum, optional) - This is the [time range](#caaccountdetailsobject) for the business's order fulfillment. **Note:** This value is required when *shipsGoods* is set to *true*.
     - SHORT
     - MEDIUM
     - LONG
@@ -4658,8 +4657,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + refundPolicyDescription:`Timely` (string, optional) - This is a description of the business's refund policy.
     **Note:** This value is required when *refundPolicy* is set to *true*.
 + federalTaxNumber:`987654321` (string, optional) - This is the tax identification/registration number of the business.
-+ additionalPaymentMethods: (array, optional) - These are optional payment types for the business.
-    **Note:** Not supported for Direct Debit merchant processing accounts.
++ additionalPaymentMethods: (array, optional) - These are optional payment types for the business. **Note:** Not supported for Direct Debit merchant processing accounts.
     - DIRECT_DEBIT
     - VISA_DEBIT
 
@@ -5256,9 +5254,9 @@ This is how you look up a debit transfer using the merchant reference number.
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
-    **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
+
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
     
@@ -5291,8 +5289,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - fr_CA
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
-    **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
@@ -5326,8 +5323,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - User 2
 + amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
 + externalAccountId:`C_45678` (string, optional) - This is the external account ID.
-+ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
-    **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject). **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.
     + Include Merchant Descriptor
 + caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
     + Include Account Details
