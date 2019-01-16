@@ -1157,13 +1157,20 @@ The Paysafe Test environment can be used to test applications without actually r
 ## Microdeposit
 |Element    |Type                       |Description                        |
 |---        |---                        |---       |
+|id         |string<br/>`length<=36`    |This is the ID returned in the response. It can be used later to look up the microdeposit.|
 |amount     |number<br/>`0.01-0.99`     |This is the amount associated with the microdeposit.|
 |status     |string<br/>`length<=20`    |This is the status of the microdeposit. Possible values are:<ul><li>SENT</li><li>ERROR</li><li>FAILED</li><li>VALIDATED</li><li>INVALID</li><li>TXN_ERROR</li><li>TXN_FAILED</li></ul>|
+|links      |[links](#linksobject)      |This is an array of links. |
 
 ```apib
 {
-  "amount":"0.88",
-  "status":"VALIDATED"
+    "links": [{
+        "rel": "self",
+        "href": "https://api.test.paysafe.com/accountmanagement/v1/microdeposits/8b670bf0-f218-4710-86a9-1b100206e1c1"
+    }],
+    "id": "8b670bf0-f218-4710-86a9-1b100206e1c1",
+    "status": "VALIDATED",
+    "amount": "0.51"
 }
 ```
 
@@ -4392,9 +4399,8 @@ You can create only one microdeposit request for each bank account. In addition,
 + Response 200 (application/json)
 
     + Attributes
-        + bLinks Microdeposits
+        + Include Links Microdeposits
         + Include Response Base
-        + Include Microdeposit Response
 
 ## Validate a Microdeposit [POST /v1/microdeposits/{microdeposit_id}/validate]
 <a name="validatemicrodeposit" title="Validate a Microdeposit"></a>
@@ -5168,7 +5174,7 @@ This is how you look up a debit transfer using the merchant reference number.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/ext_0914?searchBy=ext` (string, required) - This is the URI of the resource.
 
 ## Links Microdeposits
-+ links (array, required) - This is an array of [links](#linksobject).
++ links (array) - This is an array of [links](#linksobject).
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/microdeposits/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
