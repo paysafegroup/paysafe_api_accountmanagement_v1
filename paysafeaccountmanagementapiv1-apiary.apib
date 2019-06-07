@@ -187,7 +187,6 @@ The following request types are supported:
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Look Up a Wire Merchant Bank Account   |GET    |
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Delete a Wire Merchant Bank Account    |DELETE |
 |/accounts/{account_id}/termsandconditions      |Accept the Terms and Conditions        |POST   |
-|/accounts/{account_id}/identity                 |Associate an Identity ID to a Merchant Account |POST   |
 |/accounts/{account_id}/activation              |Activate a Merchant Account            |POST   |
 |/bankaccounts/{bank_account_id}/microdeposits |Validate a Bank Account         |POST   |
 |/microdeposits/{micro_deposit_id}      |Look Up a Microdeposit |GET    |
@@ -2131,7 +2130,7 @@ You must create a different merchant account (each with its unique *productCode*
 
     + Attributes
         + Include Links Merchant Account Create
-        + Include Merchant Account Response
+        + Include Merchant Account Creation Response
         
 ## Create a Merchant Account - Consolidated Call [POST /v1/merchants/{merchant_id}/accounts?operationMode={operation_mode}]
 <a name="createmerchantaccountconsolidated" title="Create a Merchant Account - Consolidated"></a>
@@ -2162,7 +2161,7 @@ You must create a different merchant account (each with its unique *productCode*
 
     + Attributes
         + Include Links Merchant Account Create
-        + Include Merchant Account Response
+        + Include Merchant Account Creation Response
         + Include Address Object
         + Include Trading Address Object        
 
@@ -4351,7 +4350,7 @@ This is how you create a microdeposit request for an ACH (U.S.) or EFT (Canadian
 
 **Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/platforms/accounts/api/#/reference/0/users/create-a-user) request.
 
-You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
+You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>PROCESSING</li><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
 
 + Parameters
 
@@ -5316,11 +5315,40 @@ This is how you look up a debit transfer using the merchant reference number.
     - DISABLED
     - ENABLED
     - PENDING
+    - PROCESSING
     - REJECTED
     - RETURNED
     - SUBMITTED
     - WAITING
     - WITHDRAWN
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
++ locale:`en_US` (string, optional) - This is the locale used for the merchant account.
++ users: (array, optional) - This is a list of existing users that will have access to the merchant account in the Merchant Back Office. Max = 100.
+    - User 1
+    - User 2
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
+## Merchant Account Creation Response
++ id:`1000789670` (string, required) - This is the account ID returned in the response.
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account.
+    **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ region:`CA` (enum, required) - This is the region for the merchant account.
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+    - PENDING
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
@@ -5389,16 +5417,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
-    - APPROVED
-    - DEFERRED
-    - DISABLED
-    - ENABLED
     - PENDING
-    - REJECTED
-    - RETURNED
-    - SUBMITTED
-    - WAITING
-    - WITHDRAWN
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
