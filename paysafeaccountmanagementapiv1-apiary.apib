@@ -114,7 +114,6 @@ The following request types are supported:
   * [Merchant SEPA Bank Accounts](#sepabankaccounts)
   * [Merchant Wire Bank Accounts](#wirebankaccounts)
   * [Terms and Conditions](#termsandconditions)
-  * [Identity Verification](#identity)  
   * [Merchant Account Activation](#accountactivation)
   * [Bank Account Validation](#microdeposits)
   * [Balance Transfers](#transfers)
@@ -188,7 +187,6 @@ The following request types are supported:
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Look Up a Wire Merchant Bank Account   |GET    |
 |/accounts/{account_id}/wirebankaccounts/{bank_account_id}   |Delete a Wire Merchant Bank Account    |DELETE |
 |/accounts/{account_id}/termsandconditions      |Accept the Terms and Conditions        |POST   |
-|/accounts/{account_id}/identity                 |Associate an Identity ID to a Merchant Account |POST   |
 |/accounts/{account_id}/activation              |Activate a Merchant Account            |POST   |
 |/bankaccounts/{bank_account_id}/microdeposits |Validate a Bank Account         |POST   |
 |/microdeposits/{micro_deposit_id}      |Look Up a Microdeposit |GET    |
@@ -695,9 +693,10 @@ The Paysafe Test environment can be used to test applications without actually r
 |nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/>See [Nationality Codes](#nationalitycodes).|
 |dateOfBirth    |[dateOfBirth](#date)           |This is the birth date of the business owner.|
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
-|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account.<br/> **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant.|
+|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account.<br/> **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.|
+|isControlProng |boolean                        |This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer).<br/>**Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response. All US partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the Control Prong. It will become a mandatory element in the near future.|
 |gender         |enum                           |This is the gender of the business owner.<br/> **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
-|percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.<br/>  **Note:** This is used for European business owners only.|
+|percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.|
 
 ```apib
 {
@@ -2131,7 +2130,7 @@ You must create a different merchant account (each with its unique *productCode*
 
     + Attributes
         + Include Links Merchant Account Create
-        + Include Merchant Account Response
+        + Include Merchant Account Creation Response
         
 ## Create a Merchant Account - Consolidated Call [POST /v1/merchants/{merchant_id}/accounts?operationMode={operation_mode}]
 <a name="createmerchantaccountconsolidated" title="Create a Merchant Account - Consolidated"></a>
@@ -2162,7 +2161,7 @@ You must create a different merchant account (each with its unique *productCode*
 
     + Attributes
         + Include Links Merchant Account Create
-        + Include Merchant Account Response
+        + Include Merchant Account Creation Response
         + Include Address Object
         + Include Trading Address Object        
 
@@ -2531,6 +2530,8 @@ This is how you look up a merchant account trading address.
 
 # Business Owners [/businessowners]
 <a name="businessowners" title="Business Owners"></a>
+
+[Consult these tables](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/create-a-business-owner/business-owner-requirements/) to see requirements for adding a business owner to a merchant account.
 
 ## Create a Canadian Business Owner [POST /v1/accounts/{account_id}/businessowners]
 <a name="canadianbusinessownersrequest" title="Create a Canadian Business Owner"></a>
@@ -4273,34 +4274,6 @@ This is how you look up the recovery questions, using the locale, that can be [p
         + Include Links Recovery Questions Locale
         + Include Recovery Questions French
 
-# Identity Verification [/identity]
-<a name="identity" title="Identity Verification"></a>
-
-## Associate an Identity ID to a Merchant Account [POST /v1/accounts/{account_id}/identity]
-<a name="associateidentity" title="Associate an Identity ID to a Merchant Account"></a>
-
-This is how you submit a merchant account identity verification request.
-
-**Note:** The *identityId* value used for this request is the *id* value returned in the response from the Paysafe Identity Verification API. See [Business Owner Identity Verification](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/business-owner-identity-verification/) for more information.
-
-+ Parameters
-
-    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
-
-+ Request Identity Verification (application/json)
-
-    + Attributes
-        + Include Identity ID
-
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-        + Include Identity ID Response
-
 # Merchant Account Activation [/activation]
 <a name="activation" title="Activation"></a>
 
@@ -4379,7 +4352,7 @@ This is how you create a microdeposit request for an ACH (U.S.) or EFT (Canadian
 
 **Note:** If the microdepost creation request fails (e.g., due to invalid bank account details), Paysafe sends a notification email to the email address that was included in the [user creation](https://developer.paysafe.com/en/platforms/accounts/api/#/reference/0/users/create-a-user) request.
 
-You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
+You can create only one microdeposit request for each bank account. In addition, you can create a microdepost request only for merchant accounts with one of the [following statuses](#merchantaccountobject):<ul><li>PROCESSING</li><li>DEFERRED</li><li>APPROVED</li><li>ENABLED</li></ul>
 
 + Parameters
 
@@ -4690,7 +4663,7 @@ This is how you look up a debit transfer using the merchant reference number.
             - SUBMITTED
             - WAITING
             - WITHDRAWN
-        + statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
+        + statusReason: (enum) - When *status* is *PROCESSING*, this parameter is returned. 
             - IN_GRPL_COMP - Being reviewed by Compliance.
             - IN_RISK - Being reviewed by Risk.
         + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
@@ -4907,8 +4880,9 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
-+ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
-    **Note:** You can only designate one business owner as the applicant.
++ percentageOwnership:`50` (number, optional) - This is the percentage of ownership by the business owner.
++ isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. 
+    **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
 
 ## Canadian Driving License 
 + number:`DL987654321` (string, required) - This is the driving license number
@@ -5024,7 +4998,7 @@ This is how you look up a debit transfer using the merchant reference number.
     + Include Date
 + gender:`M` (enum, optional) - This is the gender of the business owner.
 + isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
-    **Note:** You can only designate one business owner as the applicant.
+    **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
 
 ## European Identity Card 
 + countryOfIssue:`GB` (string, required) - This is the country in which the identity card was issued. See [Country Codes](#countrycodes).
@@ -5043,13 +5017,6 @@ This is how you look up a debit transfer using the merchant reference number.
 + number:`*********89` (string, optional) - This is the European identity card number.
 + expiryDate (object, required) - This is the expiration date the identity card.
     + Include Date Expiry
-
-## Identity ID
-+ identityId:`31380` (number, required) - This is the identity ID (*id*) returned by the identity verification service.
-
-## Identity ID Response
-+ identityId:`31380` 
-+ Include Links Merchant Account
 
 ## International Passport 
 + number:`ID123456789` (string, required) - This is the passport number.
@@ -5350,11 +5317,40 @@ This is how you look up a debit transfer using the merchant reference number.
     - DISABLED
     - ENABLED
     - PENDING
+    - PROCESSING
     - REJECTED
     - RETURNED
     - SUBMITTED
     - WAITING
     - WITHDRAWN
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ url:`www.megagym.com` (string, optional) - This is the website of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
++ yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
++ locale:`en_US` (string, optional) - This is the locale used for the merchant account.
++ users: (array, optional) - This is a list of existing users that will have access to the merchant account in the Merchant Back Office. Max = 100.
+    - User 1
+    - User 2
++ amexMid:`1234567899` (string, optional) - This is the merchant's American Express ID.
++ externalAccountId:`C_45678` (string, optional) - This is the external account ID.
++ merchantDescriptor (object, optional) - This is the merchant [credit card or Direct Debit transaction descriptor](#merchantdescriptorobject).
+    + Include Merchant Descriptor
++ caAccountDetails (object, optional) - These are the merchant account details for the [US](#usaccountdetailsobject)|[CA](#caaccountdetailsobject)|[EU](#euaccountdetailsobject) regions. Only the AccountDetails object that is relevant to the account being created needs to be sent in the request.
+    + Include Account Details
+
+## Merchant Account Creation Response
++ id:`1000789670` (string, required) - This is the account ID returned in the response.
++ name:`Mega Gym` (string, required) - This is the merchant name.
++ processingCurrency:`USD` (enum, optional) - This is the [processing currency](#merchantaccountobject) used for transactions on this merchant account, for Platform Partners configured by Paysafe for multicurrency processing.
++ currency:`CAD` (enum, required) - For Platform Partners not configured by Paysafe for multicurrency processing, this is the currency used for processing and settlement for this merchant account.
+    **Note:** For Platform Partners configured by Paysafe for multicurrency processing, this is the [currency](#merchantaccountobject) used for settling transactions on this merchant account.
++ region:`CA` (enum, required) - This is the region for the merchant account.
++ legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
++ productCode:`G987` (string, required) - This is the code of the Platform Partner product.
++ category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
++ status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
+    - PENDING
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
@@ -5393,9 +5389,9 @@ This is how you look up a debit transfer using the merchant reference number.
     - SUBMITTED
     - WAITING
     - WITHDRAWN
-+ statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
-    - IN_GRPL_COMP - Being reviewed by Compliance.
-    - IN_RISK - Being reviewed by Risk.
++ statusReason: (enum) - When *status* is *PROCESSING*, this parameter is returned.
+    - IN_GRPL_COMP - Being reviewed by Compliance
+    - IN_RISK - Being reviewed by Risk
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
@@ -5423,16 +5419,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
 + status:`PENDING` (enum, required) - This is the [status](#merchantaccountobject) of the merchant account.
-    - APPROVED
-    - DEFERRED
-    - DISABLED
-    - ENABLED
     - PENDING
-    - REJECTED
-    - RETURNED
-    - SUBMITTED
-    - WAITING
-    - WITHDRAWN
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
@@ -5661,8 +5648,11 @@ This is how you look up a debit transfer using the merchant reference number.
     + Include Date
 + ssn:`999888777` (string, required) - This is the SSN of the business owner.
     **Note:** The *ssn* parameter is not required when the *type* parameter in the *usAccountDetails* object is set to NPCORP. This object is included when you [create a merchant account](#createmerchantaccount).
++ percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
 + isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
-    **Note:** You can only designate one business owner as the applicant.
+    **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
++ isControlProng:`false` (boolean, optional) - This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer). All US partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the Control Prong. It will become a mandatory element in the near future.
+    **Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response.
 
 ## User
 + userName:`john_smith` (string, required) - This is the user that will be configured to access the merchant account in the Merchant Back Office.
