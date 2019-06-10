@@ -2531,6 +2531,8 @@ This is how you look up a merchant account trading address.
 # Business Owners [/businessowners]
 <a name="businessowners" title="Business Owners"></a>
 
+[Consult these tables](https://developer.paysafe.com/en/rest-apis/platforms/account-management/typical-api-calls/create-a-business-owner/business-owner-requirements/) to see requirements for adding a business owner to a merchant account.
+
 ## Create a Canadian Business Owner [POST /v1/accounts/{account_id}/businessowners]
 <a name="canadianbusinessownersrequest" title="Create a Canadian Business Owner"></a>
 
@@ -4661,7 +4663,7 @@ This is how you look up a debit transfer using the merchant reference number.
             - SUBMITTED
             - WAITING
             - WITHDRAWN
-        + statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
+        + statusReason: (enum) - When *status* is *PROCESSING*, this parameter is returned. 
             - IN_GRPL_COMP - Being reviewed by Compliance.
             - IN_RISK - Being reviewed by Risk.
         + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
@@ -4878,7 +4880,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
-+ percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
++ percentageOwnership:`50` (number, optional) - This is the percentage of ownership by the business owner.
 + isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account. 
     **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
 
@@ -5387,9 +5389,9 @@ This is how you look up a debit transfer using the merchant reference number.
     - SUBMITTED
     - WAITING
     - WITHDRAWN
-+ statusReason:`IN_GRPL_COMP` (enum) - When *status* is *PROCESSING*, this parameter is returned. 
-    - IN_GRPL_COMP - Being reviewed by Compliance.
-    - IN_RISK - Being reviewed by Risk.
++ statusReason: (enum) - When *status* is *PROCESSING*, this parameter is returned.
+    - IN_GRPL_COMP - Being reviewed by Compliance
+    - IN_RISK - Being reviewed by Risk
 + averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
