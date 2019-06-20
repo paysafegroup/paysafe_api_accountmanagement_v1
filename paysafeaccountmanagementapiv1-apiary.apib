@@ -1055,7 +1055,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
 |productCode    |string<br/>`length<=50`    |This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.|
 |category       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
-|averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units. |
+|averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units.<br/>**Note:** This cannot be zero (0). |
 |url            |string<br/>`length<=60`    |This is the website of the business. |
 |phone          |string<br/>`length<=40`    |This is the customer support phone number of the business. |
 |email          |string<br/>`length<=240`   |This is the customer support email of the business. |
@@ -1097,7 +1097,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |street         |string<br/>`length<=50`        |This is the first line of the street address.|
 |street2        |string<br/>`length<=50`        |This is the second line of the street address, if required (e.g., apartment number).|
 |city           |string<br/>`length<=40`        |This is the city where address is located.|
-|state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
+|state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Province Codes](#provincecodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the merchant account address. See [Supported Country Codes](#supportedcountrycodes).|
 |zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address.|
 
@@ -5209,7 +5209,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. **Note:** This cannot be zero (0).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
@@ -5247,7 +5247,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. **Note:** This cannot be zero (0).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
@@ -5278,7 +5278,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. **Note:** This cannot be zero (0).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
@@ -5324,7 +5324,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - SUBMITTED
     - WAITING
     - WITHDRAWN
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. 
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
