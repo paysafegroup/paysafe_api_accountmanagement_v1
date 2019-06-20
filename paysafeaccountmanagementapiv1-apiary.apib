@@ -690,7 +690,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |previousLastName      |string<br/>`length<=50` |This is the previous last name of the business owner.<br/> **Note:** This is used for European business owners only.|
 |email          |string<br/>`length<=255`       |This is the email address of the business owner.|
 |jobTitle       |string<br/>`length<=50`        |This is the job title of the business owner. |
-|phone          |string<br/>`length<=40`        |This is the phone number of the business owner.|
+|phone          |string<br/>`length<=40`        |This is the phone number of the business owner.  Cannot contain special characters.|
 |nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/>See [Nationality Codes](#nationalitycodes).|
 |dateOfBirth    |[dateOfBirth](#date)           |This is the birth date of the business owner.|
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
@@ -727,8 +727,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |city           |string<br/>`length<=40`        |This is the city where address is located.|
 |state          |string<br/>`length<=40`        |This is the state/province/region of the business owner address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the business owner address. See [Supported Country Codes](#supportedcountrycodes).|
-|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner address.|
-|yearsAtAddress |number<br/>`length<+100`       |This is the number of years the business owner has been living at this address.|
+|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner address. Cannot contain special characters.|
+|yearsAtAddress |number<br/>`length<=100`       |This is the number of years the business owner has been living at this address.|
 
 ```apib
 {
@@ -878,7 +878,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
 |refundPolicyDescription        |string<br/>`length<=255`   |This is a description of the business's refund policy.|
-|federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
+|federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business. Must be exact or application may defer.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li><li>VISA_DEBIT</li></ul>|
 
 **Note:** The following three elements are **not** supported for Direct Debit merchant processing accounts: <ul><li>*isCardPresent*</li><li>*additionalPaymentMethods*</li><li>*hasPreviouslyProcessedCards*</li></ul>
@@ -984,7 +984,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment.<br/> **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
 |refundPolicyDescription        |string<br/>`length<=30`    |This is a description of the business's refund policy.<br/> **Note:** This value is required when *refundPolicy* is set to *true*.|
-|taxIdentificationNumber        |string<br/>`length<=30`    |This is the tax identification (VAT) number of the business.|
+|taxIdentificationNumber        |string<br/>`length<=30`    |This is the tax identification (VAT) number of the business. Must be exact or application may defer.|
 |registrationNumber             |string<br/>`length<=20`    |This is the registration number of the business.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>SEPA</li><li>IDEAL</li><li>GIROPAY</li><li>SOFORT</li><li>UK_DIRECT_DEBIT</li></ul>|
 
@@ -1055,9 +1055,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |locale         |string<br/>`length=5`      |This is the locale value used for the merchant account. The values depend on the region. Possible values are: <ul><li>en_US (US)</li><li>en_CA (Canadian English)</li><li>fr_CA (Canadian French)</li><li>en_GB (EU)</li></ul> |
 |productCode    |string<br/>`length<=50`    |This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.|
 |category       |enum                       |This is the category code of the business. Please see [Merchant Category Codes](#merchantcategorycodes). |
-|averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units. |
+|averageTransactionAmount   |number<br>`max=99999999999`    |This is the average transaction amount, in minor units.<br/>**Note:** This cannot be zero (0). |
 |url            |string<br/>`length<=60`    |This is the website of the business. |
-|phone          |string<br/>`length<=40`    |This is the customer support phone number of the business. |
+|phone          |string<br/>`length<=40`    |This is the customer support phone number of the business. Cannot contain special characters.|
 |email          |string<br/>`length<=240`   |This is the customer support email of the business. |
 |yearlyVolumeRange  |enum                   |This is the estimated yearly volume of the business, by transaction. Possible values are: <ul><li>LOW &ndash; 0–50k</li><li>MEDIUM &ndash; 50k–100k</li><li>HIGH &ndash; 100k–250k</li><li>VERY_HIGH &ndash; 250k+</li></ul> |
 |users          |enum                       |This a comma-separated list of users configured to have access to the merchant account in the back office ["user 1", "user 2", ...]. You can add users that have [already been created](#users) for this merchant account.<br/> **Note:** The maximum number of users that can be added using the Account Management API is 100.
@@ -1097,9 +1097,9 @@ The Paysafe Test environment can be used to test applications without actually r
 |street         |string<br/>`length<=50`        |This is the first line of the street address.|
 |street2        |string<br/>`length<=50`        |This is the second line of the street address, if required (e.g., apartment number).|
 |city           |string<br/>`length<=40`        |This is the city where address is located.|
-|state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
+|state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Province Codes](#provincecodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the merchant account address. See [Supported Country Codes](#supportedcountrycodes).|
-|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address.|
+|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address. Cannot contain special characters.|
 
 ```apib
 {
@@ -1122,7 +1122,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |city           |string<br/>`length<=40`        |This is the city where address is located.|
 |state          |string<br/>`length<=40`        |This is the state/province/region of the merchant account address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the merchant account address. See [Supported Country Codes](#supportedcountrycodes).|
-|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address.|
+|zip            |string<br/>`length<=10`        |This is the zip code or postal code of the merchant account address. Cannot contain special characters.|
 |type           |string<br/>`length<=10`        |If this element is included and set to *TRADING*, the address provided is stored as the trading address for the merchant account. |
 
 ```apib
@@ -1142,7 +1142,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |Element                        |Type                       |Description                        |
 |---                            |---                        |---       |
 |dynamicDescriptor              |string<br/>For credit card merchant processing accounts `length<=20`<br/>For Direct Debit merchant processing accounts `length<=32`    |This is the dynamic descriptor field.|
-|phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor. <br/>**Note:** This element is *not* supported for **Direct Debit** processing merchants.|
+|phone                          |string<br/>`length=13`     |This is the phone number to use in the card descriptor. Cannot contain special characters.<br/>**Note:** This element is *not* supported for **Direct Debit** processing merchants.|
 
 **Note:** <ul><li>For **Direct Debit** processing merchants, the *merchantDescriptor* object is supported only in Canada and the U.S.</li><li>For **credit card** processing merchants, an extra prefix might be added to the *dynamicDescriptor* parameter, depending on the processing bank.</li></ul>
 
@@ -1239,7 +1239,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |deliveryTimeRange              |enum                       |This is the time range for the business's order fulfillment.<br/> **Note:** This value is required when *shipsGoods* is set to *true*. Possible values are:<ul><li>SHORT (1–7 days)</li><li>MEDIUM (8–14 days)</li><li>LONG (15 days and more)</li></ul>|
 |refundPolicy                   |boolean                    |This indicates whether the business has a refund policy.|
 |refundPolicyDescription        |string<br/>`length<=255`   |This is a description of the business's refund policy.<br/> **Note:** This value is required when *refundPolicy* is set to *true*.|
-|federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business.|
+|federalTaxNumber               |string<br/>`length=9`      |This is the tax identification/registration number of the business. Must be exact or application may defer.|
 |additionalPaymentMethods       |array                      |These are optional payment types for the business. Possible values are: <ul><li>DIRECT_DEBIT</li></ul>|
 
 **Note:** The following three elements are **not** supported for Direct Debit merchant processing accounts: <ul><li>*isCardPresent*</li><li>*additionalPaymentMethods*</li><li>*hasPreviouslyProcessedCards*</li></ul>
@@ -4636,7 +4636,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + refundPolicy:`true` (boolean, optional) - This indicates whether the business has a refund policy.
 + refundPolicyDescription:`Timely` (string, optional) - This is a description of the business's refund policy.
     **Note:** This value is required when *refundPolicy* is set to *true*.
-+ federalTaxNumber:`987654321` (string, optional) - This is the tax identification/registration number of the business.
++ federalTaxNumber:`987654321` (string, optional) - This is the tax identification/registration number of the business. Must be exact or application may defer.
 + additionalPaymentMethods: (array, optional) - These are optional payment types for the business. **Note:** Not supported for Direct Debit merchant processing accounts.
     - DIRECT_DEBIT
     - VISA_DEBIT
@@ -4700,7 +4700,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + city:`Toronto` (string, required) - This is the city where the address is located.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
-+ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
++ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
 + yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address.
     **Note:** This field is optional for US businesses.
 
@@ -4710,7 +4710,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + city:`Toronto` (string, required) - This is the city where the address is located.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
-+ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
++ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
 + yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address.
     **Note:** This field is optional for US businesses.
  
@@ -4745,7 +4745,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + city:`Toronto` (string, required) - This is the city where the address is located.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
-+ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
++ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
 
 ## Address Trading
 + street:`100 King Street West` (string, required) - This is the first line of the street address.
@@ -4753,7 +4753,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + city:`Toronto` (string, required) - This is the city where the address is located.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
-+ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
++ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
 + type:`TRADING` (string, required) - This designates this address as the trading address.
 
 ## Address Trading Response
@@ -4762,7 +4762,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + city:`Toronto` (string, required) - This is the city where the address is located.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
-+ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address.
++ zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
 
 ## Address Consolidated
 + address (object, optional) - This is the address.
@@ -4877,7 +4877,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + lastName:`Ronald` (string, required) - This is the last name of the business owner.
 + email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
 + jobTitle:`CEO` (string, required) - This is the job title of the business owner.
-+ phone:`5556667777` (string, required) - This is the phone number of the business owner.
++ phone:`5556667777` (string, required) - This is the phone number of the business owner. Cannot contain special characters.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
@@ -4992,7 +4992,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + previousLastName:`Smith` (string, optional) - This is the previous last name of the business owner.
 + email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
 + jobTitle:`CEO` (string, required) - This is the job title of the business owner.
-+ phone:`5556667777` (string, required) - This is the phone number of the business owner.
++ phone:`5556667777` (string, required) - This is the phone number of the business owner. Cannot contain special characters.
 + nationality:`CA` (enum, required) - This is the [nationality code](#nationalitycodes) of the business owner. 
 + percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
@@ -5209,9 +5209,9 @@ This is how you look up a debit transfer using the merchant reference number.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. **Note:** This cannot be zero (0).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
-+ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business. Cannot contain special characters.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
 + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated [yearly volume](#merchantaccountobject) of the business.
     - LOW
@@ -5247,9 +5247,9 @@ This is how you look up a debit transfer using the merchant reference number.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. **Note:** This cannot be zero (0).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
-+ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business. Cannot contain special characters.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
 + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated [yearly volume](#merchantaccountobject) of the business.
     - LOW
@@ -5278,9 +5278,9 @@ This is how you look up a debit transfer using the merchant reference number.
 + legalEntity:`Mega Gym Corp.` (string, required) - This is the business legal/trading name.
 + productCode:`G987` (string, required) - This is the code of the Platform Partner product, provided by Paysafe. You need a different *productCode* (and merchant account) for each payment method/currency combination you want to offer &ndash; e.g., credit card USD, Direct Debit EFT, etc.
 + category:`RECREATION` (enum, optional) - This is the [Merchant Category Code](#merchantcategorycodes).
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. **Note:** This cannot be zero (0).
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
-+ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
++ phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business. Cannot contain special characters.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
 + yearlyVolumeRange:`MEDIUM` (enum, optional) - This is the estimated yearly volume of the business.
     - LOW
@@ -5324,7 +5324,7 @@ This is how you look up a debit transfer using the merchant reference number.
     - SUBMITTED
     - WAITING
     - WITHDRAWN
-+ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units.
++ averageTransactionAmount:`9999` (number, optional) - This is the average transaction amount, in minor units. 
 + url:`www.megagym.com` (string, optional) - This is the website of the business.
 + phone:`555 888-9999` (string, optional) - This is the customer support phone number of the business.
 + email:`support@megagym.com` (string, optional) - This is the customer support email address of the business.
@@ -5437,7 +5437,7 @@ This is how you look up a debit transfer using the merchant reference number.
 ## Merchant Descriptor
 + dynamicDescriptor:`megagym` (string, optional) - This text is used in the credit card descriptor.
     **Note:** For credit card processing merchants, an extra prefix might be added to the *dynamicDescriptor* element, depending on the processing bank.
-+ phone:`555 888-9999` (string, optional) - This is the phone number used in the credit card descriptor.
++ phone:`555 888-9999` (string, optional) - This is the phone number used in the credit card descriptor. Cannot contain special characters.
     **Note:** The *phone* element is not supported for Direct Debit processing merchants.
 
 ## Merchant Name
@@ -5644,7 +5644,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + lastName:`Ronald` (string, required) - This is the last name of the business owner.
 + email:`jamesr@email.com` (string, optional) - This is the email address of the business owner.
 + jobTitle:`CEO` (string, required) - This is the job title of the business owner.
-+ phone:`5556667777` (string, required) - This is the phone number of the business owner.
++ phone:`5556667777` (string, required) - This is the phone number of the business owner. Cannot contain special characters.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, required) - This is the SSN of the business owner.
