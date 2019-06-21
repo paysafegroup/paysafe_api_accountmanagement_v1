@@ -728,7 +728,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |state          |string<br/>`length<=40`        |This is the state/province/region of the business owner address. Provide state if within U.S./Canada. For Canada see [Country Codes](#countrycodes). For U.S. see [State Codes](#statecodes). Provide region if outside of U.S./Canada.|
 |country        |string<br/>`length=2`          |This is the country of the business owner address. See [Supported Country Codes](#supportedcountrycodes).|
 |zip            |string<br/>`length<=10`        |This is the zip code or postal code of the business owner address. Cannot contain special characters.|
-|yearsAtAddress |number<br/>`length<=100`       |This is the number of years the business owner has been living at this address.|
+|yearsAtAddress |number<br/>`length<=100`       |This is the number of years the business owner has been living at this address.<br/>**Note:** If *yearsAtAddress* in the [current address](#currentaddresses) is less than 3, then you must also include a [previous address](#previousaddresses).|
 
 ```apib
 {
@@ -3038,7 +3038,7 @@ This is how you create a business owner previous address.
 + Request Business Owner Previous Address Creation (application/json)
 
     + Attributes
-        + Include Address Current
+        + Include Address Previous
         
     + Headers
     
@@ -3049,7 +3049,7 @@ This is how you create a business owner previous address.
     + Attributes
         + Include Links Previous Addresses
         + Include Response Base
-        + Include Address Current
+        + Include Address Previous
 
 ## Update a Business Owner Previous Address - PATCH [PATCH /v1/previousaddresses/{previous_address_id}]
 <a name="updatepreviousaddresspatch" title="Update a Business Owner Previous Address - PATCH"></a>
@@ -4701,8 +4701,9 @@ This is how you look up a debit transfer using the merchant reference number.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
 + zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
-+ yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address.
-    **Note:** This field is optional for US businesses.
++ yearsAtAddress:`3` (string, required) - This is the number of years the business owner has been living at this address. 
+    **Note:** If *yearsAtAddress* less than 3, then you must also include a [previous address](#previousaddresses).
+    This field is optional for US businesses, but if included and is less than 3, then a [previous address](#previousaddresses) must also be included.
 
 ## Address Previous
 + street:`100 Queen Street West` (string, required) - This is the first line of the street address.
@@ -4711,8 +4712,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + state:`ON` (string, required) - This is the state/province/region of the address. For Canada see [Province Codes](#provincecodes). For US see [State Codes](#statecodes).
 + country:`CA` (string, required) - This is the [country code](#countrycodes) of the address.
 + zip:`M5H 2N2` (string, required) - This is the zip/postal code of the address. Cannot contain special characters.
-+ yearsAtAddress:`2` (string, required) - This is the number of years the business owner has been living at this address.
-    **Note:** This field is optional for US businesses.
++ yearsAtAddress:`3` (string, required) - This is the number of years the business owner was living at this address.
  
 
 ## Address Current Object
