@@ -4426,7 +4426,189 @@ This is how you look up a microdeposit to view its status.
         + Include Links Microdeposits
         + Include Response Base        
         + Include Microdeposit Response Valid
+
+
+# Subaccounts [/subaccounts]
+<a name="subaccounts" title="Subaccounts"></a>
+
+Subaccounts allow merchants to share and distribute payments among multiple accounts. 
+When you create a subaccount, it will be connected with the merchant account ID that is specified in the request endpoint.
+
+Not all merchant account types support subaccounts. Contact your account manager for more information.
+
+## Create a Subaccount [POST /v1/accounts/{account_id}/subaccounts]
+<a name="createsubaccounts" title="Create a Subaccount"></a>
+
+This is how you create a [subaccount](#subaccountobject).
+
+You must first create either an [EFT bank account](#createeftbankaccountsub) or an [ACH bank account](#createachbankaccountsub) &ndash; depending on the processing region of the merchant account from which this subacccount is being created &ndash; that you will associate with this subaccount. 
+The *id* returned in the response to the destination bank account creation request will be used as the *eftId* or *achId* element in this request. 
+Note that the *id* can be used in multiple subaccount creation requests.
+
+**Note:** [Microdeposits are not supported](#createmicrodeposit) for bank accounts associated with subaccounts.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the [merchant account creation request](#createmerchantaccount).
+
++ Request Create Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount
         
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response
+
+## Update a Subaccount [PATCH /v1/subaccounts/{subaccount_id}]
+<a name="updatesubaccounts" title="Update a Subaccount"></a>
+
+This is how you update a [subaccount](#subaccountobject).
+
+**Note:** When using the PATCH operation, you must provide only the elements of the subaccount that you want to update. Elements not included will remain unchanged in the resulting subaccount.
+
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+
++ Request Update Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount Patch
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response Patch
+
+## Disable All Subaccounts for a Merchant Account [PATCH /v1/accounts/{account_id}/subaccounts]
+<a name="disablesubaccounts" title="Disable All Subaccounts for a Merchant Account"></a>
+
+You can disable a single subaccount by [updating the subaccount](#updatesubaccounts) and changing its status to DISABLED. 
+With this request, however, you can disable all [subaccounts](#subaccountobject) belonging to a merchant account.
+
+**Note:** When using the PATCH operation, you must provide only the elements of the subaccount that you want to update. Elements not included will remain unchanged in the resulting subaccount.
+
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+
++ Request Update Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount Patch Disable
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 202 (application/json)
+
+    + Attributes
+        + Include Subaccount Patch Disable Response
+
+## Look Up a Subaccount [GET /v1/subaccounts/{subaccount_id}]
+<a name="getsubaccount" title="Look Up a Subaccount"></a>
+
+This is how you look up a [subaccount](#subaccountobject).
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+
++ Request Get Subaccount (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response
+
+## Look Up All Subaccounts for a Merchant Account [GET /v1/accounts/{account_id}/subaccounts?offset={offset}&limit={limit}]
+<a name="getsubaccounts" title="Look Up All Subaccounts for a Merchant Account"></a>
+
+This is how you look up all [subaccounts](#subaccountobject) belonging to a merchant account. 
+If there are no subaccounts associated with the merchant account, then an empty collections array will be returned.
+
+**Note:** If a merchant account has subaccounts associated with it, then the URL to be used in this request will be listed in the *links* array of the GET response when [looking up that merchant account](#getmerchantaccount). 
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + offset:`3` (string, optional) - This identifies your location within the list of records returned.
+    + limit:3 (string, optional) - This is the total number of records to return. Default value is 10. Max value is 50.
+
++ Request Get All Subaccounts (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response All
+
+## Look Up a Subaccount - Expanded [GET /v1/subaccounts/{subaccount_id}?expand={fields}]
+<a name="getsubaccountexpanded" title="Look Up a Subaccount in Expanded Format"></a>
+
+This is how you look up a [subaccount](#subaccountobject) in expanded format to view the payment schedule created when assigning a destination bank account to the subaccount.
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+    + fields:`paymentSchedule` (string, required) -  This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+
++ Request Get Subaccount - Expanded (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response Expanded
+
+## Look Up All Subaccounts for a Merchant Account - Expanded [GET /v1/accounts/{account_id}/subaccounts?offset={offset}&limit={limit}&expand={fields}]
+<a name="getsubaccountsexpanded" title="Look Up All Subaccounts for a Merchant Account in Expanded Format"></a>
+
+This is how you look up all [subaccounts](#subaccountobject) belonging to a merchant account in expanded format to view the payment schedule associated with the subaccounts.
+If there are no subaccounts associated with the merchant account, then an empty collections array will be returned.
+
++ Parameters
+
+    + account_id:`1000789670` (string, required) - This is the merchant account ID returned in the response to the merchant account creation request.
+    + offset:`3` (string, optional) - This identifies your location within the list of records returned.
+    + limit:3 (string, optional) - This is the total number of records to return. Default value is 10. Max value is 50.    
+    + fields:`paymentSchedule` (string, required) -  This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+
++ Request Get All Subaccounts - Expanded (application/json)
+
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+        + Include Subaccount Response All Expanded
+
+
 
 # Balance Transfers [/transfers]
 <a name="transfers" title="Balance Transfers"></a>
@@ -4922,7 +5104,7 @@ This is how you look up a debit transfer using the merchant reference number.
             + Include Date Issue
         + expiryDate (object, optional) - This is the expiration date the driving license.
             + Include Date Expiry
-            
+
 ## creditsobject
 + amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
 + detail:`Refund` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
@@ -5116,13 +5298,13 @@ This is how you look up a debit transfer using the merchant reference number.
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/merchants/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
-        
+
 ## Links Merchant Account
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670` (string, required) - This is the URI of the resource.
-        
+
 ## Links Merchant Account Consolidated
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
@@ -5171,6 +5353,61 @@ This is how you look up a debit transfer using the merchant reference number.
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/sepabankaccounts/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704880` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts2
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704890` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Expanded
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704880?expand=paymentSchedule` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Disable
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1005704880/subaccounts` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Array
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/subaccounts/1005704660` (string, required) - This is the URI of the resource.
+
+## Links Subaccounts Get All
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:self (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=3` (string, required)
+    + (object)
+        + rel:prev (string, optional) - This is the link type that allows you to navigate to the previous set of resources.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=0` (string, required)        
+    + (object)
+        + rel:next (string, optional) - This is the link type that allows you to navigate to the next set of resources.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=6` (string, required)
+
+## Links Subaccounts Get All Expanded
++ links (array, required) - This is an array of [links](#linksobject).
+    + (object)
+        + rel:self (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=3&expand=paymentSchedule` (string, required)
+    + (object)
+        + rel:prev (string, optional) - This is the link type that allows you to navigate to the previous set of resources.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=0&expand=paymentSchedule` (string, required)
+    + (object)
+        + rel:next (string, optional) - This is the link type that allows you to navigate to the next set of resources.
+        + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=6&expand=paymentSchedule` (string, required)        
+
 
 ## Links Terms and Conditions
 + links (array, required) - This is an array of [links](#linksobject).
@@ -5451,6 +5688,14 @@ This is how you look up a debit transfer using the merchant reference number.
         + limit:`10` (number, required) - This is the number of records to be returned per page. The default is 10 and the maximum is 100.
         + page:`1` (number, required) - This is the number of pages to display.
 
+## Meta Subaccounts
++ _meta (object, optional) - This is meta data about the GET request.
+
+    + Properties
+        + numberOfRecords:`12`
+        + limit:`3`
+        + page:`2`
+
 ## Microdeposit
 + amount:`0.51` (string, required) - This is the amount of the microdeposit made to the bank account.
 
@@ -5463,6 +5708,21 @@ This is how you look up a debit transfer using the merchant reference number.
 ## Microdeposit Validation
 + status:`VALIDATED` (string, required) - This is the status of the microdeposit.
 + amount:`0.51` (string, required) - This is the amount of the microdeposit made to the bank account.
+
+## Payment Schedule
++ id:`e067d83f-add7-4b6b-8884-dfa8693dde1f`
++ eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1`
++ frequency:`WEEKLY`
++ status:`ENABLED`
+
+## Payment Schedule old
++ paymentSchedule (object, required) - This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+
+    + Properties
+        + id:`e067d83f-add7-4b6b-8884-dfa8693dde1f`
+        + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1`
+        + frequency:`WEEKLY`
+        + status:`ENABLED`
 
 ## Recovery Question
 + recoveryQuestion (object, optional) - These are some details about the recovery question for the user. The recovery question will be used to support password resets in the Merchant Back Office.
@@ -5563,6 +5823,153 @@ This is how you look up a debit transfer using the merchant reference number.
 + beneficiaryAccountName:`Main` (string, required) - This is the beneficiary account name.
 + swiftNumber:`********` (string, required) - This is the swift number of the merchant's bank account.
 + ibanNumber:`940015****2421` (string, required) - This is the IBAN number of the merchant's bank account.
+
+## Subaccount
++ name:`Settlement Account` (string, required) - This is the subaccount name.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+
+## Subaccount Get Array
++ subaccounts (array, required) - This is an array of subaccounts associated with this merchant account number.
+    + (object)
+        + id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
+        + Include Links Subaccounts
+    + (object)
+        + id:`1005704660` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account Provisional` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206rrrr` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206uuuu` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-k5j67dy65fw3`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
+        + Include Links Subaccounts Array
+    + (object)
+        + id:`1005704890` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b10020ttttt` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b10020zzzzz` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa869tfyguh`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
+        + Include Links Subaccounts2
++ Include Links Subaccounts Get All
+
+## Subaccount Get Array Expanded
++ subaccounts (array, required) - This is an array of subaccounts associated with this merchant account number.
+    + (object)
+        + id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
+        + Payment Schedule
+            + id:`e067d83f-add7-4b6b-8884-dfa8693dde1f`
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1`
+            + frequency:`WEEKLY`
+            + status:`ENABLED`
+        + Include Links Subaccounts
+    + (object)
+        + id:`1005704660` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account Provisional` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206rrrr` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b100206uuuu` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-k5j67dy65fw3`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount.
+        + Payment Schedule
+            + id:`e067d83f-add7-4b6b-8884-k5j67dy65fw3`
+            + eftId:`8b670bf0-f218-4710-86a9-1b100206rrrr`
+            + frequency:`WEEKLY`
+            + status:`ENABLED`        
+        + Include Links Subaccounts Array
+    + (object)
+        + id:`1005704890` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
+        + name:`Settlement Account` (string, required) - This is the subaccount name.
+        + status:`ENABLED` (enum, required) - This is the status of the subaccount.
+        + One of
+            + eftId:`8b670bf0-f218-4710-86a9-1b10020ttttt` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+            + achId:`9a880bf0-f218-4710-86a9-1b10020zzzzz` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
+        + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa869tfyguh`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
+        + Payment Schedule
+            + id:`e067d83f-add7-4b6b-8884-dfa869tfyguh`
+            + eftId:`8b670bf0-f218-4710-86a9-1b10020ttttt`
+            + frequency:`WEEKLY`
+            + status:`ENABLED`        
+        + Include Links Subaccounts2
++ Include Links Subaccounts Get All Expanded
+
+## Subaccount Response
++ id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
++ name:`Settlement Account` (string, required) - This is the subaccount name.
++ status:`ENABLED` (enum, required) - This is the status of the subaccount.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
++ paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
++ Include Links Subaccounts
+
+## Subaccount Response Expanded
++ id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
++ name:`Settlement Account` (string, required) - This is the subaccount name.
++ status:`ENABLED` (enum, required) - This is the status of the subaccount.
++ eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination bank account, returned by Paysafe when the bank account for subaccounts was created.
++ paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
++ paymentSchedule (object, required) - This is the [payment schedule](#paymentscheduleobject) created https://github.com/paysafegroup/paysafe_api_accountmanagement_v1/compare/master...TW_752?expand=1in the background when assigning a destination bank account ID to a subaccount
+    + Include Payment Schedule
++ Include Links Subaccounts Expanded
+
+## Subaccount Response All
++ Include Meta Subaccounts
++ Include Subaccount Get Array
+
+## Subaccount Response All Expanded
++ Include Meta Subaccounts
++ Include Subaccount Get Array Expanded
+
+## Subaccount Patch
++ name:`Settlement Account Corporate` (string, optional) - This is the subaccount name.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b1002044yy7` (string, optional) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, optional) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
++ status:`DISABLED` (enum, optional) - This is the status of the subaccount.
+    **Note:** You can only change the status of a subaccount from *ENABLED* to *DISABLED*. 
++ statusReason:`TERMINATED` (enum, optional) - This is the reason if the *status* is being set to *DISABLED*.
+    **Note:** This field is required if *status* field is included.
++ statusComment:`Merchant sold business.` (string, optional) - This is a comment on why the subaccount is being set to *DISABLED*.
+    **Note:** This field is required if *status* field is included.
+
+## Subaccount Response Patch
++ id:`1005704880` (string, required) - This is the ID of the subaccount, returned by Paysafe, that can be used later to look up or patch a subaccount.
++ name:`Settlement Account Corporate` (string, required) - This is the subaccount name.
++ status:`DISABLED` (enum, required) - This is the status of the subaccount.
++ statusReason:`TERMINATED` (enum, optional) - This is the reason why the *status* is being set to *DISABLED*. 
++ statusComment:`Merchant sold business.` (string, optional) - This is a comment on why the subaccount is being set to *DISABLED*.
++ One of
+    + eftId:`8b670bf0-f218-4710-86a9-1b1002044yy7` (string, required) - This is the ID of the destination EFT bank account, returned by Paysafe when the bank account for subaccounts was created.
+    + achId:`9a880bf0-f218-4710-86a9-1b100206fh67` (string, required) - This is the ID of the destination ACH bank account, returned by Paysafe when the bank account for subaccounts was created.
++ paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
++ Include Links Subaccounts
+
+## Subaccount Patch Disable
++ status:`DISABLED` (enum, optional) - This is the status of the subaccount.
+    **Note:** You can only change the status of a subaccount from *ENABLED* to *DISABLED*. 
++ statusReason:`TERMINATED` (enum, optional) - This is the reason if the *status* is being set to *DISABLED*.
+    **Note:** This field is required if *status* field is included.
++ statusComment:`Merchant sold business.` (string, optional) - This is a comment on why the subaccount is being set to *DISABLED*.
+    **Note:** This field is required if *status* field is included.
+
+## Subaccount Patch Disable Response
++ description:`Your request has been accepted and is in progress.` (string)
++ Include Links Subaccounts Disable
 
 ## Terms and Conditions
 + version:`V1` (string, required) - This is the version of the Terms and Conditions.
