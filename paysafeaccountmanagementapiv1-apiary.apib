@@ -4816,6 +4816,34 @@ This is how you update a [subaccount](#subaccountobject).
 + Response 200 (application/json)
 
     + Attributes
+
+        + Include Subaccount Response
+
+## Update a Subaccount [PATCH /v1/subaccounts/{subaccount_id}]
+<a name="updatesubaccounts" title="Update a Subaccount"></a>
+
+This is how you update a [subaccount](#subaccountobject).
+
+**Note:** When using the PATCH operation, you must provide only the elements of the subaccount that you want to update. Elements not included will remain unchanged in the resulting subaccount.
+
+
++ Parameters
+
+    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
+
++ Request Update Subaccount (application/json)
+
+    + Attributes
+        + Include Subaccount Patch
+        
+    + Headers
+    
+            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
+
++ Response 200 (application/json)
+
+    + Attributes
+
         + Include Subaccount Response Patch
 
 ## Disable All Subaccounts for a Merchant Account [PATCH /v1/accounts/{account_id}/subaccounts]
@@ -5430,7 +5458,7 @@ This is how you look up a debit transfer using the merchant reference number.
             + Include Date Issue
         + expiryDate (object, optional) - This is the expiration date the driving license.
             + Include Date Expiry
-            
+
 ## creditsobject
 + amount:`500` (number, required) - This is the amount to transfer from the linked account in minor currency units.
 + detail:`Refund` (string, optional) - This is a description of the transaction, added by the merchant. Maximum length 4000 characters.
@@ -5633,7 +5661,7 @@ This is how you look up a debit transfer using the merchant reference number.
     + (object)
         + rel:`self` (string, required) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/merchants/8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the URI of the resource.
-        
+
 ## Links Merchant Account
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
@@ -5643,6 +5671,7 @@ This is how you look up a debit transfer using the merchant reference number.
         + rel:`subaccounts` (string, optional) - This is the link type that allows different endpoints to be targeted depending on the end state of the transaction.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts` (string, required) - This is the URI of the subaccounts collection.        
         
+
 ## Links Merchant Account Consolidated
 + links (array, required) - This is an array of [links](#linksobject).
     + (object)
@@ -5750,6 +5779,7 @@ This is how you look up a debit transfer using the merchant reference number.
     + (object)
         + rel:next (string, optional) - This is the link type that allows you to navigate to the next set of resources.
         + href:`https://api.test.paysafe.com/accountmanagement/v1/accounts/1000789670/subaccounts?limit=3&offset=6&expand=paymentSchedule` (string, required)        
+
 
 ## Links Terms and Conditions
 + links (array, required) - This is an array of [links](#linksobject).
@@ -6296,7 +6326,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + eftId:`8b670bf0-f218-4710-86a9-1b100206e1c1` (string, required) - This is the ID of the destination bank account, returned by Paysafe when the bank account for subaccounts was created.
 + paymentScheduleId:`e067d83f-add7-4b6b-8884-dfa8693dde1f`  (string, required) - This is the [ID of the payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a new subaccount.
 + paymentSchedule (object, required) - This is the [payment schedule](#paymentscheduleobject) created in the background when assigning a destination bank account ID to a subaccount
-    + Include Payment Schedule
++ Include Payment Schedule
 + Include Links Subaccounts Expanded
 
 ## Subaccount Response All
