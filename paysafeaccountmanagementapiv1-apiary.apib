@@ -4817,33 +4817,6 @@ This is how you update a [subaccount](#subaccountobject).
 
     + Attributes
 
-        + Include Subaccount Response
-
-## Update a Subaccount [PATCH /v1/subaccounts/{subaccount_id}]
-<a name="updatesubaccounts" title="Update a Subaccount"></a>
-
-This is how you update a [subaccount](#subaccountobject).
-
-**Note:** When using the PATCH operation, you must provide only the elements of the subaccount that you want to update. Elements not included will remain unchanged in the resulting subaccount.
-
-
-+ Parameters
-
-    + subaccount_id:`1005704880` (string, required) - This is the subaccount ID returned in the response to the subaccount creation request.
-
-+ Request Update Subaccount (application/json)
-
-    + Attributes
-        + Include Subaccount Patch
-        
-    + Headers
-    
-            Authorization: Basic YOUR-BASE64-ENCODED-API-KEY
-
-+ Response 200 (application/json)
-
-    + Attributes
-
         + Include Subaccount Response Patch
 
 ## Disable All Subaccounts for a Merchant Account [PATCH /v1/accounts/{account_id}/subaccounts]
