@@ -6430,7 +6430,7 @@ This is how you look up a debit transfer using the merchant reference number.
 + dateOfBirth (object, required) - This is the birth date of the business owner.
     + Include Date
 + ssn:`999888777` (string, required) - This is the SSN of the business owner.
-    **Note:** The *ssn* parameter is not required when the *type* parameter in the *usAccountDetails* object is set to NPCORP. This object is included when you [create a merchant account](#createmerchantaccount).
+    **Note:** The *ssn* parameter is not required when the *type* parameter in the *usAccountDetails* object is set to NPCORP, CHARITY or GOV. This object is included when you [create a merchant account](#createmerchantaccount).
 + percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
 + isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
     **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
