@@ -297,8 +297,8 @@ The Paysafe Test environment can be used to test applications without actually r
 |nationality    |enum                           |This is the nationality code of the business owner.<br/>  **Note:** This is used for European business owners only.<br/> See [Nationality Codes](#nationalitycodes).|
 |dateOfBirth    |[dateOfBirth](#date)           |This is the birth date of the business owner.|
 |ssn            |string<br/>`length<=9`         |This is the SSN/SIN of the business owner. |
-|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account.<br/> **Note:** If you are adding multiple business owners for the merchant account, you can only designate one as the applicant. All partners are required to make it mandatory for their merchants to identify one of the business owners as the applicant. This is mandatory for all regions.|
-|isControlProng |boolean                        |This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer).<br/>**Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response. All US partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the Control Prong. It will become a mandatory element in the near future.|
+|isApplicant    |boolean                        |This indicates whether this business owner is the applicant for the the merchant account.<br/> **Note:** You can only designate one business owner as the applicant. All US/CAN/EU partners must make it mandatory for their merchants to identify one of the business owners as the applicant.|
+|isControlProng |boolean                        |This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer). All US partners must make it mandatory for their merchants to identify one of the business owners as the Control Prong<br/>**Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response.|
 |gender         |enum                           |This is the gender of the business owner.<br/> **Note:** This is used for European business owners only. Possible values are: <ul><li>M &ndash; male</li><li>F &ndash; female</li></ul>  |
 |percentageOwnership    |number<br/>`max=100`   |This is the percentage of ownership by the business owner.|
 
@@ -314,8 +314,10 @@ The Paysafe Test environment can be used to test applications without actually r
       "day":"24",
       "month":"10",
       "year":"1981"
-      },
-      "ssn":"999888777"
+    },
+    "ssn":"999888777"
+    "percentageOwnership": 50,
+    "isApplicant": true
 }
 ```
 
@@ -4938,7 +4940,9 @@ This is how you look up a debit transfer using the merchant reference number.
 + ssn:`999888777` (string, optional) - This is the SSN/SIN of the business owner.
 + percentageOwnership:`50` (number, optional) - This is the percentage of ownership by the business owner.
 + isApplicant:`true` (boolean, required) - This indicates whether this business owner is the applicant for the the merchant account.
-    **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
+    **Note:** You can only designate one business owner as the applicant. All US/CAN/EU partners must make it mandatory for their merchants to identify one of the business owners as the applicant.
++ isControlProng:`false` (boolean, required) - This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer). All US partners must make it mandatory for their merchants to identify one of the business owners as the Control Prong.
+    **Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response.
 
 ## Canadian Driving License 
 + number:`DL987654321` (string, required) - This is the driving license number
@@ -5054,7 +5058,7 @@ This is how you look up a debit transfer using the merchant reference number.
     + Include Date
 + gender:`M` (enum, optional) - This is the gender of the business owner.
 + isApplicant:`true` (boolean, optional) - This indicates whether this business owner is the applicant for the the merchant account.
-    **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
+    **Note:** You can only designate one business owner as the applicant. All US/CAN/EU partners must make it mandatory for their merchants to identify one of the business owners as the applicant.
 
 ## European Identity Card 
 + countryOfIssue:`GB` (string, required) - This is the country in which the identity card was issued. See [Country Codes](#countrycodes).
@@ -5979,8 +5983,8 @@ This is how you look up a debit transfer using the merchant reference number.
     **Note:** The *ssn* parameter is not required when the *type* parameter in the *usAccountDetails* object is set to NPCORP, CHARITY or GOV. This object is included when you [create a merchant account](#createmerchantaccount).
 + percentageOwnership:`75` (number, optional) - This is the percentage of ownership by the business owner.
 + isApplicant:`true` (boolean, required) - This indicates whether this business owner is the applicant for the the merchant account.
-    **Note:** You can only designate one business owner as the applicant. All partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the applicant. It will become a mandatory element in the near future.
-+ isControlProng:`false` (boolean, required) - This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer). All US partners are strongly advised to make it mandatory for their merchants to identify one of the business owners as the Control Prong. It will become a mandatory element in the near future.
+    **Note:** You can only designate one business owner as the applicant. All US/CAN/EU partners must make it mandatory for their merchants to identify one of the business owners as the applicant.
++ isControlProng:`false` (boolean, required) - This indicates whether the business owner is the Control Prong. Only one business owner can be indicated as a Control Prong. Control Prong is an individual with significant responsibility for managing the legal entity customer (e.g., a CEO, CFO, COO, Managing Member, General Partner, President, Vice-President, or Treasurer). All US partners must make it mandatory for their merchants to identify one of the business owners as the Control Prong.
     **Note:** This is used for US owners only. For all other regions, this value will be ignored and will not be returned in the response.
 
 ## User
