@@ -667,7 +667,7 @@ The Paysafe Test environment can be used to test applications without actually r
 |email          |string<br/>`length<=240`   |This is the customer support email of the business. |
 |yearlyVolumeRange  |enum                   |This is the estimated yearly volume of the business, by transaction. Possible values are: <ul><li>LOW &ndash; 0–50k</li><li>MEDIUM &ndash; 50k–100k</li><li>HIGH &ndash; 100k–250k</li><li>VERY_HIGH &ndash; 250k+</li></ul> |
 |users          |enum                       |This a comma-separated list of users configured to have access to the merchant account in the back office ["user 1", "user 2", ...]. You can add users that have [already been created](#users) for this merchant account.<br/> **Note:** The maximum number of users that can be added using the Account Management API is 100.
-|amexMid        |string<br/>`length=10`     |This is the merchant's American Express ID. |
+|amexMid        |string<br/>`length=10`     |This is the merchant's American Express ID. <br/>**Note:** This is your American Express ID (Merchant ID or MID number). Please find your Merchant ID on your AMEX statements. Adding a wrong AMEX id can lead to transactions being denied.|
 |externalAccountId |string<br/>`length=36`  |This is the external account ID.|
 |merchantDescriptor |[merchantDescriptor](#merchantdescriptorobject)    |This is the merchant transaction descriptor.<br/> **Note:** This is not supported for EU SEPA Direct Debit merchant processing accounts.|
 |tradingAddress     |[tradingAddress](#merchantaccounttradingaddressesobject) |This is the merchant's trading address.|
